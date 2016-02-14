@@ -8,8 +8,8 @@ var HOSTNAME = 'localhost',
     requestsCount = 0;
 
 app.use(function (req, res, done) {
-	d = new Date();
-	console.log("[%s] [%s]", d.toLocaleString(), requestsCount++);
+	var date = new Date();
+	console.log("[%s] [%s]", date.toLocaleString(), requestsCount++);
 	done();
 });
 
