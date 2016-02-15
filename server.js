@@ -5,9 +5,11 @@ var express = require('express'),
 
 var HOSTNAME = 'localhost',
     PORT = 8080,
-    PUBLIC_DIR = __dirname + '/public_html';
+    PUBLIC_DIR = __dirname + '/public_html',
+    requestsCounter = 0;
 
 app.use(function (req, res, done) {
+	console.log("Запрос №%s", requestsCounter++);
 	done();
 });
 
