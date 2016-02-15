@@ -4,6 +4,9 @@ module.exports = function (grunt) {
 
 		shell: {
 			// запуск сервера через скрипт shell'a https://www.npmjs.com/package/grunt-shell
+			dev: {
+				command: "node server.js"			
+			}
 		},
 
 		watch: {
@@ -13,6 +16,8 @@ module.exports = function (grunt) {
 		
 		concurrent: {
 			// одновременный запуска shell'a и watcher'a https://www.npmjs.com/package/grunt-concurrent
+			// target1: ['coffee', 'sass'],
+			// target2: ['jshint', 'mocha']
 		},
 
 		fest: {
@@ -44,4 +49,5 @@ module.exports = function (grunt) {
 
     // результат команды grunt
     grunt.registerTask('default', ['shell', 'watch']);
+    // grunt.registerTask('default', ['shell', 'watch','concurrent:target1', 'concurrent:target2']);
 };

@@ -22,7 +22,8 @@ app
 	.use(errorHandler());
 
 app.listen(PORT, function () {
-	console.log("Simple static server showing %s listening at http://%s:%s", PUBLIC_DIR, HOSTNAME, PORT);
+	console.log("Simple static server showing %s listening at http://%s:%s",
+		PUBLIC_DIR, HOSTNAME, PORT);
 });
 
 app.use('/proxy', proxy('http://vk.com', {
