@@ -11,11 +11,6 @@ var HOSTNAME = 'localhost',
 app.use(function (req, res, done) {
 	var date = new Date();
 	console.log("[%s] [%s]", date.toLocaleString(), requestsCount++);
-	// Здесь нужно написать журналирование в формате
-	// (журналирование - вывод в консоль)
-	// [время] [номер запроса по счету]
-	done();
-});
 
 app
 	.use('/', express.static(PUBLIC_DIR))
