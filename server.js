@@ -11,6 +11,8 @@ var HOSTNAME = 'localhost',
 app.use(function (req, res, done) {
 	var date = new Date();
 	console.log("[%s] [%s]", date.toLocaleString(), requestsCount++);
+	done();
+});
 
 app
 	.use('/', express.static(PUBLIC_DIR))
