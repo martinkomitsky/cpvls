@@ -14,7 +14,14 @@
         <h1>Hello world!</h1>
     </div>
     <script>
+        var template = mainTmpl;
         var $page = $('#page');
-        showMainScreen();
+        var html_string = template({
+            data: [1,2,3]
+        });
+        console.log(html_string)
+        $page.html(html_string);
+
+        // showMainScreen();
     </script>
 </body></html>

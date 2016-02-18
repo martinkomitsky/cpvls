@@ -14,7 +14,8 @@ module.exports = function (grunt) {
                 files: ['templates/*.xml'],
                 tasks: ['fest'],
                 options: {
-                    spawn: false
+                    spawn: false,
+                    atbegin: true
                 }
             }
 			// запуск watcher'a, который следит за изенениями файлов  templates/*.xml
