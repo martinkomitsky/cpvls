@@ -4,7 +4,8 @@ var require = {
     paths: {
         underscore: 'lib/underscore',
         jquery: 'lib/jquery',
-        backbone: 'lib/backbone'
+        backbone: 'lib/backbone',
+        phaser: 'lib/phaser'
     },
     shim: {
         'backbone': {
