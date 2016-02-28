@@ -269,11 +269,9 @@
 }
 
 .content__game-playscreen {
-    color: red;
-    margin: 10% auto;
-    margin-left: 25%;
-    height: 600px;
-    width: 80%;
+margin: 11% auto;
+}
 
-    overflow: hidden;
-} 
+canvas {
+margin: 0 auto;
+}
