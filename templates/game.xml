@@ -1,8 +1,10 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="content__game-main content__game-main_visible">
-        <div class="content__game-playscreen">
+        	<div class="content__game-playscreen" id="myplayscreen"> 
+        	</div>
+    </div>
 			<script type="text/javascript">
-				var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+				var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', { preload: preload, create: create, update: update });
 				console.log("Script is in action");
 				function preload() {
 					game.load.image('sky', 'images/assets/landscape.jpg');
@@ -87,6 +89,4 @@
 					
 				}
 			</script>
-        </div>
-    </div>
 </fest:template>

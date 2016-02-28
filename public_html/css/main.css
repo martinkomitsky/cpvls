@@ -270,8 +270,10 @@
 
 .content__game-playscreen {
     color: red;
-    margin: 15% auto;
-    height: 500px;
-    width: 80%; 
+    margin: 10% auto;
+    margin-left: 25%;
+    height: 600px;
+    width: 80%;
+
     overflow: hidden;
 } 
