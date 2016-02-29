@@ -1,3 +1,36 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <div id="scoreboard"></div>
+    <div class="content__game-main content__game-main_visible">
+        <div class="content__game-menu">
+            <div class="game-menu game-menu_scoreboard">
+                <div class="game-menu__title">
+                    <h3 class="game-menu__title-text">TOP KEK</h3>
+                </div>
+                <div class="game-menu__scoreboard">
+                    <div class="scoreboard-item scoreboard-item_captions">
+                        <span class="scoreboard-player">PLAYER</span>
+                        <span class="scoreboard-score">SCORE</span>
+                    </div>
+                    <div class="scoreboard-item">
+                        <span class="scoreboard-player">NITRAM</span>
+                        <span class="scoreboard-score">5555</span>
+                    </div>
+                    <div class="scoreboard-item">
+                        <span class="scoreboard-player">BELYANOFF</span>
+                        <span class="scoreboard-score">4444</span>
+                    </div>
+                    <div class="scoreboard-item">
+                        <span class="scoreboard-player">PUHOVITY</span>
+                        <span class="scoreboard-score">3333</span>
+                    </div>
+                    <div class="scoreboard-item">
+                        <span class="scoreboard-player">POLINITY</span>
+                        <span class="scoreboard-score">2222</span>
+                    </div>
+                </div>
+                <ul class="game-menu__nav">
+                    <li class="game-menu__nav-element"><a id="main" class="game-menu__nav-item js-back" href="#main">BACK</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </fest:template>

@@ -9,7 +9,7 @@ var HOSTNAME = 'localhost',
     requestsCount = 0;
 
 app.use(function (req, res, done) {
-	var date = new Date();
+	var date = Date();
 	console.log("[%s] [%s]", date.toLocaleString(), requestsCount++);
 	done();
 });

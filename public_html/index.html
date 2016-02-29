@@ -1,27 +1,22 @@
-<!DOCTYPE  html>
-<html><head>
-    <meta charset="utf-8" />
-    <title><!-- TODO --></title>
-    <link rel="stylesheet" href="/css/main.css" />
-    <script src="/js/lib/jquery.js"></script>
-    <script src="/js/tmpl/main.js"></script>
-    <script src="/js/tmpl/scoreboard.js"></script>
-    <script src="/js/tmpl/game.js"></script>
-    <script src="/js/tmpl/login.js"></script>
-    <script src="/js/index.js"></script>
-</head><body>
-    <div id="page">
-        <h1>Hello world!</h1>
-    </div>
-    <script>
-        var template = mainTmpl;
-        var $page = $('#page');
-        var html_string = template({
-            data: [1,2,3]
-        });
-        console.log(html_string)
-        $page.html(html_string);
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>MK CPVLS</title>
+        <link rel="stylesheet" href="css/main.css" />
+        <script src="js/config.js"></script>
+        <script src="js/lib/require.js" data-main="main"></script>
+    </head>
+    <body class="page">
+        <div class="page__content">
+            <div class="content">
+                <video class="content__vbg" autoplay muted loop poster="images/obama_poster.png">
+                    <!-- <source src="mk.mp4" type="video/mp4"> -->
+                </video> 
+                <div class="content__game">
 
-        // showMainScreen();
-    </script>
-</body></html>
+                </div> 
+            </div>
+        </div>
+    </body> 
+</html> 

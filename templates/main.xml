@@ -1,9 +1,14 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div id="main">
-    	main izazazsdfsdfdsf sdf sdfffffd
-    	<fest:for iterate="[1,2,3]" index="i" value="v">
-    		<fest:value>v</fest:value>
-
-    	</fest:for>
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <div class="content__game-main content__game-main_visible">
+        <div class="content__game-menu">
+            <div class="game-menu">
+                <ul class="game-menu__nav">
+                    <li class="game-menu__nav-element"><a class="game-menu__nav-item" href="#login">SIGN IN</a></li>
+                    <li class="game-menu__nav-element"><a class="game-menu__nav-item" href="#register">REGISTER</a></li>
+                    <li class="game-menu__nav-element"><a class="game-menu__nav-item" href="#scoreboard">SCOREBOARD</a></li>
+                    <li class="game-menu__nav-element"><a class="game-menu__nav-item" href="#howtoplay">HOW TO PLAY</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </fest:template>

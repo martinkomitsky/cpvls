@@ -1,1 +1,277 @@
-/* TODO */
+@font-face {
+    font-family: 'mkx_titleregular';
+    src: url('../fonts/mkx_title-webfont.eot');
+    src: url('../fonts/mkx_title-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/mkx_title-webfont.woff2') format('woff2'),
+         url('../fonts/mkx_title-webfont.woff') format('woff'),
+         url('../fonts/mkx_title-webfont.ttf') format('truetype'),
+         url('../fonts/mkx_title-webfont.svg#mkx_titleregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'memento_regular';
+    src: url('../fonts/Memento.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.page, html {
+	height: 100%;
+	overflow: hidden;
+    user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+.page {
+    margin: 0;
+    background: #000;
+    min-height: 650px;
+    /*cursor: none;*/
+}
+
+.page__content {
+    height: 100%;
+}
+
+.content {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: black;
+    background: -webkit-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
+    background: -o-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
+    background: -moz-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
+    background: radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
+}
+
+.content__game {
+    overflow: hidden;
+}
+
+.content__vbg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover;
+    transition: 1s opacity;
+}
+
+.content__game-title-holder {
+    display: block;
+    width: 70%;
+    margin: 20% auto 0 auto;
+    text-align: center;
+}
+
+.content__game-title {
+    margin: 0;
+    font-family: "mkx_titleregular";
+    font-size: 7em;
+    font-weight: normal;
+    letter-spacing: 0.035em;
+    color: #E4E3E4;
+    text-shadow: 4px 3px rgba(0, 0, 0, 0.29);
+    cursor: default;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.4; }
+    50% { opacity: 1 }
+    100% { opacity: 0.4; }
+}
+
+@keyframes fadeOut {
+    0% { display: block; opacity: 1; }
+    99% { display: block; opacity: 0}
+    100% { display: none; opacity: 0; }
+}
+
+@keyframes fadeIn {
+    0% { display: block; opacity: 0; }
+    50% { display: block; opacity: 0.5 }
+    100% { display: block; opacity: 1; }
+}
+
+.content__game-c2a {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    position: absolute;
+    bottom: 8%;
+    text-shadow: 4px 3px rgba(0, 0, 0, 0.29);
+    animation: flicker 1s infinite;
+}
+
+.content__game-c2a-button {
+    font-family: "memento_regular";
+    font-size: 30px;
+    color: #E4E3E4;
+    text-decoration: none;
+}
+
+.content__game-menu {
+    /*display: none;*/
+    /*display: block;*/
+    /*margin: 0 auto;*/
+
+    /*position: absolute;*/
+    margin: 21% 0 0 0;
+    top: 35%;
+    width: 100%;
+    text-align: center;
+    font-family: "memento_regular";
+}
+
+.content__game-main {
+    display: none;
+}
+
+.content__game-main_visible {
+    animation: fadeIn 1s;
+    display: block;
+}
+.game-menu {
+    height: 100%;
+    width: 22%;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.42);
+    border: 1px solid black;
+    box-shadow: 0 0 50px 6px rgba(0, 0, 0, 0.76), 0 0 50px 7px rgba(0, 0, 0, 0.39);
+}
+
+.game-menu_scoreboard {
+    color: #E4E3E4;
+    text-shadow: 3px 2px rgba(132, 1, 1, 0.29);    
+    width: 50%;
+}
+
+.game-menu__nav {
+    list-style-type: none;
+    padding: 0;
+}
+
+.game-menu__nav-element {
+    margin: 5px 0 5px 0;
+}
+
+.game-menu__nav-item {
+    font-size: 35px;
+    text-decoration: none;
+    color: #888788;
+    transition: color 0.4s ease;
+}
+
+.game-menu__nav-item:focus,
+.game-menu__nav-item:hover {
+    color: #E4E3E4;
+    outline: none;
+}
+
+.game-menu__nav-item:focus:before,
+.game-menu__nav-item:focus:after,
+.game-menu__nav-item:hover:before,
+.game-menu__nav-item:hover:after {
+    content: "•";
+    color: #E4E3E4;
+    margin-right: 10px;
+}
+.game-menu__nav-item:focus:after,
+.game-menu__nav-item:hover:after {
+    margin-left: 10px;
+}
+
+.game-menu__nav-item_input {
+    padding: 5px;
+    color: #E4E3E4;
+    font-size: 35px;
+    /*background: rgba(0, 0, 0, 0.42);*/
+    /*border: 1px solid black;*/
+    background: transparent;
+    border: 0;
+    font-family: "memento_regular";
+    width: 220px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.game-menu__nav-item_input::-webkit-input-placeholder {
+    color: #888788;
+}
+
+.game-menu__nav-item_input:-moz-placeholder { /* Firefox 18- */
+    color: #888788;
+}
+
+.game-menu__nav-item_input::-moz-placeholder {  /* Firefox 19+ */
+    color: #888788;
+}
+
+.game-menu__nav-item_input:-ms-input-placeholder {
+    color: #888788;
+}
+
+
+.game-menu__title {
+
+}
+
+.game-menu__title-text {
+    font-size: 50px;
+    margin: 0;
+}
+
+.game-menu__scoreboard {
+    margin-top: 15px;
+}
+
+
+.scoreboard {
+
+}
+
+.scoreboard-player {
+    width: 40%;
+    display: inline-block;
+}
+.scoreboard-score {
+    width: 40%;
+    display: inline-block;
+}
+
+.scoreboard-item {
+    font-size: 35px;
+}
+
+.scoreboard-item_captions {
+    font-size: 40px;
+    color: #A00A00;
+}
+
+.content__game-splash {
+
+}
+
+.content__game-splash_hidden {
+    animation: fadeOut 1s;
+    opacity: 0;
+    /*display: none;*/
+}
+
+.content__game-playscreen {
+    color: red;
+    margin: 15% auto;
+    height: 500px;
+    width: 80%; 
+    overflow: hidden;
+} 
