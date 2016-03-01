@@ -1,0 +1,6 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+        <div class="howto__title-holder">
+            <h2 class="howto__title">How to play:</h2>
+        </div>
+        <div class="howto__text">PRESS X TO WIN</div>
+</fest:template>
