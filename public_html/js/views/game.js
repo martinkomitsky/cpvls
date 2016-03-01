@@ -1,15 +1,19 @@
-define(
-    ['views/baseView','tmpl/game', 'phaser', 'event'],
-    function (baseView, tmpl, Phaser, event) {
-        var View = baseView.extend({
-            template: tmpl,
-            render: function() {
-                // code
-                return baseView.prototype.render.call(this);
-            },
-            initialize: function () {
-            },
-        });
+define( function(require) {
+    
+    var baseView = require('views/baseView'),
+        tmpl = require('tmpl/game'),
+        phaser = require('phaser'),
+        event = require('event');
+
+    var View = baseView.extend({
+        template: tmpl,
+        render: function() {
+            // code
+            return baseView.prototype.render.call(this);
+        },
+        initialize: function () {
+        },
+    });
 
         return new View();
     }

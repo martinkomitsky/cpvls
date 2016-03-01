@@ -1,6 +1,7 @@
-define(
-    ['underscore','backbone'] ,
-    function (_, Backbone) {
+define( function(require) {
+
+	var Backbone = require('backbone'), 
+		_ = require('underscore');
+
         return _.extend({}, Backbone.Events);
-    }
-)
+	});
