@@ -21,7 +21,7 @@ define(function(require) {
         },
         initialize: function () {
             this.currentView = main;
-            // this.listenTo(event, 'navigate', this.changeRoute);
+            this.listenTo(event, 'navigate', this.changeRoute);
         },
         // displayView: function () {
         //     var fragmentName = Backbone.history.getFragment();
