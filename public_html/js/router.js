@@ -1,31 +1,53 @@
-define([
-    'backbone', 'require', 'views/main', 'views/game', 'views/login', 'views/scoreboard', 'views/register', 'views/splashScreen', 'event'
-    ], function(Backbone, require, main, game, login, scoreboard, register, splashScreen, event) {
+define(function(require) {
 
+    var Backbone = require('backbone'),
+        require = require('require'),
+        main = require('views/main'),
+        game = require('views/game'),
+        login = require('views/login'),
+        scoreboard = require('views/scoreboard'),
+        register = require('views/register'),
+        splashScreen = require('views/splashScreen'),
+        event = require('event');
+    
     var Router = Backbone.Router.extend({
         routes: {
-            'main': 'displayView',
-            'login': 'displayView',
-            'register': 'displayView',
-            'scoreboard': 'displayView',
-            'game': 'displayView',
+            'main': 'main',
+            'login': 'login',
+            'register': 'register',
+            'scoreboard': 'scoreboard',
+            'game': 'game',
             '*default': 'defaultAction'
         },
         initialize: function () {
             this.currentView = main;
             this.listenTo(event, 'navigate', this.changeRoute);
         },
-        displayView: function () {
-            var fragmentName = Backbone.history.getFragment();
-            var view = require('views/'+fragmentName);
-            this.currentView.hide();
-            view.show();
-            this.currentView = view;
+        // displayView: function () {
+        //     var fragmentName = Backbone.history.getFragment();
+        //     var view = require('views/'+fragmentName);
+        //     this.currentView.hide();
+        //     view.show();
+        //     this.currentView = view;
+        // },
+        main: function() {
+            main.show();
         },
+        login: function() {
+            login.show();
+        },
+        register: function() {
+            register.show();
+        },
+        scoreboard: function() {
+            scoreboard.show();
+        },
+        game: function() {
+            game.show();
+        }   ,     
         defaultAction: function () {
-            var mainView = splashScreen;
-            mainView.show();
-            this.currentView = mainView;
+            splashScreen.show();
+            this.currentView = splashScreen;
         },
         changeRoute: function (route) {
             this.navigate(route, {trigger: true});

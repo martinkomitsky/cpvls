@@ -1,7 +1,92 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="content__game-main content__game-main_visible">
-        <div class="content__game-playscreen">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis id vitae quasi explicabo eligendi harum adipisci minima soluta commodi velit! Tempore nemo magnam dicta dolores delectus quae doloremque reprehenderit maxime eaque, mollitia aspernatur unde officiis, optio earum ullam, sequi praesentium beatae. Voluptates placeat illo maiores, quam saepe eius officiis ipsa, eveniet laboriosam mollitia dicta reiciendis cumque. Aliquid obcaecati iusto, assumenda repudiandae rem distinctio, maiores cum consequatur culpa accusantium veniam hic vitae pariatur consectetur laboriosam, eius fuga sed ratione eaque qui suscipit quibusdam perspiciatis provident, iste! Quod qui quisquam dolor, ab, sapiente nisi, dolores doloribus ipsam eius aliquam totam aut voluptatem. Nulla repellendus expedita facere veritatis, nihil, quam voluptas iusto voluptatum, aspernatur eveniet deleniti quia ullam exercitationem nobis maiores cum laborum reiciendis praesentium voluptate consequuntur. Sunt ipsa officia laboriosam molestias quos aperiam itaque natus neque voluptatem iusto, fugiat, ea. Inventore ea magni, quibusdam eaque fugit quaerat autem architecto maiores blanditiis fuga provident nostrum ab quas eius accusantium doloribus deleniti sequi, quasi beatae iusto vitae necessitatibus sapiente, nam? Ad quidem nemo itaque quaerat repellat autem reiciendis. Eligendi asperiores blanditiis odio deleniti, necessitatibus ducimus odit pariatur dignissimos ullam quibusdam accusantium mollitia illo voluptatibus nobis veniam quasi iure iusto laboriosam maxime fugit. Quaerat excepturi error necessitatibus nostrum, optio corrupti beatae ipsum accusantium aperiam dolorem similique eligendi odio consequatur aliquid hic voluptatibus, explicabo rerum ullam dolor. In quas perferendis, ratione error asperiores. Facilis accusamus ratione corrupti deserunt voluptates, sequi quos ducimus non fuga eum nulla possimus similique laboriosam enim illum debitis blanditiis, corporis voluptatum laudantium doloremque dignissimos soluta rem. Porro minima nam dicta, cupiditate quo quae error. Asperiores quis dolores quos sit fugit expedita impedit nisi, maxime enim quasi illum quae est reprehenderit odit sed repudiandae quidem tenetur quisquam distinctio sapiente aspernatur iure minima! Dolores obcaecati nisi eum quaerat quidem perspiciatis iste, dolor. Fugiat iste quaerat veniam dolores facilis corporis nobis quod, maiores suscipit voluptatibus voluptate laudantium, ratione, voluptatum nihil laboriosam, et necessitatibus. Maiores pariatur facilis dolorum consectetur, repellat ab assumenda commodi alias, vel minima laborum, ipsum provident deserunt tempora voluptatum tenetur inventore excepturi voluptates quaerat. Impedit, placeat corporis porro cum ullam error id voluptatum obcaecati eius quaerat, minus omnis quo? Nihil tempore recusandae laudantium et commodi molestias aspernatur adipisci voluptate obcaecati illo eaque error odio unde accusamus ex quibusdam dolorem atque quos, ut temporibus. Ipsum dolorum deleniti fugit, odit reiciendis enim architecto, dolores velit, labore quo perferendis doloribus explicabo excepturi, quasi impedit quis quaerat. Nobis distinctio deleniti vel fugiat iusto dolorem quisquam neque modi beatae, illo ad ipsum dolore. Illo placeat, praesentium autem natus fugit. Alias quasi sit at optio ducimus repellat et debitis suscipit, quis consequatur assumenda itaque praesentium, incidunt blanditiis iure vel distinctio eaque commodi natus mollitia molestias rem sed? Obcaecati corrupti, repellendus cupiditate tempore at! Omnis sint nisi, in laboriosam hic magni eum aperiam ex, totam pariatur voluptatibus eos reprehenderit neque saepe quidem libero. Nisi praesentium corporis a ipsa officiis, ipsam unde dolorum nihil, dolore consequatur, molestias iusto repellendus quibusdam suscipit, similique laudantium quis ea aliquam magni amet sint deleniti. Vitae architecto officia sequi doloremque vero ex soluta accusantium nemo sunt facere incidunt nam itaque repellendus ad iure nobis, voluptatem, maxime.
-        </div>
+        	<div class="content__game-playscreen" id="myplayscreen"> 
+        	</div>
     </div>
+			<script type="text/javascript">
+				var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', { preload: preload, create: create, update: update });
+				console.log("Script is in action");
+				function preload() {
+					game.load.image('sky', 'images/assets/landscape.jpg');
+					game.load.image('sky2', 'images/assets/landscape2.jpg');
+					game.load.image('sky3', 'images/assets/landscape3.jpg');
+					game.load.image('sky4', 'images/assets/landscape4.jpeg');
+					game.load.image('sky5', 'images/assets/landscape5.jpg');
+					game.load.image('ground', 'images/assets/platform.png');
+					game.load.spritesheet('dude', 'images/assets/scorpion.png', 116, 0);
+					game.load.spritesheet('dudekick', 'images/assets/kick.png', 116, 0);
+				}
+
+				var platforms;
+				var player;
+				var attack;
+
+				function create() {
+					game.physics.startSystem(Phaser.Physics.ARCADE);
+					skies = ['sky', 'sky2', 'sky3', 'sky4', 'sky5'];
+					var rand = Math.random()*5^0 % 5;
+					var sky = game.add.sprite(0, 0, skies[rand]);
+					
+					platforms = game.add.group();
+					platforms.enableBody = true;
+
+					var ground = platforms.create(0, game.world.height - 16, 'ground');
+					ground.scale.setTo(2, 2);
+					ground.visible = false;
+					ground.body.immovable = true;
+
+					cursors = game.input.keyboard.createCursorKeys();
+					attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+					player = game.add.sprite(32, game.world.height - 450, 'dude');
+					game.physics.arcade.enable(player);
+					player.body.bounce.y = 0;
+					player.body.gravity.y = 1400;
+					player.body.collideWorldBounds = true;
+					player.animations.add('stay', [0, 1, 2, 3, 4, 5, 6], 10, true);
+					player.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 10, true);
+					player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 10, true);
+					player.animations.add('jump', [15, 16, 17, 18, 19, 20, 21, 22], 10, false);
+					player.animations.add('jumpleft', [22,21,20,19,18,17,16,15], 10, false);
+					
+				}
+
+				function update() {
+					game.physics.arcade.collide(player, platforms);
+					player.body.velocity.x = 0;
+
+					 if (cursors.left.isDown)
+					{
+						console.log("Move to the left");
+						player.body.velocity.x = -150;
+						if(player.body.touching.down) {
+							player.animations.play('left');
+						}
+					}
+					else if (cursors.right.isDown)
+					{
+						console.log("Move to the right");
+						player.body.velocity.x = 150;
+						if(player.body.touching.down) 
+							player.animations.play('right');
+					}
+					else {
+						if (player.body.touching.down) { 
+								player.animations.play('stay');
+					}
+					}
+					if (cursors.up.isDown && player.body.touching.down)
+					{
+						console.log("Jump");
+						if (cursors.left.isDown)
+							player.animations.play('jumpleft');
+						else
+							player.animations.play('jump');
+						player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
+						player.body.velocity.y = -850;
+					}
+				   
+					
+				}
+			</script>
 </fest:template>

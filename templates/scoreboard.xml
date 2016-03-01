@@ -1,4 +1,4 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="content__game-main content__game-main_visible">
         <div class="content__game-menu">
             <div class="game-menu game-menu_scoreboard">
@@ -10,22 +10,12 @@
                         <span class="scoreboard-player">PLAYER</span>
                         <span class="scoreboard-score">SCORE</span>
                     </div>
-                    <div class="scoreboard-item">
-                        <span class="scoreboard-player">NITRAM</span>
-                        <span class="scoreboard-score">5555</span>
-                    </div>
-                    <div class="scoreboard-item">
-                        <span class="scoreboard-player">BELYANOFF</span>
-                        <span class="scoreboard-score">4444</span>
-                    </div>
-                    <div class="scoreboard-item">
-                        <span class="scoreboard-player">PUHOVITY</span>
-                        <span class="scoreboard-score">3333</span>
-                    </div>
-                    <div class="scoreboard-item">
-                        <span class="scoreboard-player">POLINITY</span>
-                        <span class="scoreboard-score">2222</span>
-                    </div>
+                    <fest:for iterate="data.scores" index="i" value="score">
+                        <div class="scoreboard-item">
+                            <span class="scoreboard-player"><fest:value>score.name</fest:value></span>
+                            <span class="scoreboard-score"><fest:value>score.score</fest:value></span>
+                        </div>
+                    </fest:for>
                 </div>
                 <ul class="game-menu__nav">
                     <li class="game-menu__nav-element"><a id="main" class="game-menu__nav-item js-back" href="#main">BACK</a></li>
