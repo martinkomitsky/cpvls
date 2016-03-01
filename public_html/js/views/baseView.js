@@ -44,11 +44,11 @@ define(
             },
             show: function () {
                 $('.content__game').html(this.render().el);
-                this.$el.find('.js-back').click(function(e) {
-                    e.preventDefault();
-                    event.trigger('navigate', $(this).attr('id'));
-                    console.log('navigate');
-                });
+                // this.$el.find('.js-back').click(function(e) {
+                //     e.preventDefault();
+                //     event.trigger('navigate', $(this).attr('id'));
+                //     console.log('navigate');
+                // });
                 this.$el.show();
             },
             hide: function () {
