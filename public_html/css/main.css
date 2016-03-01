@@ -121,12 +121,7 @@
 }
 
 .content__game-menu {
-    /*display: none;*/
-    /*display: block;*/
-    /*margin: 0 auto;*/
-
-    /*position: absolute;*/
-    margin: 21% 0 0 0;
+    position: absolute;
     top: 35%;
     width: 100%;
     text-align: center;
@@ -152,7 +147,7 @@
 
 .game-menu_scoreboard {
     color: #E4E3E4;
-    text-shadow: 3px 2px rgba(132, 1, 1, 0.29);    
+    text-shadow: 3px 2px rgba(132, 1, 1, 0.29);
     width: 50%;
 }
 
@@ -202,7 +197,7 @@
     font-family: "memento_regular";
     width: 220px;
     text-align: center;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 
 .game-menu__nav-item_input::-webkit-input-placeholder {
@@ -243,6 +238,7 @@
 .scoreboard-player {
     width: 40%;
     display: inline-block;
+    text-transform: uppercase;
 }
 .scoreboard-score {
     width: 40%;
@@ -271,7 +267,7 @@
 .content__game-playscreen {
     color: red;
     margin: 11% auto;
-} 
+}
 
 canvas {
     margin: 0 auto;
