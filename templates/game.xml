@@ -55,33 +55,31 @@
 					game.physics.arcade.collide(player, platforms);
 					player.body.velocity.x = 0;
 
-					 if (cursors.left.isDown)
-					{
+					 if (cursors.left.isDown) {
 						console.log("Move to the left");
 						player.body.velocity.x = -150;
 						if(player.body.touching.down) {
 							player.animations.play('left');
 						}
 					}
-					else if (cursors.right.isDown)
-					{
+					else if (cursors.right.isDown) {
 						console.log("Move to the right");
 						player.body.velocity.x = 150;
 						if(player.body.touching.down) 
 							player.animations.play('right');
-					}
-					else {
+					} else {
 						if (player.body.touching.down) { 
 								player.animations.play('stay');
+						} 
 					}
-					}
-					if (cursors.up.isDown && player.body.touching.down)
-					{
+					if (cursors.up.isDown && player.body.touching.down) {
 						console.log("Jump");
-						if (cursors.left.isDown)
+						if (cursors.left.isDown) {
 							player.animations.play('jumpleft');
-						else
+						}
+						else {
 							player.animations.play('jump');
+						}
 						player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
 						player.body.velocity.y = -850;
 					}
