@@ -7,7 +7,7 @@ define(function(require) {
         login = require('views/login'),
         scoreboard = require('views/scoreboard'),
         register = require('views/register'),
-        howto = require('views/howto'),
+        howtoplay = require('views/howtoplay'),
         splashScreen = require('views/splashScreen'),
         event = require('event');
     
@@ -18,7 +18,7 @@ define(function(require) {
             'register': 'register',
             'scoreboard': 'scoreboard',
             'game': 'game',
-            'howto': 'howto',
+            'howtoplay': 'howtoplay',
             '*default': 'defaultAction'
         },
         initialize: function () {
@@ -47,8 +47,8 @@ define(function(require) {
         game: function() {
             game.show();
         },
-        howto: function() {
-            howto.show();
+        howtoplay: function() {
+            howtoplay.show();
         },     
         defaultAction: function () {
             splashScreen.show();

@@ -273,6 +273,33 @@
     margin: 11% auto;
 } 
 
+.howto__title-holder {
+    display: block;
+    width: 70%;
+    margin: 20% auto 0 auto;
+    text-align: center;
+}
+
+.howto__title {
+    margin: 0;
+    font-family: "mkx_titleregular";
+    font-size: 7em;
+    font-weight: normal;
+    letter-spacing: 0.035em;
+    color: #E4E3E4;
+    text-shadow: 4px 3px rgba(0, 0, 0, 0.29);
+    cursor: default;
+}
+
+
+.howto__text {
+    font-family: "memento_regular";
+    font-size: 30px;
+    color: #E4E3E4;
+    text-align: center;
+    text-decoration: none;
+}
+
 canvas {
     margin: 0 auto;
 }
