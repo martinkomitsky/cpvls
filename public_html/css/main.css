@@ -19,7 +19,7 @@
 
 .page, html {
 	height: 100%;
-	overflow: hidden;
+	/*overflow: hidden;*/
     user-select: none;
     -o-user-select: none;
     -moz-user-select: none;
@@ -121,11 +121,16 @@
 }
 
 .content__game-menu {
-    position: absolute;
-    top: 35%;
-    width: 100%;
+    /*position: absolute;*/
+    /*top: 35%;*/
+    padding: 10% 5% 10% 5%;
+    /*width: 100%;*/
     text-align: center;
     font-family: "memento_regular";
+}
+
+.content__game-menu_main {
+    margin-top: 10%;
 }
 
 .content__game-main {
@@ -139,6 +144,7 @@
 .game-menu {
     height: 100%;
     width: 22%;
+    min-width: 225px;
     margin: 0 auto;
     background: rgba(0, 0, 0, 0.42);
     border: 1px solid black;
@@ -149,6 +155,7 @@
     color: #E4E3E4;
     text-shadow: 3px 2px rgba(132, 1, 1, 0.29);
     width: 50%;
+    min-width: 550px;
 }
 
 .game-menu__nav {
@@ -239,10 +246,13 @@
     width: 40%;
     display: inline-block;
     text-transform: uppercase;
+    text-align: left;
+    overflow: hidden;
 }
 .scoreboard-score {
     width: 40%;
     display: inline-block;
+    overflow: hidden;
 }
 
 .scoreboard-item {
@@ -252,6 +262,7 @@
 .scoreboard-item_captions {
     font-size: 40px;
     color: #A00A00;
+    margin-bottom: 10px;
 }
 
 .content__game-splash {
