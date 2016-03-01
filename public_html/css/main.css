@@ -269,9 +269,10 @@
 }
 
 .content__game-playscreen {
-margin: 11% auto;
-}
+    color: red;
+    margin: 11% auto;
+} 
 
 canvas {
-margin: 0 auto;
+    margin: 0 auto;
 }

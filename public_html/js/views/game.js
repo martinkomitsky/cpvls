@@ -1,6 +1,6 @@
 define(
-    ['views/baseView','tmpl/game', 'event'],
-    function (baseView, tmpl, event) {
+    ['views/baseView','tmpl/game', 'phaser', 'event'],
+    function (baseView, tmpl, Phaser, event) {
         var View = baseView.extend({
             template: tmpl,
             render: function() {
