@@ -1,7 +1,7 @@
 define(function(require) {
 
     var BaseView = require('views/baseView'),
-        tmpl = require('tmpl/register');
+        tmpl = require('tmpl/howtoplay');
 
     var View = BaseView.extend({
         template: tmpl
