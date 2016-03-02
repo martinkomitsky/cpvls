@@ -15,11 +15,11 @@ define(function(require) {
 
 	return new Collection([
 		{
-			name: 'Kaddak',
+			name: 'Zchireenoffskeey',
 			score: 5140
 		},
 		{
-			name: 'Kaddak2',
+			name: 'Kiseljoff',
 			score: 4517
 		},
 		{

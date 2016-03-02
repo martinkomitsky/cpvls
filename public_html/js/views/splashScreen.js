@@ -1,10 +1,10 @@
 define(function(require) {
 
-    var baseView = require('views/baseView'),
+    var BaseView = require('views/baseView'),
         tmpl = require('tmpl/splashScreen'),
         event = require('event');
 
-    var View = baseView.extend({
+    var View = BaseView.extend({
         template: tmpl,
         render: function() {
             $(document).on('keypress', 'body', function(e) {
@@ -14,10 +14,9 @@ define(function(require) {
             }).on('animationend', '.content__game-splash', function(e) {
                 $('.content__game-splash').hide();
                 event.trigger('navigate', 'main');
-                // $('.content__game-main').addClass('content__game-main_visible');
                 // $('.game-menu__nav-item').eq(0).focus();
             });
-            return baseView.prototype.render.call(this);
+            return BaseView.prototype.render.call(this);
         },
         // events: {
         // 	'keypress': function(e) {

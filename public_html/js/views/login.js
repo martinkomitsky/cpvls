@@ -1,13 +1,13 @@
 define(function(require) {
 
-    var baseView = require('views/baseView'),
+    var BaseView = require('views/baseView'),
         tmpl = require('tmpl/login'),
         event = require('event');
 
-    var View = baseView.extend({
+    var View = BaseView.extend({
         template: tmpl,
         render: function() {
-            return baseView.prototype.render.call(this);
+            return BaseView.prototype.render.call(this);
         },
         initialize: function () {
         },

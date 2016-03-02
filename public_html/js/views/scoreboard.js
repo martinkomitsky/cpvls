@@ -1,13 +1,16 @@
 define(function(require) {
 
     var Backbone = require('backbone'),
-		baseView = require('views/baseView'),
+		BaseView = require('views/baseView'),
 		tmpl = require('tmpl/scoreboard'),
 		scores = require('collections/scores');
 
-        var View = baseView.extend({
+        var View = BaseView.extend({
             template: function() {
             	return tmpl({scores: scores.toJSON()});
+            },
+            initialize: function() {
+                console.log('init');
             },
             collection: scores,
         });

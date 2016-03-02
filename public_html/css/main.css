@@ -263,24 +263,78 @@
 
 }
 
-.scoreboard-player {
+.scoreboard__player {
     width: 40%;
     display: inline-block;
     text-transform: uppercase;
     text-align: left;
     overflow: hidden;
+    margin: 0;
+    cursor: default;
+
 }
-.scoreboard-score {
+.scoreboard__score {
     width: 40%;
     display: inline-block;
     overflow: hidden;
 }
 
-.scoreboard-item {
+.scoreboard__player-name_scroll:hover {
+    -webkit-animation: slide 6.0s ease infinite;
+    -moz-animation: slide 6.0s ease infinite;
+    -o-animation: slide 6.0s ease infinite;
+    animation: slide 6.0s ease infinite;
+    width:40%;
+    margin-left: 0;
+    text-overflow: clip;
+}
+
+@-webkit-keyframes slide {
+    0% { margin-left: 0%;}
+    /*25% { margin-left: -20%;}*/
+    50% { margin-left: -40%;}
+    /*75% { margin-left: -20%}*/
+    100% { margin-left: 0%;}
+}
+
+@-moz-keyframes slide {
+    0% { margin-left: 0%;}
+    /*25% { margin-left: -20%;}*/
+    50% { margin-left: -40%;}
+    /*75% { margin-left: -20%}*/
+    100% { margin-left: 0%;}
+}
+
+@-o-keyframes slide {
+    0% { margin-left: 0%;}
+    50% { margin-left: -40%;}
+    100% { margin-left: -40%;}
+}
+
+@-khtml-keyframes slide {
+    0% { margin-left: 0%;}
+    /*25% { margin-left: -20%;}*/
+    50% { margin-left: -40%;}
+    /*75% { margin-left: -20%}*/
+    100% { margin-left: 0%;}
+}
+
+@keyframes slide {
+    0% { margin-left: 0%;}
+    /*25% { margin-left: -20%;}*/
+    50% { margin-left: -40%;}
+    /*75% { margin-left: -20%}*/
+    100% { margin-left: 0%;}
+}
+
+
+
+
+.scoreboard__item {
     font-size: 35px;
 }
 
-.scoreboard-item_captions {
+.scoreboard__item_captions {
     font-size: 40px;
     color: #A00A00;
     margin-bottom: 10px;
