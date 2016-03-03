@@ -1,19 +1,19 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="content__game-main content__game-main_visible">
+    <div class="content__game-main content__game-main_visible kek">
         <div class="content__game-menu">
             <div class="game-menu game-menu_scoreboard">
                 <div class="game-menu__title">
                     <h3 class="game-menu__title-text">TOP KEK</h3>
                 </div>
                 <div class="game-menu__scoreboard">
-                    <div class="scoreboard-item scoreboard-item_captions">
-                        <span class="scoreboard-player">PLAYER</span>
-                        <span class="scoreboard-score">SCORE</span>
+                    <div class="scoreboard__item scoreboard__item_captions">
+                        <span class="scoreboard__player">PLAYER</span>
+                        <span class="scoreboard__score">SCORE</span>
                     </div>
                     <fest:for iterate="data.scores" index="i" value="score">
-                        <div class="scoreboard-item">
-                            <span class="scoreboard-player"><fest:value>score.name</fest:value></span>
-                            <span class="scoreboard-score"><fest:value>score.score</fest:value></span>
+                        <div class="scoreboard__item">
+                            <p class="scoreboard__player"><span class="scoreboard__player-name {score.name.length > 11 ? 'scoreboard__player-name_scroll': 'no'}"><fest:value>score.name</fest:value></span></p>
+                            <span class="scoreboard__score"><fest:value>score.score</fest:value></span>
                         </div>
                     </fest:for>
                 </div>

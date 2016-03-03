@@ -10,7 +10,7 @@ define(function(require) {
         howtoplay = require('views/howtoplay'),
         splashScreen = require('views/splashScreen'),
         event = require('event');
-    
+
     var Router = Backbone.Router.extend({
         routes: {
             'main': 'main',
@@ -49,7 +49,7 @@ define(function(require) {
         },
         howtoplay: function() {
             howtoplay.show();
-        },     
+        },
         defaultAction: function () {
             splashScreen.show();
             this.currentView = splashScreen;

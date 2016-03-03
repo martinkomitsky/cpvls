@@ -1,11 +1,11 @@
 define(function(require) {
 
-    var baseView = require('views/baseView'),
+    var BaseView = require('views/baseView'),
         tmpl = require('tmpl/game'),
         phaser = require('phaser'),
         event = require('event');
 
-    var View = baseView.extend({
+    var View = BaseView.extend({
         template: tmpl,
         render: function() {
             var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', { preload: preload, create: create, update: update });
@@ -84,7 +84,7 @@ define(function(require) {
                     player.body.velocity.y = -850;
                 }
             }
-            return baseView.prototype.render.call(this);
+            return BaseView.prototype.render.call(this);
         },
         initialize: function () {
         },
