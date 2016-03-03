@@ -6,15 +6,13 @@ define(function (require) {
     var View = Backbone.View.extend({
         template: {},
         initialize: function () {
-            console.log('[INIT]')
-        },
-        render: function () {
+            console.log('[INIT]', this.$el);
             var pressed = false;
             $(document).unbind('keydown').bind('keydown', function(e) {
                 if (e.keyCode == 40) {
                     console.info('down');
                     target = $('.game-menu__nav-item:focus').parent().next().children();
-                    if (target.length > 0) {
+                    if (target.length) {
                         pressed = true;
                         target.focus();
                     }
@@ -22,7 +20,7 @@ define(function (require) {
                 if (e.keyCode == 38) {
                     console.info('up');
                     target = $(".game-menu__nav-item:focus").parent().prev().children();
-                    if (target.length > 0) {
+                    if (target.length) {
                         pressed = true;
                         target.focus();
                     }
@@ -39,6 +37,10 @@ define(function (require) {
             }).off('focus').on('focus', '.game-menu__nav-item', function(e) {
                 pressed = false;
             });
+            return this;
+        },
+        render: function () {
+
             this.$el.html(this.template());
 
             return this;
