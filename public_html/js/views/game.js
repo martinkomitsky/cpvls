@@ -21,21 +21,19 @@ define(function(require) {
                 game.load.spritesheet('dudekick', 'images/assets/kick.png', 116, 0);
             }
 
-            var platforms,
+            var ground,
                 player,
                 attack;
 
             function create() {
                 game.physics.startSystem(Phaser.Physics.ARCADE);
                 skies = ['sky', 'sky2', 'sky3', 'sky4', 'sky5'];
-                var rand = Math.random() * 5^0 % 5,
+                var rand = Math.random() * 5^0,
                     sky = game.add.sprite(0, 0, skies[rand]);
 
-                platforms = game.add.group();
-                platforms.enableBody = true;
-
-                var ground = platforms.create(0, game.world.height - 16, 'ground');
+                ground = game.add.sprite(0, game.world.height - 16, 'ground');
                 ground.scale.setTo(2, 2);
+                ground.game.physics.arcade.enableBody(ground);
                 ground.visible = false;
                 ground.body.immovable = true;
 
@@ -45,28 +43,28 @@ define(function(require) {
                 player = game.add.sprite(32, game.world.height - 450, 'dude');
                 game.physics.arcade.enable(player);
                 player.body.bounce.y = 0;
-                player.body.gravity.y = 1400;
+                player.body.gravity.y = 1600;
                 player.body.collideWorldBounds = true;
-                player.animations.add('stay', [0, 1, 2, 3, 4, 5, 6], 10, true);
-                player.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 10, true);
-                player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 10, true);
-                player.animations.add('jump', [15, 16, 17, 18, 19, 20, 21, 22], 10, false);
+                player.animations.add('stay', [0, 1, 2, 3, 4, 5, 6], 15, true);
+                player.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 15, true);
+                player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 15, true);
+                player.animations.add('jump', [15, 16, 17, 18, 19, 20, 21, 22], 15, false);
                 player.animations.add('jumpleft', [22,21,20,19,18,17,16,15], 10, false);
             }
 
             function update() {
-                game.physics.arcade.collide(player, platforms);
+                game.physics.arcade.collide(player, ground);
                 player.body.velocity.x = 0;
 
                  if (cursors.left.isDown) {
                     console.log("Move to the left");
-                    player.body.velocity.x = -150;
+                    player.body.velocity.x = -200;
                     if (player.body.touching.down) {
                         player.animations.play('left');
                     }
                 } else if (cursors.right.isDown) {
                     console.log("Move to the right");
-                    player.body.velocity.x = 150;
+                    player.body.velocity.x = 200;
                     if (player.body.touching.down)
                         player.animations.play('right');
                 } else {
