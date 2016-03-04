@@ -11,14 +11,14 @@ define(function (require) {
             return this;
         },
         render: function () {
-
             this.$el.html(this.template());
 
             return this;
         },
         show: function () {
             $('.content__game').html(this.render().el);
-            this.$el.show();
+            this.$('.js-focus').eq(0).focus();
+            // this.$el.show();
         },
         hide: function () {
             this.$el.hide();
