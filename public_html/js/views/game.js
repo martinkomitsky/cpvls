@@ -54,7 +54,7 @@ define(function(require) {
                 player.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 12, true);
                 player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 12, true);
                 player.animations.add('jump', [15, 16, 17, 18, 19, 20, 21, 22], 10, false);
-                player.animations.add('jumpleft', [22,21,20,19,18,17,16,15], 10, false);
+                player.animations.add('jumpleft', [22, 21, 20, 19, 18, 17, 16, 15], 10, false);
             }
 
             function update() {
@@ -81,8 +81,7 @@ define(function(require) {
                     console.log("Jump");
                     if (cursors.left.isDown) {
                         player.animations.play('jumpleft');
-                    }
-                    else {
+                    } else {
                         player.animations.play('jump');
                     }
                     player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
