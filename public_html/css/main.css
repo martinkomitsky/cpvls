@@ -167,6 +167,13 @@
     margin: 5px 0 5px 0;
 }
 
+.game-menu__nav-submit {
+    background: 0;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
 .game-menu__nav-item {
     font-size: 35px;
     text-decoration: none;

@@ -4,9 +4,9 @@
             <div class="game-menu">
                 <ul class="game-menu__nav">
                     <form action="">
-                    <li class="game-menu__nav-element"><input type="text" maxlength="20" placeholder="E-MAIL" class="game-menu__nav-item game-menu__nav-item_input js-focus"/></li>
+                    <li class="game-menu__nav-element"><input type="email" maxlength="20" placeholder="E-MAIL" class="game-menu__nav-item game-menu__nav-item_input js-focus"/></li>
                     <li class="game-menu__nav-element"><input type="password" maxlength="10" placeholder="PASSWORD" class="game-menu__nav-item game-menu__nav-item_input js-focus"/></li>
-                    <li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#">REGISTER</a></li>
+                    <li class="game-menu__nav-element"><button class="game-menu__nav-item game-menu__nav-submit js-focus" type="submit">REGISTER</button></li>
                     <li class="game-menu__nav-element"><a id="main" class="game-menu__nav-item js-focus js-back" href="#main">BACK</a></li>
                     </form>
                 </ul>

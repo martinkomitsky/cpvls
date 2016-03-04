@@ -3,6 +3,7 @@
         <div class="content__game-menu content__game-menu_main">
             <div class="game-menu">
                 <ul class="game-menu__nav">
+                    <li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#game">START GAME</a></li>
                     <li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#login">SIGN IN</a></li>
                     <li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#register">REGISTER</a></li>
                     <li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#scoreboard">SCOREBOARD</a></li>
