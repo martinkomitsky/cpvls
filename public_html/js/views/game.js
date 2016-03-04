@@ -86,8 +86,6 @@ define(function(require) {
             }
             return BaseView.prototype.render.call(this);
         },
-        // initialize: function () {
-        // },
     });
 
         return new View();

@@ -18,11 +18,6 @@ define(function(require) {
             });
             return BaseView.prototype.render.call(this);
         },
-        // events: {
-        // 	'keypress': function(e) {
-        // 		console.warn('keypress')
-        // 	}
-        // }
     });
 
     return new View();
