@@ -7,19 +7,24 @@ define(function(require) {
 
     var View = BaseView.extend({
         template: tmpl,
+        initialize: function() {
+        },
         render: function() {
-            var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', { preload: preload, create: create, update: update });
             console.log("Script is in action");
-            function preload() {
-                game.load.image('sky', 'images/assets/landscape.jpg');
-                game.load.image('sky2', 'images/assets/landscape2.jpg');
-                game.load.image('sky3', 'images/assets/landscape3.jpg');
-                game.load.image('sky4', 'images/assets/landscape4.jpeg');
-                game.load.image('sky5', 'images/assets/landscape5.jpg');
-                game.load.image('ground', 'images/assets/platform.png');
-                game.load.spritesheet('dude', 'images/assets/scorpion.png', 116, 0);
-                game.load.spritesheet('dudekick', 'images/assets/kick.png', 116, 0);
-            }
+            var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', {
+                preload: function() {
+                    game.load.image('sky', 'images/assets/landscape.jpg');
+                    game.load.image('sky2', 'images/assets/landscape2.jpg');
+                    game.load.image('sky3', 'images/assets/landscape3.jpg');
+                    game.load.image('sky4', 'images/assets/landscape4.jpeg');
+                    game.load.image('sky5', 'images/assets/landscape5.jpg');
+                    game.load.image('ground', 'images/assets/platform.png');
+                    game.load.spritesheet('dude', 'images/assets/scorpion.png', 116, 0);
+                    game.load.spritesheet('dudekick', 'images/assets/kick.png', 116, 0);
+                },
+                create: create,
+                update: update
+            });
 
             var platforms,
                 player,
@@ -87,8 +92,6 @@ define(function(require) {
                 }
             }
             return BaseView.prototype.render.call(this);
-        },
-        initialize: function () {
         },
     });
 

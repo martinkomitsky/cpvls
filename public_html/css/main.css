@@ -19,7 +19,7 @@
 
 .page, html {
 	height: 100%;
-	/*overflow: hidden;*/
+	overflow: hidden;
     user-select: none;
     -o-user-select: none;
     -moz-user-select: none;
@@ -165,6 +165,13 @@
 
 .game-menu__nav-element {
     margin: 5px 0 5px 0;
+}
+
+.game-menu__nav-submit {
+    background: 0;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
 }
 
 .game-menu__nav-item {
@@ -337,6 +344,12 @@
     font-size: 35px;
 }
 
+@media (max-height: 667px) {
+    .scoreboard__item {
+        font-size: 20px;
+    }
+}
+
 .scoreboard__item_captions {
     font-size: 40px;
     color: #A00A00;
@@ -355,7 +368,7 @@
 
 .content__game-playscreen {
     color: red;
-    margin: 15vh auto;
+    margin: 5vh auto;
 }
 
 canvas {

@@ -25,13 +25,6 @@ define(function(require) {
             this.currentView = main;
             this.listenTo(event, 'navigate', this.changeRoute);
         },
-        // displayView: function () {
-        //     var fragmentName = Backbone.history.getFragment();
-        //     var view = require('views/'+fragmentName);
-        //     this.currentView.hide();
-        //     view.show();
-        //     this.currentView = view;
-        // },
         main: function() {
             main.show();
         },

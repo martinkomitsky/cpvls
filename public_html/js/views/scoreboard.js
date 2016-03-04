@@ -9,9 +9,6 @@ define(function(require) {
             template: function() {
             	return tmpl({scores: scores.toJSON()});
             },
-            initialize: function() {
-                console.log('init');
-            },
             collection: scores,
         });
 
