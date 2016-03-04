@@ -1,0 +1,10 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <div class="content__game-splash">
+        <div class="content__game-title-holder">
+            <h2 class="content__game-title">MORTAL KOMBAT CPVLS</h2>
+        </div>
+        <div class="content__game-c2a">
+            <a class="content__game-c2a-button" href="#">PRESS ANY BUTTON</a>
+        </div>
+    </div>
+</fest:template>

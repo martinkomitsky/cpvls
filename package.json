@@ -1,16 +1,56 @@
 {
-  "name": "epicgame",
-  "version": "0.1.0",
-  "description": "SSPA - Simple Single Page Application",
-  "main": "index.js",
-  "author": "a.mezin@corp.mail.ru",
-  "license": "MIT",
-  "devDependencies": {
-    "body-parser": "^1.14.2",
-    "errorhandler": "^1.4.3",
-    "express": "^4.13.4"
-  },
-  "scripts": {
-    "start": "node server"
-  }
+	"name": "cpvls",
+	"version": "0.1.1",
+	"description": "MK CPVLS",
+	"main": "main.js",
+	"author": "Martin Komitsky <martin00@ya.ru>",
+	"contributors": [
+		{
+			"name": "Polina Gliznutsina",
+			"email": "dezi2004@rambler.ru"
+		},
+		{
+			 "name": "Marina Belyanova",
+			 "email": "flerchy@gmail.com"
+		},
+		{
+			 "name": "Artem Максимов",
+			 "email": "puhovity@ya.ru"
+		}
+	],
+	"repository" : {
+		"type" : "git",
+		"url" : "https://github.com/martinkomitsky/cpvls.git"
+	},
+	"keywords": [
+		"putin",
+		"obama",
+		"mortal kombat",
+		"political fighting"
+	],
+	"license": "MIT",
+	"devDependencies": {
+		"body-parser": "^1.14.2",
+		"errorhandler": "^1.4.3",
+		"express": "^4.13.4",
+		"grunt": "^0.4.5",
+		"grunt-cli": "^0.1.13",
+		"grunt-concurrent": "^1.0.1",
+		"grunt-contrib-connect": "~0.6.0",
+		"grunt-contrib-qunit": "^0.7.0",
+		"grunt-contrib-watch": "^0.5.3",
+		"grunt-fest": "~0.1.4",
+		"grunt-shell": "^1.1.1"
+	},
+	"scripts": {
+		"start": "node server"
+	},
+	"engines": {
+		"node": "^0.10.x",
+		"npm": "^2.x.x"
+	},
+	"dependencies": {
+		"express-http-proxy": "^0.6.0",
+		"express-rewrite": "0.0.4"
+	}
 }

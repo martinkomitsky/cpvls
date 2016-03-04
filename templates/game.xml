@@ -1,3 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <div id="game"></div>
+    <div class="content__game-main content__game-main_visible">
+    	<div class="content__game-playscreen" id="myplayscreen">
+    	</div>
+    </div>
 </fest:template>
