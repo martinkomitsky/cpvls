@@ -7,6 +7,9 @@ define(function(require) {
 
     var View = BaseView.extend({
         template: tmpl,
+        initialize: function() {
+
+        },
         render: function() {
             var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', { preload: preload, create: create, update: update });
             console.log("Script is in action");

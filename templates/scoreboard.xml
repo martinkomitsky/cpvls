@@ -18,7 +18,7 @@
                     </fest:for>
                 </div>
                 <ul class="game-menu__nav">
-                    <li class="game-menu__nav-element"><a id="main" class="game-menu__nav-item js-back" href="#main">BACK</a></li>
+                    <li class="game-menu__nav-element"><a id="main" class="game-menu__nav-item js-focus js-back" href="#main">BACK</a></li>
                 </ul>
             </div>
         </div>

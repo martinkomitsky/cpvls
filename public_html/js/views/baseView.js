@@ -11,23 +11,18 @@ define(function (require) {
             return this;
         },
         render: function () {
-
             this.$el.html(this.template());
 
             return this;
         },
         show: function () {
             $('.content__game').html(this.render().el);
-            this.$el.show();
+            this.$('.js-focus').eq(0).focus();
+            // this.$el.show();
         },
         hide: function () {
             this.$el.hide();
             this.$el.off();
-        },
-        events: {
-            'click a': function(e) {
-                console.warn('neekhooya');
-            }
         },
         bindEvents: function() {
             console.info('[bindEvents]');
@@ -35,7 +30,7 @@ define(function (require) {
             $(document).unbind('keydown').bind('keydown', function(e) {
                 if (e.keyCode == 40) {
                     console.info('down');
-                    target = $('.game-menu__nav-item:focus').parent().next().children();
+                    target = $('.js-focus:focus').parent().next().children();
                     if (target.length) {
                         pressed = true;
                         target.focus();
@@ -43,7 +38,7 @@ define(function (require) {
                 }
                 if (e.keyCode == 38) {
                     console.info('up');
-                    target = $(".game-menu__nav-item:focus").parent().prev().children();
+                    target = $(".js-focus:focus").parent().prev().children();
                     if (target.length) {
                         pressed = true;
                         target.focus();
@@ -51,14 +46,14 @@ define(function (require) {
                 }
             });
 
-            $(document).off('focusout').on('focusout', '.game-menu__nav-item', function(e) {
+            $(document).off('focusout').on('focusout', '.js-focus', function(e) {
                 if (!pressed) {
                     console.log(e);
                     e.preventDefault();
                     $(this).focus();
                 }
 
-            }).off('focus').on('focus', '.game-menu__nav-item', function(e) {
+            }).off('focus').on('focus', '.js-focus', function(e) {
                 pressed = false;
             });
         }

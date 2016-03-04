@@ -337,6 +337,12 @@
     font-size: 35px;
 }
 
+@media (max-height: 667px) {
+    .scoreboard__item {
+        font-size: 20px;
+    }
+}
+
 .scoreboard__item_captions {
     font-size: 40px;
     color: #A00A00;
@@ -355,7 +361,7 @@
 
 .content__game-playscreen {
     color: red;
-    margin: 15vh auto;
+    margin: 5vh auto;
 }
 
 canvas {
