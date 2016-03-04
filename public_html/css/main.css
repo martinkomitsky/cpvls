@@ -70,7 +70,7 @@
 .content__game-title-holder {
     display: block;
     width: 70%;
-    margin: 20% auto 0 auto;
+    margin: 35vh auto 0 auto;
     text-align: center;
 }
 
@@ -121,16 +121,13 @@
 }
 
 .content__game-menu {
-    /*position: absolute;*/
-    /*top: 35%;*/
     padding: 10% 5% 10% 5%;
-    /*width: 100%;*/
     text-align: center;
     font-family: "memento_regular";
 }
 
 .content__game-menu_main {
-    margin-top: 10%;
+    margin-top: 20vh;
 }
 
 .content__game-main {
@@ -279,29 +276,39 @@
     overflow: hidden;
 }
 
+.scoreboard__player-name {
+    display: block;
+}
+
+.scoreboard__player-name_scroll {
+    animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.99); color: #DEDEDE; }
+    100% { transform: scale(1); }
+}
+
 .scoreboard__player-name_scroll:hover {
     -webkit-animation: slide 6.0s ease infinite;
     -moz-animation: slide 6.0s ease infinite;
     -o-animation: slide 6.0s ease infinite;
     animation: slide 6.0s ease infinite;
-    width:40%;
+    width: 40%;
     margin-left: 0;
     text-overflow: clip;
 }
 
 @-webkit-keyframes slide {
     0% { margin-left: 0%;}
-    /*25% { margin-left: -20%;}*/
     50% { margin-left: -40%;}
-    /*75% { margin-left: -20%}*/
     100% { margin-left: 0%;}
 }
 
 @-moz-keyframes slide {
     0% { margin-left: 0%;}
-    /*25% { margin-left: -20%;}*/
     50% { margin-left: -40%;}
-    /*75% { margin-left: -20%}*/
     100% { margin-left: 0%;}
 }
 
@@ -313,17 +320,13 @@
 
 @-khtml-keyframes slide {
     0% { margin-left: 0%;}
-    /*25% { margin-left: -20%;}*/
     50% { margin-left: -40%;}
-    /*75% { margin-left: -20%}*/
     100% { margin-left: 0%;}
 }
 
 @keyframes slide {
     0% { margin-left: 0%;}
-    /*25% { margin-left: -20%;}*/
     50% { margin-left: -40%;}
-    /*75% { margin-left: -20%}*/
     100% { margin-left: 0%;}
 }
 
@@ -352,7 +355,7 @@
 
 .content__game-playscreen {
     color: red;
-    margin: 11% auto;
+    margin: 15vh auto;
 }
 
 canvas {

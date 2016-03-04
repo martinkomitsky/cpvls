@@ -6,39 +6,12 @@ define(function (require) {
     var View = Backbone.View.extend({
         template: {},
         initialize: function () {
-            console.log('[INIT]')
+            console.log('[INIT]', this.$el);
+            this.bindEvents();
+            return this;
         },
         render: function () {
-            var pressed = false;
-            $(document).unbind('keydown').bind('keydown', function(e) {
-                if (e.keyCode == 40) {
-                    console.info('down');
-                    target = $('.game-menu__nav-item:focus').parent().next().children();
-                    if (target.length > 0) {
-                        pressed = true;
-                        target.focus();
-                    }
-                }
-                if (e.keyCode == 38) {
-                    console.info('up');
-                    target = $(".game-menu__nav-item:focus").parent().prev().children();
-                    if (target.length > 0) {
-                        pressed = true;
-                        target.focus();
-                    }
-                }
-            });
 
-            $(document).off('focusout').on('focusout', '.game-menu__nav-item', function(e) {
-                if (!pressed) {
-                    console.log(e);
-                    e.preventDefault();
-                    $(this).focus();
-                }
-
-            }).off('focus').on('focus', '.game-menu__nav-item', function(e) {
-                pressed = false;
-            });
             this.$el.html(this.template());
 
             return this;
@@ -55,6 +28,39 @@ define(function (require) {
             'click a': function(e) {
                 console.warn('neekhooya');
             }
+        },
+        bindEvents: function() {
+            console.info('[bindEvents]');
+            var pressed = false;
+            $(document).unbind('keydown').bind('keydown', function(e) {
+                if (e.keyCode == 40) {
+                    console.info('down');
+                    target = $('.game-menu__nav-item:focus').parent().next().children();
+                    if (target.length) {
+                        pressed = true;
+                        target.focus();
+                    }
+                }
+                if (e.keyCode == 38) {
+                    console.info('up');
+                    target = $(".game-menu__nav-item:focus").parent().prev().children();
+                    if (target.length) {
+                        pressed = true;
+                        target.focus();
+                    }
+                }
+            });
+
+            $(document).off('focusout').on('focusout', '.game-menu__nav-item', function(e) {
+                if (!pressed) {
+                    console.log(e);
+                    e.preventDefault();
+                    $(this).focus();
+                }
+
+            }).off('focus').on('focus', '.game-menu__nav-item', function(e) {
+                pressed = false;
+            });
         }
     });
 

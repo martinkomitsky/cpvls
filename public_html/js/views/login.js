@@ -9,8 +9,8 @@ define(function(require) {
         render: function() {
             return BaseView.prototype.render.call(this);
         },
-        initialize: function () {
-        },
+        // initialize: function () {
+        // },
     });
 
         return new View();
