@@ -19,7 +19,7 @@
 
 .page, html {
 	height: 100%;
-	/*overflow: hidden;*/
+	overflow: hidden;
     user-select: none;
     -o-user-select: none;
     -moz-user-select: none;
