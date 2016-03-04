@@ -14,7 +14,6 @@ define(function(require) {
             }).on('animationend', '.content__game-splash', function(e) {
                 $('.content__game-splash').hide();
                 event.trigger('navigate', 'main');
-                // $('.game-menu__nav-item').eq(0).focus();
             });
             return BaseView.prototype.render.call(this);
         },
