@@ -1,11 +1,12 @@
 define(function(require) {
 
-    var BaseView = require('views/baseView'),
-        tmpl = require('tmpl/howtoplay');
+	var BaseView = require('views/baseView'),
+		tmpl = require('tmpl/howtoplay');
 
-    var View = BaseView.extend({
-        template: tmpl
-    });
+	var View = BaseView.extend({
+		template: tmpl,
+		className: 'content__game-menu content__game-main_visible'
+	});
 
-    return new View();
+	return new View();
 });
