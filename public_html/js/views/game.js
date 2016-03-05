@@ -96,5 +96,5 @@ define(function(require) {
 		},
 	});
 
-	return new View();
+	return View;
 });

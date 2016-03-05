@@ -3,6 +3,6 @@
 		<h2 class="content__game-title">MORTAL KOMBAT CPVLS</h2>
 	</div>
 	<div class="content__game-c2a">
-		<a class="content__game-c2a-button" href="#">PRESS ANY BUTTON</a>
+		<a class="content__game-c2a-button js-focus" href="#main">PRESS ANY BUTTON</a>
 	</div>
 </fest:template>

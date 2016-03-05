@@ -1,8 +1,7 @@
 define(function(require) {
 
 	var BaseView = require('views/baseView'),
-		tmpl = require('tmpl/login'),
-		event = require('event');
+		tmpl = require('tmpl/login');
 
 	var View = BaseView.extend({
 		template: tmpl,
@@ -12,5 +11,5 @@ define(function(require) {
 		},
 	});
 
-	return new View();
+	return View;
 });

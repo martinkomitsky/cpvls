@@ -1,15 +1,27 @@
 define(function(require) {
 
 	var Backbone = require('backbone'),
-		require = require('require'),
-		main = require('views/main'),
-		game = require('views/game'),
-		login = require('views/login'),
-		scoreboard = require('views/scoreboard'),
-		register = require('views/register'),
-		howtoplay = require('views/howtoplay'),
-		splashScreen = require('views/splashScreen'),
-		event = require('event');
+		app = require('views/appView'),
+
+		Main = require('views/main'),
+		Game = require('views/game'),
+		Login = require('views/login'),
+		Scoreboard = require('views/scoreboard'),
+		Register = require('views/register'),
+		Howtoplay = require('views/howtoplay'),
+		SplashScreen = require('views/splashScreen');
+
+	app.views.add({
+		'main': Main,
+		'game': Game,
+		'login': Login,
+		'scoreboard': Scoreboard,
+		'register': Register,
+		'howtoplay': Howtoplay,
+		'splashscreen': SplashScreen
+	});
+	app.render();
+
 
 	var Router = Backbone.Router.extend({
 		routes: {
@@ -22,33 +34,27 @@ define(function(require) {
 			'*default': 'defaultAction'
 		},
 		initialize: function () {
-			this.currentView = main;
-			this.listenTo(event, 'navigate', this.changeRoute);
 		},
 		main: function() {
-			main.show();
+			app.views.get('main').show();
 		},
 		login: function() {
-			login.show();
+			app.views.get('login').show();
 		},
 		register: function() {
-			register.show();
+			app.views.get('register').show();
 		},
 		scoreboard: function() {
-			scoreboard.show();
+			app.views.get('scoreboard').show();
 		},
 		game: function() {
-			game.show();
+			app.views.get('game').show();
 		},
 		howtoplay: function() {
-			howtoplay.show();
+			app.views.get('howtoplay').show();
 		},
 		defaultAction: function () {
-			splashScreen.show();
-			this.currentView = splashScreen;
-		},
-		changeRoute: function (route) {
-			this.navigate(route, {trigger: true});
+			app.views.get('splashscreen').show();
 		}
 	});
 

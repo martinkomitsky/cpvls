@@ -1,0 +1,12 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+	<div class="page__game">
+		<div class="game">
+
+		</div>
+	</div>
+	<div class="page__vbg">
+		<video class="vbg" autoplay="autoplay" muted="muted" loop="loop" poster="images/obama_poster.png">
+			<!-- <source src="mk.mp4" type="video/mp4"/> -->
+		</video>
+	</div>
+</fest:template>

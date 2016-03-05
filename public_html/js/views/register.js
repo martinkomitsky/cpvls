@@ -8,5 +8,5 @@ define(function(require) {
 		className: 'content__game-main content__game-main_visible',
 	});
 
-	return new View();
+	return View;
 });
