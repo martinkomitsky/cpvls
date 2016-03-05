@@ -11,6 +11,5 @@ define(function(require) {
         },
     });
 
-        return new View();
-    }
-);
+    return new View();
+});

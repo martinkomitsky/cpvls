@@ -12,6 +12,5 @@ define(function(require) {
             collection: scores,
         });
 
-        return new View();
-    }
-);
+    return new View();
+});

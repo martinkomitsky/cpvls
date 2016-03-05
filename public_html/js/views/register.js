@@ -7,6 +7,5 @@ define(function(require) {
         template: tmpl
     });
 
-        return new View();
-    }
-);
+    return new View();
+});

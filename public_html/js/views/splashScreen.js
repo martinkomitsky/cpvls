@@ -8,7 +8,6 @@ define(function(require) {
         template: tmpl,
         render: function() {
             $(document).on('keypress', 'body', function(e) {
-                console.log('shit');
                 $(".content__game-splash").addClass('content__game-splash_hidden');
                 $(document).off('keypress')
             }).on('animationend', '.content__game-splash', function(e) {
@@ -20,5 +19,4 @@ define(function(require) {
     });
 
     return new View();
-    }
-);
+});

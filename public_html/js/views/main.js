@@ -6,11 +6,9 @@ define(function(require) {
     var View = BaseView.extend({
         template: tmpl,
         render: function() {
-            $(".game-menu__nav-item").eq(0).focus();
             return BaseView.prototype.render.call(this);
         }
     });
 
-        return new View();
-    }
-);
+    return new View();
+});
