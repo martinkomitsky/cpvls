@@ -1,4 +1,4 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-	<div class="content__game-playscreen" id="myplayscreen">
+	<div id="playscreen" class="content__game-playscreen js-focus">
 	</div>
 </fest:template>

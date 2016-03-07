@@ -7,10 +7,19 @@ define(function(require) {
 	var View = BaseView.extend({
 		template: tmpl,
 		className: 'content__game-splash',
-		render: function() {
-
+		render: function () {
 			return BaseView.prototype.render.call(this);
 		},
+		events: {
+			'keyup': function(e) {
+				console.info('keyup dokhooya');
+				this.$el.addClass('content__game-splash_hidden');
+			},
+			'animationend': function(e) {
+				this.trigger('navigate');
+				this.$el.removeClass('content__game-splash_hidden')
+			}
+		}
 	});
 
 	return View;

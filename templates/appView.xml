@@ -1,12 +1,15 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
 	<div class="page__game">
-		<div class="game">
-
+		<div class="page__btn-video">
+			<button class="btn-video js-video js-video-stop">
+				<i class="btn-video__icon fa fa-pause"></i>
+			</button>
 		</div>
+		<div class="game"></div>
 	</div>
 	<div class="page__vbg">
-		<video class="vbg" autoplay="autoplay" muted="muted" loop="loop" poster="images/obama_poster.png">
-			<!-- <source src="mk.mp4" type="video/mp4"/> -->
+		<video class="vbg" autoplay="autoplay" muted="muted" loop="loop" poster="images/obama_poster.png" data-src="mk.mp4">
+			<source class="vbg__src" src="mk.mp4" type="video/mp4"/>
 		</video>
 	</div>
 </fest:template>

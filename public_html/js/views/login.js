@@ -9,6 +9,15 @@ define(function(require) {
 		render: function() {
 			return BaseView.prototype.render.call(this);
 		},
+		events: {
+			'submit .game-menu__form': 'submit'
+		},
+		submit: function (event) {
+			event.preventDefault();
+			var data = this.$('.game-menu__form').serializeObject()
+			console.info("data", data);
+		}
+
 	});
 
 	return View;

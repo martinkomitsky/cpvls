@@ -28,7 +28,10 @@ define(function (require) {
 		},
 		bindEvents: function() {
 			// console.info('[bindEvents]');
-		}
+		},
+		events: {
+
+        }
 	});
 
 	return View;

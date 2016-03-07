@@ -12,7 +12,7 @@ define(function(require) {
 		},
 		render: function() {
 			console.log("Script is in action");
-			var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', {
+			var game = new Phaser.Game(800, 600, Phaser.AUTO, 'playscreen', {
 				preload: function() {
 					game.load.image('sky', 'images/assets/landscape.jpg');
 					game.load.image('sky2', 'images/assets/landscape2.jpg');
@@ -53,11 +53,11 @@ define(function(require) {
 				player.body.bounce.y = 0;
 				player.body.gravity.y = 1400;
 				player.body.collideWorldBounds = true;
-				player.animations.add('stay', [0, 1, 2, 3, 4, 5, 6], 10, true);
-				player.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 10, true);
-				player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 10, true);
+				player.animations.add('stay', [0, 1, 2, 3, 4, 5, 6], 12, true);
+				player.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 12, true);
+				player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 12, true);
 				player.animations.add('jump', [15, 16, 17, 18, 19, 20, 21, 22], 10, false);
-				player.animations.add('jumpleft', [22,21,20,19,18,17,16,15], 10, false);
+			 	player.animations.add('jumpleft', [22,21,20,19,18,17,16,15], 10, false);
 			}
 
 			function update() {
