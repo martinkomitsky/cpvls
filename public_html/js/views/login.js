@@ -1,7 +1,8 @@
 define(function(require) {
 
 	var BaseView = require('views/baseView'),
-		tmpl = require('tmpl/login');
+		tmpl = require('tmpl/login'),
+		User = require('models/user');
 
 	var View = BaseView.extend({
 		template: tmpl,
@@ -16,6 +17,17 @@ define(function(require) {
 			event.preventDefault();
 			var data = this.$('.game-menu__form').serializeObject()
 			console.info("data", data);
+
+			var user = new User();
+			user.save(data);
+
+			if (user.validationError) {
+				console.log(user.validationError)
+				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_valid').addClass('game-menu__nav-item_input_invalid');
+			} else {
+				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_invalid').addClass('game-menu__nav-item_input_valid');
+				this.$('.game-menu__form')[0].reset();
+			}
 		}
 
 	});

@@ -228,7 +228,17 @@
 	font-family: "memento_regular";
 	width: 220px;
 	text-align: center;
+	transition: all 0.8s ease;
 	/*text-transform: uppercase;*/
+}
+.game-menu__nav-item_input_invalid {
+	background: rgba(202, 69, 69, 0.12);
+    border: 1px solid rgba(243, 41, 41, 0.35);
+}
+
+.game-menu__nav-item_input_valid {
+    background: rgba(97, 253, 58, 0.12);
+    border: 1px solid rgba(41, 243, 75, 0.35);
 }
 
 .game-menu__nav-item_input::-webkit-input-placeholder {
