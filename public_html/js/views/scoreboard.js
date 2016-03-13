@@ -9,7 +9,7 @@ define(function(require) {
 			template: function() {
 				return tmpl({scores: scores.toJSON()});
 			},
-			className: 'content__game-main content__game-main_visible',
+			className: 'content__game-main content__game-main_visible js-scoreboard',
 			collection: scores,
 		});
 

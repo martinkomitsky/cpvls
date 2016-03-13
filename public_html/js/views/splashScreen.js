@@ -6,7 +6,7 @@ define(function(require) {
 
 	var View = BaseView.extend({
 		template: tmpl,
-		className: 'content__game-splash',
+		className: 'content__game-splash js-splashscreen',
 		render: function () {
 			return BaseView.prototype.render.call(this);
 		},

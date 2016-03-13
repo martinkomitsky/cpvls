@@ -23,6 +23,7 @@ define(function (require) {
 		},
 		get: function (viewName) {
 			var view = this.views.list[viewName];
+			this.scope = viewName;
 			if (!view) {
 				view = new this.views.create[viewName]();
 				this.listenTo(view, 'show', this.hide)
@@ -41,40 +42,25 @@ define(function (require) {
 		},
 		bindEvents: function () {
 			console.info('[bindEvents]');
-			var pressed = false;
-			$(document).bind('keydown', function(e) {
-				if (e.keyCode == 40) {
-					console.info('down');
-					target = $('.js-focus:focus').parent().next().children();
-					if (target.length) {
-						pressed = true;
-						target.focus();
-					}
-				}
-				if (e.keyCode == 38) {
-					console.info('up');
-					target = $(".js-focus:focus").parent().prev().children();
-					if (target.length) {
-						pressed = true;
-						target.focus();
-					}
-				}
-			});
+			this.pressed = false;
+			that = this;
+			// this.menus = this.$('.js-focus');
 
 			$(document).on('focusout', '.js-focus', function(e) {
-				if (!pressed) {
-					// console.log(e);
+				if (!that.pressed) {
 					e.preventDefault();
 					$(this).focus();
 				}
 
 			}).on('focus', '.js-focus', function(e) {
-				pressed = false;
+				that.pressed = false;
 			});
 		},
 		events: {
 			'click .js-video-stop': 'stop',
-			'click .js-video-play': 'play'
+			'click .js-video-play': 'play',
+			'keydown': 'keyHandler',
+			'focusout .js-focus': 'resetFocus'
 		},
 		stop: function (e) {
 			this.$('.js-video').toggleClass('js-video-stop js-video-play');
@@ -86,6 +72,35 @@ define(function (require) {
 			this.$('.btn-video__icon').toggleClass('fa-play fa-pause');
 			$video = this.$('.vbg')
 			$video.attr('src', $video.attr('data-src'));
+		},
+		keyHandler: function (event) {
+			this.menus = this.$('.js-' + this.scope + ' .js-focus');
+			console.log(this.menus.length);
+			console.log(this.scope);
+			if (event.keyCode == 40) {
+				console.info('down');
+				target = this.$('.js-focus:focus').parent().next().children();
+				if (target.length) {
+					this.pressed = true;
+					target.focus();
+				}
+			}
+			if (event.keyCode == 38) {
+				console.info('up');
+				target = this.$(".js-focus:focus").parent().prev().children();
+				if (target.length) {
+					this.pressed = true;
+					target.focus();
+				}
+			}
+		},
+		resetFocus: function (event) {
+			// console.log("currentTarget", $(event.target))
+			// if (!this.pressed) {
+			// 	event.preventDefault();
+			// 	$(event.target).focus();
+			// }
+
 		}
 
 	});
