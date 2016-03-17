@@ -11,7 +11,7 @@ define(function(require) {
 		Howtoplay = require('views/howtoplay'),
 		SplashScreen = require('views/splashScreen');
 
-	app.views.add({
+	app.add({
 		'main': Main,
 		'game': Game,
 		'login': Login,
@@ -34,27 +34,33 @@ define(function(require) {
 			'*default': 'defaultAction'
 		},
 		initialize: function () {
+			app.get('splashscreen').on('navigate', this.goToMain.bind(this));
 		},
 		main: function() {
-			app.views.get('main').show();
+			app.get('main').show();
 		},
 		login: function() {
-			app.views.get('login').show();
+			app.get('login').show();
 		},
 		register: function() {
-			app.views.get('register').show();
+			app.get('register').show();
 		},
 		scoreboard: function() {
-			app.views.get('scoreboard').show();
+			app.get('scoreboard').show();
 		},
 		game: function() {
-			app.views.get('game').show();
+			app.get('game').show();
 		},
 		howtoplay: function() {
-			app.views.get('howtoplay').show();
+			app.get('howtoplay').show();
 		},
 		defaultAction: function () {
-			app.views.get('splashscreen').show();
+			app.get('splashscreen').show();
+		},
+
+		goToMain: function () {
+			console.warn("navigate triggernoolsya", this)
+			this.navigate('main', {trigger: true});
 		}
 	});
 

@@ -4,6 +4,7 @@ var require = {
 	paths: {
 		underscore: 'lib/underscore',
 		jquery: 'lib/jquery',
+		serializeObject: 'lib/serializeObject',
 		backbone: 'lib/backbone',
 		phaser: 'lib/phaser'
 	},
@@ -14,6 +15,9 @@ var require = {
 		},
 		'underscore': {
 			exports: '_'
+		},
+		'serializeObject': {
+			deps: ['jquery']
 		}
 	}
 };

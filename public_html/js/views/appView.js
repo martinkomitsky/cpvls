@@ -1,85 +1,105 @@
 define(function (require) {
 	var Backbone = require('backbone'),
-		tmpl = require('tmpl/appView');
+		tmpl = require('tmpl/appView'),
+		so = require('serializeObject');
 
 	var AppView = Backbone.View.extend({
 		initialize: function () {
 			this.$el = $(".page");
 			this.views.list = {};
 			this.views.create = {};
-			this.views.that = this;
+			this.that = this;
 			this.bindEvents();
 		},
 		render: function () {
 			this.$el.html(tmpl());
 			return this;
 		},
-		views: {
-			add: function (Views) {
-				_.each(Views, function (View, name) {
-					this.create[name] = View;
-					console.warn(name, View)
-				}, this);
-			},
-			get: function (viewName) {
-				var view = this.list[viewName];
-				if (!view) {
-					view = new this.create[viewName]();
-					this.that.listenTo(view, 'show', this.hide)
-					view.render();
-					this.that.$('.game').append(view.$el);
-					this.list[viewName] = view;
+		views: {},
+		add: function (Views) {
+			_.each(Views, function (View, name) {
+				this.views.create[name] = View;
+			}, this);
+		},
+		get: function (viewName) {
+			var view = this.views.list[viewName];
+			this.scope = viewName;
+			if (!view) {
+				view = new this.views.create[viewName]();
+				this.listenTo(view, 'show', this.hide)
+				view.render();
+				this.$('.game').append(view.$el);
+				this.views.list[viewName] = view;
+			}
+			return view;
+		},
+		hide: function (view) {
+			_.each(this.views.list, function (vi) {
+				if (view !== vi) {
+					vi.hide();
 				}
-
-				return view;
-			},
-			hide: function (view) {
-				_.each(this.views.list, function (vi) {
-					if (view !== vi) {
-						vi.hide();
-					}
-				}, this);
-			},
+			}, this);
 		},
 		bindEvents: function () {
 			console.info('[bindEvents]');
-			var pressed = false;
-			$(document).bind('keydown', function(e) {
-				if (e.keyCode == 40) {
-					console.info('down');
-					target = $('.js-focus:focus').parent().next().children();
-					if (target.length) {
-						pressed = true;
-						target.focus();
-					}
-				}
-				if (e.keyCode == 38) {
-					console.info('up');
-					target = $(".js-focus:focus").parent().prev().children();
-					if (target.length) {
-						pressed = true;
-						target.focus();
-					}
-				}
-			});
+			this.pressed = false;
+			that = this;
+			// this.menus = this.$('.js-focus');
 
 			$(document).on('focusout', '.js-focus', function(e) {
-				if (!pressed) {
-					console.log(e);
+				if (!that.pressed) {
 					e.preventDefault();
 					$(this).focus();
 				}
 
 			}).on('focus', '.js-focus', function(e) {
-				pressed = false;
+				that.pressed = false;
 			});
-
-			$(document).on('keypress', 'body', function(e) {
-				$(".content__game-splash").addClass('content__game-splash_hidden');
-				$(document).off('keypress')
-			}).on('animationend', '.content__game-splash', function(e) {
-				$('.content__game-splash').hide();
-			});
+		},
+		events: {
+			'click .js-video-stop': 'stop',
+			'click .js-video-play': 'play',
+			'keydown': 'keyHandler',
+			'focusout .js-focus': 'resetFocus'
+		},
+		stop: function (e) {
+			this.$('.js-video').toggleClass('js-video-stop js-video-play');
+			this.$('.btn-video__icon').toggleClass('fa-pause fa-play');
+			this.$('.vbg').attr('src', '');
+		},
+		play: function (e) {
+			this.$('.js-video').toggleClass( 'js-video-play js-video-stop');
+			this.$('.btn-video__icon').toggleClass('fa-play fa-pause');
+			$video = this.$('.vbg')
+			$video.attr('src', $video.attr('data-src'));
+		},
+		keyHandler: function (event) {
+			this.menus = this.$('.js-' + this.scope + ' .js-focus');
+			console.log(this.menus.length);
+			console.log(this.scope);
+			if (event.keyCode == 40) {
+				console.info('down');
+				target = this.$('.js-focus:focus').parent().next().children();
+				if (target.length) {
+					this.pressed = true;
+					target.focus();
+				}
+			}
+			if (event.keyCode == 38) {
+				console.info('up');
+				target = this.$(".js-focus:focus").parent().prev().children();
+				if (target.length) {
+					this.pressed = true;
+					target.focus();
+				}
+			}
+		},
+		resetFocus: function (event) {
+			// console.log("currentTarget", $(event.target))
+			// if (!this.pressed) {
+			// 	event.preventDefault();
+			// 	$(event.target).focus();
+			// }
 
 		}
 
