@@ -8,8 +8,9 @@ define(function (require) {
 			this.$el = $(".page");
 			this.views.list = {};
 			this.views.create = {};
-			this.that = this;
 			this.bindEvents();
+			this.current = 0;
+			this.pressed = false;
 		},
 		render: function () {
 			this.$el.html(tmpl());
@@ -34,6 +35,8 @@ define(function (require) {
 			return view;
 		},
 		hide: function (view) {
+			this.current = 0;
+			this.menus = this.$('.js-' + this.scope + ' .js-focus');
 			_.each(this.views.list, function (vi) {
 				if (view !== vi) {
 					vi.hide();
@@ -42,24 +45,12 @@ define(function (require) {
 		},
 		bindEvents: function () {
 			console.info('[bindEvents]');
-			this.pressed = false;
-			that = this;
-			// this.menus = this.$('.js-focus');
-
-			$(document).on('focusout', '.js-focus', function(e) {
-				if (!that.pressed) {
-					e.preventDefault();
-					$(this).focus();
-				}
-
-			}).on('focus', '.js-focus', function(e) {
-				that.pressed = false;
-			});
 		},
 		events: {
 			'click .js-video-stop': 'stop',
 			'click .js-video-play': 'play',
 			'keydown': 'keyHandler',
+			'focus .js-focus': 'focus',
 			'focusout .js-focus': 'resetFocus'
 		},
 		stop: function (e) {
@@ -74,35 +65,31 @@ define(function (require) {
 			$video.attr('src', $video.attr('data-src'));
 		},
 		keyHandler: function (event) {
-			this.menus = this.$('.js-' + this.scope + ' .js-focus');
-			console.log(this.menus.length);
-			console.log(this.scope);
 			if (event.keyCode == 40) {
-				console.info('down');
-				target = this.$('.js-focus:focus').parent().next().children();
-				if (target.length) {
+				this.next = this.current + 1;
+				if (this.next <= this.menus.length - 1) {
 					this.pressed = true;
-					target.focus();
+					this.current = this.next;
+					this.menus.eq(this.current).focus();
 				}
 			}
 			if (event.keyCode == 38) {
-				console.info('up');
-				target = this.$(".js-focus:focus").parent().prev().children();
-				if (target.length) {
+				this.next = this.current - 1;
+				if (this.next >= 0) {
 					this.pressed = true;
-					target.focus();
+					this.current = this.next;
+					this.menus.eq(this.current).focus();
 				}
 			}
 		},
+		focus: function () {
+			this.pressed = false;
+		},
 		resetFocus: function (event) {
-			// console.log("currentTarget", $(event.target))
-			// if (!this.pressed) {
-			// 	event.preventDefault();
-			// 	$(event.target).focus();
-			// }
-
+			if (!this.pressed) {
+				$(event.target).focus();
+			}
 		}
-
 	});
 	return new AppView();
 });
