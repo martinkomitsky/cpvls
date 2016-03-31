@@ -12,7 +12,6 @@ define(function(require) {
 		},
 		events: {
 			'keyup': function(e) {
-				console.info('keyup dokhooya');
 				this.$el.addClass('content__game-splash_hidden');
 			},
 			'animationend': function(e) {
