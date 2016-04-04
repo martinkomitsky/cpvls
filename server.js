@@ -4,13 +4,13 @@ var express = require('express'),
 	proxy = require('express-http-proxy');
 
 var HOSTNAME = 'localhost',
-    PORT = 8080,
+    PORT = 8800,
     PUBLIC_DIR = __dirname + '/public_html',
     requestsCount = 0;
 
 app.use(function (req, res, done) {
 	var date = Date();
-	console.log("[%s] [%s]", date.toLocaleString(), requestsCount++);
+	console.log("[%s] [%s] [%s]", requestsCount++, req.url.toLocaleString(), date.toLocaleString());
 	done();
 });
 

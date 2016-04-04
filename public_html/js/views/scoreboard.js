@@ -1,17 +1,17 @@
 define(function(require) {
 
-    var Backbone = require('backbone'),
+	var Backbone = require('backbone'),
 		BaseView = require('views/baseView'),
 		tmpl = require('tmpl/scoreboard'),
 		scores = require('collections/scores');
 
-        var View = BaseView.extend({
-            template: function() {
-            	return tmpl({scores: scores.toJSON()});
-            },
-            collection: scores,
-        });
+		var View = BaseView.extend({
+			template: function() {
+				return tmpl({scores: scores.toJSON()});
+			},
+			className: 'content__game-main content__game-main_visible js-scoreboard',
+			collection: scores,
+		});
 
-        return new View();
-    }
-);
+	return View;
+});

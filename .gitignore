@@ -2,3 +2,6 @@ node_modules
 .DS_Store
 .idea
 lrr
+cpvls.sublime-project
+cpvls.sublime-workspace
+[Tt]humbs.db
