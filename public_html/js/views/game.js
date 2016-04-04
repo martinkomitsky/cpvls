@@ -12,7 +12,7 @@ define(function(require) {
         render: function() {
             console.log("Script is in action");
             var game = new Phaser.Game(800, 600, Phaser.AUTO, 'myplayscreen', {
-                preload: function() {
+                preload: function() {//some textures
                     game.load.image('sky', 'images/assets/landscape.jpg');
                     game.load.image('sky2', 'images/assets/landscape2.jpg');
                     game.load.image('sky3', 'images/assets/landscape3.jpg');
