@@ -193,6 +193,7 @@
 
 .content__game-menu_register {
 	margin-top: 0;
+    padding: 5% 5% 10% 5%;
 }
 .content__game-menu_game{
 	padding: 0;
@@ -298,6 +299,7 @@ i.nav-avatar__delete_visible {
 
 .game-menu__nav-shotter {
 	display: none;
+    animation: flicker 1s infinite;
 }
 
 .game-menu__nav-submit {
