@@ -20,8 +20,7 @@ define(function(require) {
 					game.load.image('sky4', 'images/assets/landscape4.jpeg');
 					game.load.image('sky5', 'images/assets/landscape5.jpg');
 					game.load.image('ground', 'images/assets/platform.png');
-					game.load.spritesheet('dude', 'images/assets/scorpion.png', 116, 0);
-					game.load.spritesheet('dudekick', 'images/assets/kick.png', 116, 0);
+					game.load.spritesheet('dude', 'images/assets/zero.png', 141, 0);
 				},
 				create: create,
 				update: update
@@ -47,7 +46,7 @@ define(function(require) {
 
 				cursors = game.input.keyboard.createCursorKeys();
 				attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
+                legAttack = game.input.keyboard.addKey(Phaser.Keyboard.X);
 				player = game.add.sprite(32, game.world.height - 450, 'dude');
 				game.physics.arcade.enable(player);
 				player.body.bounce.y = 0;
@@ -58,12 +57,18 @@ define(function(require) {
 				player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 12, true);
 				player.animations.add('jump', [15, 16, 17, 18, 19, 20, 21, 22], 10, false);
 			 	player.animations.add('jumpleft', [22,21,20,19,18,17,16,15], 10, false);
+                player.animations.add('kick', [23,24], 10, false);
+                player.animations.add('leg', [26,27,28,29,30], 10, false);
 			}
 
 			function update() {
 				game.physics.arcade.collide(player, platforms);
 				player.body.velocity.x = 0;
-
+                if (attack.isDown) {
+                    player.animations.play('kick');
+                } else if (legAttack.isDown) {
+                    player.animations.play('leg');
+                } else
 				 if (cursors.left.isDown) {
 					console.log("Move to the left");
 					player.body.velocity.x = -150;
