@@ -1,6 +1,6 @@
 {
 	"name": "cpvls",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "MK CPVLS",
 	"main": "main.js",
 	"author": "Martin Komitsky <martin00@ya.ru>",
@@ -43,7 +43,8 @@
 		"grunt-shell": "^1.1.1"
 	},
 	"scripts": {
-		"start": "node server"
+		"start": "node server",
+	    "test": "grunt test"
 	},
 	"engines": {
 		"node": "^0.10.x",

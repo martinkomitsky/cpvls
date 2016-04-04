@@ -1,56 +1,68 @@
 define(function(require) {
 
-    var Backbone = require('backbone'),
-        require = require('require'),
-        main = require('views/main'),
-        game = require('views/game'),
-        login = require('views/login'),
-        scoreboard = require('views/scoreboard'),
-        register = require('views/register'),
-        howtoplay = require('views/howtoplay'),
-        splashScreen = require('views/splashScreen'),
-        event = require('event');
+	var Backbone = require('backbone'),
+		app = require('views/appView'),
 
-    var Router = Backbone.Router.extend({
-        routes: {
-            'main': 'main',
-            'login': 'login',
-            'register': 'register',
-            'scoreboard': 'scoreboard',
-            'game': 'game',
-            'howtoplay': 'howtoplay',
-            '*default': 'defaultAction'
-        },
-        initialize: function () {
-            this.currentView = main;
-            this.listenTo(event, 'navigate', this.changeRoute);
-        },
-        main: function() {
-            main.show();
-        },
-        login: function() {
-            login.show();
-        },
-        register: function() {
-            register.show();
-        },
-        scoreboard: function() {
-            scoreboard.show();
-        },
-        game: function() {
-            game.show();
-        },
-        howtoplay: function() {
-            howtoplay.show();
-        },
-        defaultAction: function () {
-            splashScreen.show();
-            this.currentView = splashScreen;
-        },
-        changeRoute: function (route) {
-            this.navigate(route, {trigger: true});
-        }
-    });
+		Main = require('views/main'),
+		Game = require('views/game'),
+		Login = require('views/login'),
+		Scoreboard = require('views/scoreboard'),
+		Register = require('views/register'),
+		Howtoplay = require('views/howtoplay'),
+		SplashScreen = require('views/splashScreen');
 
-    return new Router();
+	app.add({
+		'main': Main,
+		'game': Game,
+		'login': Login,
+		'scoreboard': Scoreboard,
+		'register': Register,
+		'howtoplay': Howtoplay,
+		'splashscreen': SplashScreen
+	});
+	app.render();
+
+
+	var Router = Backbone.Router.extend({
+		routes: {
+			'main': 'main',
+			'login': 'login',
+			'register': 'register',
+			'scoreboard': 'scoreboard',
+			'game': 'game',
+			'howtoplay': 'howtoplay',
+			'*default': 'defaultAction'
+		},
+		initialize: function () {
+			app.get('splashscreen').on('navigate', this.goToMain.bind(this));
+		},
+		main: function() {
+			app.get('main').show();
+		},
+		login: function() {
+			app.get('login').show();
+		},
+		register: function() {
+			app.get('register').show();
+		},
+		scoreboard: function() {
+			app.get('scoreboard').show();
+		},
+		game: function() {
+			app.get('game').show();
+		},
+		howtoplay: function() {
+			app.get('howtoplay').show();
+		},
+		defaultAction: function () {
+			app.get('splashscreen').show();
+		},
+
+		goToMain: function () {
+			console.warn("navigate triggernoolsya", this)
+			this.navigate('main', {trigger: true});
+		}
+	});
+
+	return new Router();
 });
