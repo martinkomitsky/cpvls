@@ -59,7 +59,6 @@ define(function(require) {
 		},
 
 		goToMain: function () {
-			console.warn("navigate triggernoolsya", this)
 			this.navigate('main', {trigger: true});
 		}
 	});

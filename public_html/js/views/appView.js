@@ -51,7 +51,9 @@ define(function (require) {
 			'click .js-video-play': 'play',
 			'keydown': 'keyHandler',
 			'focus .js-focus': 'focus',
-			'focusout .js-focus': 'resetFocus'
+			'focusout .js-focus': 'resetFocus',
+			'mousedown .js-focus': 'mouseDown',
+			'mouseup .js-focus': 'mouseUp'
 		},
 		stop: function (e) {
 			this.$('.js-video').toggleClass('js-video-stop js-video-play');
@@ -61,7 +63,7 @@ define(function (require) {
 		play: function (e) {
 			this.$('.js-video').toggleClass( 'js-video-play js-video-stop');
 			this.$('.btn-video__icon').toggleClass('fa-play fa-pause');
-			$video = this.$('.vbg')
+			$video = this.$('.vbg');
 			$video.attr('src', $video.attr('data-src'));
 		},
 		keyHandler: function (event) {
@@ -89,6 +91,12 @@ define(function (require) {
 			if (!this.pressed) {
 				$(event.target).focus();
 			}
+		},
+		mouseDown: function (event) {
+			this.pressed = true;
+		},
+		mouseUp: function (event) {
+			this.pressed = false;
 		}
 	});
 	return new AppView();

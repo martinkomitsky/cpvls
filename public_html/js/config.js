@@ -6,7 +6,8 @@ var require = {
 		jquery: 'lib/jquery',
 		serializeObject: 'lib/serializeObject',
 		backbone: 'lib/backbone',
-		phaser: 'lib/phaser'
+		phaser: 'lib/phaser',
+		FileAPI: 'lib/fileapi/FileAPI.min'
 	},
 	shim: {
 		'backbone': {

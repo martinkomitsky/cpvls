@@ -34,6 +34,47 @@
 	/*cursor: none;*/
 }
 
+.page__bar-top {
+    position: absolute;
+    top: 0;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid #6C6459;
+    width: 100%;
+}
+
+.bar-top {
+    position: relative;
+    display: block;
+    float: right;
+}
+
+.bar-top__avatar {
+    display: inline;
+    float: left;
+    margin: 2.5px;
+    height: 40px;
+    width: 40px;
+    border-radius: 65px;
+    background: whitesmoke;
+    overflow: hidden;
+}
+
+.avatar {
+	width: 100%;
+}
+
+.bar-top__name {
+    display: inline;
+    float: left;
+    padding: 10px 15px;
+    font-family: 'memento_regular';
+    color: #E4E3E4;
+	font-size: 20px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
 .page__game {
 	/*height: 100%;*/
 	height: 100%;
@@ -150,6 +191,14 @@
 	margin-top: 20vh;
 }
 
+.content__game-menu_register {
+	margin-top: 0;
+    padding: 5% 5% 10% 5%;
+}
+.content__game-menu_game{
+	padding: 0;
+}
+
 .content__game-main {
 	display: none;
 }
@@ -185,6 +234,72 @@
 
 .game-menu__nav-element {
 	margin: 5px 0 5px 0;
+}
+
+.game-menu__nav-avatar {
+    width: 220px;
+    border: 1px solid rgba(149, 160, 164, 0.08);
+    margin: 0 auto;
+    height: 220px;
+    background: rgba(179, 179, 179, 0.12);
+    box-sizing: border-box;
+}
+.nav-avatar {
+    height: 100%;
+}
+
+.nav-avatar__icons {
+    position: absolute;
+    z-index: 1;
+    height: 220px;
+    width: 220px;
+}
+
+.nav-avatar__preview {
+	position: absolute;
+	transition: all 0.4s ease;
+}
+
+.nav-avatar__preview_faded {
+	/*z-index: -1;*/
+	opacity: 0.8;
+    -webkit-filter: grayscale(75%) blur(1px);
+}
+
+i.nav-avatar__delete {
+    opacity: 0;
+
+}
+
+i.nav-avatar__camera,
+i.nav-avatar__delete {
+    font: normal normal normal 130px/1 FontAwesome;
+    color: #888788;
+    padding: 45px 0 45px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.nav-avatar__camera:hover,
+.nav-avatar__camera:active,
+.nav-avatar__camera:focus,
+.nav-avatar__delete:hover,
+.nav-avatar__delete:active,
+.nav-avatar__delete:focus {
+	color: #E4E3E4;
+}
+
+i.nav-avatar__delete_invisible {
+	display: none;
+}
+
+i.nav-avatar__delete_visible {
+	opacity: 1;
+}
+
+.game-menu__nav-shotter {
+	display: none;
+    animation: flicker 1s infinite;
 }
 
 .game-menu__nav-submit {

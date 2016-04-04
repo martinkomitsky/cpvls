@@ -1,5 +1,15 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
 	<div class="page__game">
+		<div class="page__bar-top">
+			<div class="bar-top">
+				<div class="bar-top__avatar">
+					<img class="avatar" src="images/nitr2.jpg" alt=""/>
+				</div>
+				<div class="bar-top__name">
+					<span>Martin</span>
+				</div>
+			</div>
+		</div>
 		<div class="page__btn-video">
 			<button class="btn-video js-video js-video-stop">
 				<i class="btn-video__icon fa fa-pause"></i>
@@ -9,7 +19,7 @@
 	</div>
 	<div class="page__vbg">
 		<video class="vbg" autoplay="autoplay" muted="muted" loop="loop" poster="images/obama_poster.png" data-src="mk.mp4">
-			<!-- <source class="vbg__src" src="mk.mp4" type="video/mp4"/> -->
+			<source class="vbg__src" src="mk.mp4" type="video/mp4"/>
 		</video>
 	</div>
 </fest:template>
