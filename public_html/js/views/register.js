@@ -15,7 +15,8 @@ define(function(require) {
 			'mouseover .js-delete-avatar': 'hoverOnPreviewImg',
 			'mouseout .js-delete-avatar': 'hoverOnPreviewImg',
 			'click .js-shotter': 'capture',
-			'click .js-delete-avatar': 'deleteAvatar'
+			'click .js-delete-avatar': 'deleteAvatar',
+			'click .js-cancel': 'cancel'
 		},
 		hoverOnPreviewImg: function (event) {
 			console.log()
@@ -55,10 +56,12 @@ define(function(require) {
 		},
 		showCamera: function() {
 			var $captureButton = this.$('.js-shotter'),
-				$cameraButton = this.$('.js-camera');
+				$cameraButton = this.$('.js-camera'),
+				$cancelButton = this.$('.js-cancel');
 
 			$cameraButton.hide();
 			$captureButton.show();
+			$cancelButton.show();
 
 			this._avatar = null;
 
@@ -70,8 +73,8 @@ define(function(require) {
 			event.preventDefault();
 			var $preview = this.$('.js-preview'),
 				$cameraButton = this.$('.js-camera'),
-				$captureButton = this.$('.js-shotter');
-				// $fileUploadInput = this.$('.js-choose'),
+				$captureButton = this.$('.js-shotter'),
+				$cancelButton = this.$('.js-cancel');
 
 			if (this.camera.isActive()) {
 				var shot = this.camera.shot();
@@ -79,44 +82,45 @@ define(function(require) {
 				this._avatar = shot.file;
 
 				shot.preview(218).get(function (err, img) {
-					$preview.children('video').hide();
-					// $preview.children('canvas').remove();
+					$preview.find('video').hide();
 					$preview.append(img);
 				});
 				this.camera.stop();
 				this.$('.nav-avatar__delete').removeClass('nav-avatar__delete_invisible');
 
 			} else {
-				alert('Web camera is turned off!');
-
-				$preview.children('video').hide();
-				// $preview.children('canvas').remove();
+				$preview.find('video').hide();
 				$cameraButton.show();
 			}
 
 			$captureButton.hide();
-			// $cameraButton.show();
+			$cancelButton.hide();
 		},
 		deleteAvatar: function () {
 			var $preview = this.$('.js-preview');
 			this.$('.nav-avatar__delete').addClass('nav-avatar__delete_invisible');
 			this.camera.start();
-			$preview.children('canvas').remove();
-			$preview.children('video').show();
+			$preview.find('canvas').remove();
+			$preview.find('video').show();
 			this.showCamera();
+		},
+		cancel: function (event) {
+			event.preventDefault();
+			this.$('.js-preview').find('video').hide();
+			this.$('.js-camera').show();
+			this.$('.js-cancel').hide();
+			this.$('.js-shotter').hide();
 		},
 		initCamera: function () {
 			var $preview = this.$('.js-preview'),
 				$cameraButton = this.$('.js-camera');
-				$captureButton = this.$('.js-shotter'),
-				// $fileUploadInput = this.$('.js-choose'),
+				$captureButton = this.$('.js-shotter');
+
 			FileAPI.Camera.publish($preview, { width: 218, height: 218 }, function (err, cam) {
-					// debugger;
 				this.camera = cam;
 				if (err) {
-					alert('WebCam or Flash not supported!');
-
-					$preview.children('video').hide();
+					console.warn('error');//todo notifier
+					$preview.find('video').hide();
 					$preview.css('width','0').css('height','0');
 
 					$cameraButton.show();
@@ -125,10 +129,6 @@ define(function(require) {
 					return;
 				}
 
-				// $fileUploadInput.on('change', function() {
-				//     $captureButton.hide();
-				//     $cameraButton.show();
-				// });
 			}.bind(this));
 		}
 	});

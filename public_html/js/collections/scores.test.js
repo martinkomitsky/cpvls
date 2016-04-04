@@ -15,8 +15,6 @@ define(function(require) {
                 return -model.score;
             });
 
-        console.info('scores', scores);
-        console.info('scoresSorted', scoresSorted);
         QUnit.ok(_.isEqual(scores, scoresSorted), 'Returned array is sorted (lib sort)');
         QUnit.ok(scores[0].score === 111321312312135140 && scores[scores.length -1].score == -500, 'Returned array is sorted');
 

@@ -63,7 +63,7 @@ define(function (require) {
 		play: function (e) {
 			this.$('.js-video').toggleClass( 'js-video-play js-video-stop');
 			this.$('.btn-video__icon').toggleClass('fa-play fa-pause');
-			$video = this.$('.vbg')
+			$video = this.$('.vbg');
 			$video.attr('src', $video.attr('data-src'));
 		},
 		keyHandler: function (event) {
