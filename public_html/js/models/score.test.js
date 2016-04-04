@@ -9,7 +9,6 @@ define(function(require) {
         QUnit.ok(score instanceof Backbone.Model, 'Score is instance of Backbone.Model');
 
     });
-<<<<<<< HEAD
     QUnit.test("Количество очков больше 0", function () {
 
         var ScoreModel = require('./score'),
@@ -20,7 +19,3 @@ define(function(require) {
 
     });
 });
-=======
-
-});
->>>>>>> a5812c48e67f5c1c03d0b476e68e612f56c07e4b
