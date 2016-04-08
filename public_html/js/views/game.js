@@ -30,12 +30,14 @@ define(function(require) {
 			var ground,
 				player,
                 opponent,
-                firstFrame;
+                firstFrame,
+                movesList;
 
 			function create() {
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				skies = ['sky', 'sky2', 'sky3', 'sky4', 'sky5'];
-				var rand = Math.random() * 5^0,
+				//var rand = Math.random() * 5^0,
+                var rand = 0;
 					sky = game.add.sprite(0, 0, skies[rand]);
                 firstFrame = true;
 				ground = game.add.sprite(0, game.world.height - 16, 'ground');
@@ -73,6 +75,17 @@ define(function(require) {
                 opponent.animations.add('jumpleft', [22, 21, 20, 19, 18, 17, 16, 15], 10, false);
                 opponent.animations.add('kick', [23, 24], 10, false);
                 opponent.animations.add('leg', [26, 27, 28, 29, 30, 31, 32], 10, false);
+                movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
+                timer = game.time.create(false);
+                timer.loop(6000, function() {opponent.animations.play('stay'); opponent.body.velocity.x = 0}, game);
+                timer.loop(4000, function() {opponent.animations.play('left'); 
+                                             opponent.body.velocity.x = 100});
+                timer.loop(7000, function() {opponent.animations.play('jump'); opponent.body.velocity.x = -100;
+                                                opponent.body.velocity.y = -850;
+                                                opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);})
+                timer.loop(2000, function() {opponent.animations.play('right');
+                                            opponent.body.velocity.x = -100});
+                timer.start();
                 }
 
 			function update() {
@@ -80,8 +93,6 @@ define(function(require) {
                 game.physics.arcade.collide(opponent, ground);
                 game.physics.arcade.collide(player, opponent);
 				player.body.velocity.x = 0;
-                opponent.body.velocity.x = 0;
-                opponent.animations.play('stay');
                 if (player.body.touching.down) {
                     firstFrame = false;
                 }
@@ -107,7 +118,10 @@ define(function(require) {
                         } else {
                             player.animations.currentAnim.onComplete.add(function() {player.animations.play('stay')}, game);
                         }
-                    else { if (firstFrame == true) {console.log ('we are flying for the first time');
+                    else { if (firstFrame == true) {
+                        console.log ('we are flying for the first time');
+
+                    opponent.animations.play('stay');
                     player.frame = 15}}
 				}
 				if (cursors.up.isDown && player.body.touching.down) {
