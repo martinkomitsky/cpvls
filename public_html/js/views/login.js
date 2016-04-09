@@ -18,7 +18,7 @@ define(function(require) {
 			var data = this.$('.game-menu__form').serializeObject()
 			console.info("data", data);
 
-			var user = new User();
+			var user = User;
 			user.save(data);
 
 			if (user.validationError) {

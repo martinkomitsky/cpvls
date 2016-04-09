@@ -9,7 +9,7 @@ define(function(require) {
 		},
 		model: Score,
 		comparator: function(score) {
-			return -score.get('score')
+			return -score.get('score');
 		}
 	});
 

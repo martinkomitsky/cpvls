@@ -18,8 +18,12 @@ define(function(require) {
 			'click .js-delete-avatar': 'deleteAvatar',
 			'click .js-cancel': 'cancel'
 		},
+		show: function () {
+			console.log("show()", this, this.$('.game-menu__form'))
+			this.$('.game-menu__form').attr('novalidate', 'novalidate');
+			return BaseView.prototype.show.call(this);
+		},
 		hoverOnPreviewImg: function (event) {
-			console.log()
 			if (event.originalEvent.type === 'mouseover') {
 				this.$('.nav-avatar__delete').addClass('nav-avatar__delete_visible');
 				this.$('.nav-avatar__preview').addClass('nav-avatar__preview_faded');
@@ -35,7 +39,6 @@ define(function(require) {
 			var data = this.$('.game-menu__form').serializeObject()
 			console.info("data", data);
 
-			// var user = new User();
 			this.model.save(data, {
 				success: function () {
 					alert('success');
@@ -47,26 +50,44 @@ define(function(require) {
 			});
 
 			if (user.validationError) {
-				console.log(user.validationError)
-				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_valid').addClass('game-menu__nav-item_input_invalid');
+				console.log(user.validationError);
+				debugger;
+				$.each(this.$('.game-menu__nav-item_input'), function (ind, val) {
+					var field = $(this).attr('name');
+					console.log(field, user.validationError[field])
+					if (!user.validationError[field] && user.validationError[field] !== undefined) {
+						$(this).addClass('game-menu__nav-item_input_invalid');
+						$(this).removeClass('game-menu__nav-item_input_valid');
+					} else {
+						$(this).addClass('game-menu__nav-item_input_valid');
+						$(this).removeClass('game-menu__nav-item_input_invalid');
+					}
+				});
+
 			} else {
-				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_invalid').addClass('game-menu__nav-item_input_valid');
+				this.$('.game-menu__nav-item_input')
+					.removeClass('game-menu__nav-item_input_invalid')
+					.addClass('game-menu__nav-item_input_valid');
 				this.$('.game-menu__form')[0].reset();
 			}
 		},
 		showCamera: function() {
 			var $captureButton = this.$('.js-shotter'),
 				$cameraButton = this.$('.js-camera'),
-				$cancelButton = this.$('.js-cancel');
+				$cancelButton = this.$('.js-cancel')
+				$preview = this.$('.js-preview');
 
 			$cameraButton.hide();
 			$captureButton.show();
 			$cancelButton.show();
 
+			$preview.find('video').show();
 			this._avatar = null;
 
 			if (!this.camera) {
 				this.initCamera();
+			} else {
+				this.camera.start();
 			}
 		},
 		capture: function (event) {
@@ -110,6 +131,8 @@ define(function(require) {
 			this.$('.js-camera').show();
 			this.$('.js-cancel').hide();
 			this.$('.js-shotter').hide();
+			this.camera.stop();
+
 		},
 		initCamera: function () {
 			var $preview = this.$('.js-preview'),

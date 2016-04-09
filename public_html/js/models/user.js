@@ -11,18 +11,18 @@ define(function(require) {
 		// url: 'http://localhost/backbone/api/save.php',
 		url: 'http://localhost:8080/api/user/',
 		validate: function (formData) {
-			console.log(formData);
+			console.log('formData', formData);
 			var error = {};
-			if (!formData.login) {
-				error.login = false;
-			}
-			if (!formData.email) {
-				error.email = false;
-			}
-			if (!formData.password) {
-				error.password = false;
-			}
-			if (error.login === false || error.password === false) {
+
+			$.each(formData, function (key, val) {
+				console.log(key, val, this)
+				if (!val) {
+					error[key] = false;
+				}
+
+			});
+
+			if (_.size(error)) {
 				return error;
 			}
 		}
