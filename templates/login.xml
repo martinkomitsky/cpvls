@@ -2,9 +2,9 @@
 	<div class="content__game-menu content__game-menu_main">
 		<div class="game-menu">
 			<ul class="game-menu__nav">
-				<form class="game-menu__form" action="">
+				<form class="game-menu__form" action="" novalidate="novalidate" autocomplete="off">
 					<li class="game-menu__nav-element">
-						<input class="game-menu__nav-item game-menu__nav-item_input js-focus" name="login" type="email" required="required" maxlength="20" placeholder="LOGIN" />
+						<input class="game-menu__nav-item game-menu__nav-item_input js-focus" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN" />
 					</li>
 					<li class="game-menu__nav-element">
 						<input class="game-menu__nav-item game-menu__nav-item_input js-focus" name="password" type="password" required="required" maxlength="10" placeholder="PASSWORD" />

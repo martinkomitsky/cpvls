@@ -35,29 +35,29 @@
 }
 
 .page__bar-top {
-    position: absolute;
-    top: 0;
-    height: 50px;
-    background: rgba(0, 0, 0, 0.8);
-    border-bottom: 1px solid #6C6459;
-    width: 100%;
+	position: absolute;
+	top: 0;
+	height: 50px;
+	background: rgba(0, 0, 0, 0.8);
+	border-bottom: 1px solid #6C6459;
+	width: 100%;
 }
 
 .bar-top {
-    position: relative;
-    display: block;
-    float: right;
+	position: relative;
+	display: block;
+	float: right;
 }
 
 .bar-top__avatar {
-    display: inline;
-    float: left;
-    margin: 2.5px;
-    height: 40px;
-    width: 40px;
-    border-radius: 65px;
-    background: whitesmoke;
-    overflow: hidden;
+	display: inline;
+	float: left;
+	margin: 2.5px;
+	height: 40px;
+	width: 40px;
+	border-radius: 65px;
+	background: whitesmoke;
+	overflow: hidden;
 }
 
 .avatar {
@@ -65,14 +65,15 @@
 }
 
 .bar-top__name {
-    display: inline;
-    float: left;
-    padding: 10px 15px;
-    font-family: 'memento_regular';
-    color: #E4E3E4;
+	display: inline;
+	float: left;
+	padding: 10px 15px;
+	font-family: 'memento_regular';
+	color: #E4E3E4;
 	font-size: 20px;
 	font-weight: bold;
 	text-transform: uppercase;
+	cursor: default;
 }
 
 .page__game {
@@ -85,6 +86,11 @@
 	background: -o-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
 	background: -moz-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
 	background: radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
+}
+
+.bar-top__logout {
+	display: inline;
+	float: left;
 }
 
 /*.content {*/
@@ -103,6 +109,25 @@
 .btn-video:hover {
 	opacity: 1;
 }
+
+.btn-logout {
+	background: 0;
+	border: 0;
+	padding: 10px 5px;
+	font-size: 22px;
+	color: #888788;
+	cursor: pointer;
+	transition: color 0.4s ease;
+}
+
+.btn-logout:hover {
+	color: #E4E3E4;
+}
+.btn-logout:active,
+.btn-logout:focus {
+	outline: none;
+}
+
 
 .content__game {
 	overflow: hidden;
@@ -193,7 +218,7 @@
 
 .content__game-menu_register {
 	margin-top: 0;
-    padding: 5% 5% 10% 5%;
+	padding: 5% 5% 10% 5%;
 }
 .content__game-menu_game{
 	padding: 0;
@@ -237,22 +262,22 @@
 }
 
 .game-menu__nav-avatar {
-    width: 220px;
-    border: 1px solid rgba(149, 160, 164, 0.08);
-    margin: 0 auto;
-    height: 220px;
-    background: rgba(179, 179, 179, 0.12);
-    box-sizing: border-box;
+	width: 220px;
+	border: 1px solid rgba(149, 160, 164, 0.08);
+	margin: 0 auto;
+	height: 220px;
+	background: rgba(179, 179, 179, 0.12);
+	box-sizing: border-box;
 }
 .nav-avatar {
-    height: 100%;
+	height: 100%;
 }
 
 .nav-avatar__icons {
-    position: absolute;
-    z-index: 1;
-    height: 220px;
-    width: 220px;
+	position: absolute;
+	z-index: 1;
+	height: 220px;
+	width: 220px;
 }
 
 .nav-avatar__preview {
@@ -263,21 +288,21 @@
 .nav-avatar__preview_faded {
 	/*z-index: -1;*/
 	opacity: 0.8;
-    -webkit-filter: grayscale(75%) blur(1px);
+	-webkit-filter: grayscale(75%) blur(1px);
 }
 
 i.nav-avatar__delete {
-    opacity: 0;
+	opacity: 0;
 
 }
 
 i.nav-avatar__camera,
 i.nav-avatar__delete {
-    font: normal normal normal 130px/1 FontAwesome;
-    color: #888788;
-    padding: 45px 0 45px;
-    transition: all 0.4s ease;
-    cursor: pointer;
+	font: normal normal normal 130px/1 FontAwesome;
+	color: #888788;
+	padding: 45px 0 45px;
+	transition: all 0.4s ease;
+	cursor: pointer;
 }
 
 .nav-avatar__camera:hover,
@@ -299,7 +324,7 @@ i.nav-avatar__delete_visible {
 
 .game-menu__nav-shotter {
 	display: none;
-    animation: flicker 1s infinite;
+	animation: flicker 1s infinite;
 }
 
 .game-menu__nav-submit {
@@ -341,8 +366,8 @@ i.nav-avatar__delete_visible {
 	font-size: 35px;
 	/*background: rgba(0, 0, 0, 0.42);*/
 	background: rgba(179, 179, 179, 0.12);
-    border: 1px solid rgba(149, 160, 164, 0.08);
-    box-sizing: border-box;
+	border: 1px solid rgba(149, 160, 164, 0.08);
+	box-sizing: border-box;
 	font-family: "memento_regular";
 	width: 220px;
 	text-align: center;
@@ -351,12 +376,12 @@ i.nav-avatar__delete_visible {
 }
 .game-menu__nav-item_input_invalid {
 	background: rgba(202, 69, 69, 0.12);
-    border: 1px solid rgba(243, 41, 41, 0.35);
+	border: 1px solid rgba(243, 41, 41, 0.35);
 }
 
 .game-menu__nav-item_input_valid {
-    background: rgba(97, 253, 58, 0.12);
-    border: 1px solid rgba(41, 243, 75, 0.35);
+	background: rgba(97, 253, 58, 0.12);
+	border: 1px solid rgba(41, 243, 75, 0.35);
 }
 
 .game-menu__nav-item_input::-webkit-input-placeholder {
@@ -522,27 +547,27 @@ canvas {
 
 
 @keyframes cuePulse {
-    0% {
-        -webkit-transform: scale(0.5, 0.5);
-        transform: scale(0.5, 0.5);
-        box-shadow: 0px 0px 3px rgba(255,255,255,0)
-    }
+	0% {
+		-webkit-transform: scale(0.5, 0.5);
+		transform: scale(0.5, 0.5);
+		box-shadow: 0px 0px 3px rgba(255,255,255,0)
+	}
 
-    50% {
-        box-shadow: 0px 0px 3px #fff;
-        opacity: 1
-    }
+	50% {
+		box-shadow: 0px 0px 3px #fff;
+		opacity: 1
+	}
 
-    98% {
-        -webkit-transform: scale(1, 1);
-        transform: scale(1, 1);
-        box-shadow: 0px 0px 8px rgba(255,255,255,0);
-        opacity: 0
-    }
+	98% {
+		-webkit-transform: scale(1, 1);
+		transform: scale(1, 1);
+		box-shadow: 0px 0px 8px rgba(255,255,255,0);
+		opacity: 0
+	}
 
-    100% {
-        -webkit-transform: scale(1, 1);
-        transform: scale(1, 1);
-        opacity: 0
-    }
+	100% {
+		-webkit-transform: scale(1, 1);
+		transform: scale(1, 1);
+		opacity: 0
+	}
 }

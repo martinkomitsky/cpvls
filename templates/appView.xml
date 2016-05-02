@@ -1,4 +1,4 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
 	<div class="page__game">
 		<div class="page__bar-top">
 			<div class="bar-top">
@@ -7,6 +7,9 @@
 				</div>
 				<div class="bar-top__name">
 					<span>Martin</span>
+				</div>
+				<div class="bar-top__logout">
+					<button class="btn-logout js-logout" title="Logout"><i class="fa fa-sign-out"></i></button>
 				</div>
 			</div>
 		</div>
@@ -19,7 +22,7 @@
 	</div>
 	<div class="page__vbg">
 		<video class="vbg" autoplay="autoplay" muted="muted" loop="loop" poster="images/obama_poster.png" data-src="mk.mp4">
-			<source class="vbg__src" src="mk.mp4" type="video/mp4"/>
+			<!-- <source class="vbg__src" src="mk.mp4" type="video/mp4"/> -->
 		</video>
 	</div>
 </fest:template>

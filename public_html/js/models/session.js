@@ -3,15 +3,16 @@ define(function(require) {
 	var Backbone = require('backbone'),
 		hasFalseVal = require('objectHasFalseValue');
 
-	var UserModel = Backbone.Model.extend({
+
+
+	var SessionModel = Backbone.Model.extend({
 		defaults: {
 			login: '',
-			password: '',
-			email: ''
+			password: ''
 		},
-		url: '/api/user/',
+		url: '/api/session/',
 		validate: function (formData) {
-			console.log(formData);
+			console.log('formData', formData);
 			var error = {};
 			$.each(formData, function(key, val) {
 				if (!val) {
@@ -20,12 +21,11 @@ define(function(require) {
 					error[key] = true;
 				}
 			});
-
 			if (hasFalseVal(error)) {
 				return error;
 			}
 		}
 	});
 
-	return new UserModel();
+	return new SessionModel();
 });

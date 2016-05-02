@@ -19,13 +19,13 @@ app
 	.use(errorHandler());
 
 app.listen(PORT, function () {
-	console.log("Simple static server showing %s listening at http://%s:%s",
+	console.log("cpvls static server showing %s listening at http://%s:%s",
 		PUBLIC_DIR, HOSTNAME, PORT);
 });
 
-app.use('/proxy', proxy('http://vk.com', {
+app.use('/api', proxy('http://localhost:8080/', {
 	forwardPath: function(req, res) {
-		console.log(1234);
-		return require('url').parse(req.url).path;
+		console.log('proxy', require('url').parse(req.url).path);
+		return '/api' + require('url').parse(req.url).path;
 	}
 }));

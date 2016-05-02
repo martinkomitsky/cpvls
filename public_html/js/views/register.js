@@ -6,7 +6,9 @@ define(function(require) {
 		FileAPI = require('FileAPI');
 
 	var View = BaseView.extend({
-		template: tmpl,
+		template: function() {
+			return tmpl({user: user});
+		},
 		model: user,
 		className: 'content__game-main content__game-main_visible js-register',
 		events: {
@@ -17,6 +19,12 @@ define(function(require) {
 			'click .js-shotter': 'capture',
 			'click .js-delete-avatar': 'deleteAvatar',
 			'click .js-cancel': 'cancel'
+		},
+		initialize: function () {
+			console.log('init');
+			this.listenTo(this.model, 'change', function (e) {
+				console.log('change', e)
+			})
 		},
 		hoverOnPreviewImg: function (event) {
 			console.log()
@@ -35,22 +43,38 @@ define(function(require) {
 			var data = this.$('.game-menu__form').serializeObject()
 			console.info("data", data);
 
-			// var user = new User();
 			this.model.save(data, {
-				success: function () {
+				success: function (model, xhr) {
 					alert('success');
+					console.log(xhr);
 					user.set({isRegistered: true});
-				},
-				error: function () {
+					this.render();
+					this.trigger('navigate')
+				}.bind(this),
+				error: function (model, xhr) {
 					alert('error');
+					console.log(xhr.responseText);
 				}
 			});
 
 			if (user.validationError) {
-				console.log(user.validationError)
-				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_valid').addClass('game-menu__nav-item_input_invalid');
+				console.log('validation error', user.validationError)
+				this.$('.game-menu__nav-item_input').
+					removeClass('game-menu__nav-item_input_valid');
+				console.log('this', this)
+				$.each(user.validationError, function(key, val) {
+					if (!val) {
+						this.$('.game-menu__nav-item_input[name=' + key + ']').addClass('game-menu__nav-item_input_invalid');
+					} else {
+						this.$('.game-menu__nav-item_input[name=' + key + ']').addClass('game-menu__nav-item_input_valid');
+					}
+				}.bind(this));
+
 			} else {
-				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_invalid').addClass('game-menu__nav-item_input_valid');
+				this.$('.game-menu__nav-item_input')
+					.removeClass('game-menu__nav-item_input_invalid')
+					.addClass('game-menu__nav-item_input_valid');
+
 				this.$('.game-menu__form')[0].reset();
 			}
 		},
@@ -62,11 +86,14 @@ define(function(require) {
 			$cameraButton.hide();
 			$captureButton.show();
 			$cancelButton.show();
+			this.$('.js-preview').find('video').show();
 
 			this._avatar = null;
 
 			if (!this.camera) {
 				this.initCamera();
+			} else {
+				this.camera.start();
 			}
 		},
 		capture: function (event) {
@@ -90,6 +117,7 @@ define(function(require) {
 
 			} else {
 				$preview.find('video').hide();
+				this.camera.start();
 				$cameraButton.show();
 			}
 
@@ -106,6 +134,7 @@ define(function(require) {
 		},
 		cancel: function (event) {
 			event.preventDefault();
+			this.camera.stop();
 			this.$('.js-preview').find('video').hide();
 			this.$('.js-camera').show();
 			this.$('.js-cancel').hide();
