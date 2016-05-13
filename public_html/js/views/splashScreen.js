@@ -6,17 +6,17 @@ define(function(require) {
 
 	var View = BaseView.extend({
 		template: tmpl,
-		className: 'content__game-splash js-splashscreen',
+		className: 'game__splash js-splashscreen',
 		render: function () {
 			return BaseView.prototype.render.call(this);
 		},
 		events: {
 			'keyup': function(e) {
-				this.$el.addClass('content__game-splash_hidden');
+				this.$el.addClass('game__splash_hidden');
 			},
 			'animationend': function(e) {
 				this.trigger('navigate');
-				this.$el.removeClass('content__game-splash_hidden')
+				this.$el.removeClass('game__splash_hidden')
 			}
 		}
 	});

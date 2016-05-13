@@ -10,9 +10,9 @@ define(function(require) {
 			return tmpl({user: user});
 		},
 		model: user,
-		className: 'content__game-main content__game-main_visible js-register',
+		className: 'game__main game__main_visible js-register',
 		events: {
-			'submit .game-menu__form': 'submit',
+			'submit .js-form': 'submit',
 			'click .js-camera': 'showCamera',
 			'mouseover .js-delete-avatar': 'hoverOnPreviewImg',
 			'mouseout .js-delete-avatar': 'hoverOnPreviewImg',
@@ -29,18 +29,18 @@ define(function(require) {
 		hoverOnPreviewImg: function (event) {
 			console.log()
 			if (event.originalEvent.type === 'mouseover') {
-				this.$('.nav-avatar__delete').addClass('nav-avatar__delete_visible');
-				this.$('.nav-avatar__preview').addClass('nav-avatar__preview_faded');
+				this.$('.avatar__delete').addClass('avatar__delete_visible');
+				this.$('.avatar__preview').addClass('avatar__preview_faded');
 			} else if (event.originalEvent.type === 'mouseout') {
-				this.$('.nav-avatar__delete').removeClass('nav-avatar__delete_visible');
-				this.$('.nav-avatar__preview').removeClass('nav-avatar__preview_faded');
+				this.$('.avatar__delete').removeClass('avatar__delete_visible');
+				this.$('.avatar__preview').removeClass('avatar__preview_faded');
 			} else {
 				console.log('errorets');
 			}
 		},
 		submit: function (event) {
 			event.preventDefault();
-			var data = this.$('.game-menu__form').serializeObject()
+			var data = this.$('.js-form').serializeObject()
 			console.info("data", data);
 
 			this.model.save(data, {
@@ -59,23 +59,23 @@ define(function(require) {
 
 			if (user.validationError) {
 				console.log('validation error', user.validationError)
-				this.$('.game-menu__nav-item_input').
-					removeClass('game-menu__nav-item_input_valid');
+				this.$('.menu__item_input').
+					removeClass('menu__item_input_valid');
 				console.log('this', this)
 				$.each(user.validationError, function(key, val) {
 					if (!val) {
-						this.$('.game-menu__nav-item_input[name=' + key + ']').addClass('game-menu__nav-item_input_invalid');
+						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_invalid');
 					} else {
-						this.$('.game-menu__nav-item_input[name=' + key + ']').addClass('game-menu__nav-item_input_valid');
+						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_valid');
 					}
 				}.bind(this));
 
 			} else {
-				this.$('.game-menu__nav-item_input')
-					.removeClass('game-menu__nav-item_input_invalid')
-					.addClass('game-menu__nav-item_input_valid');
+				this.$('.menu__item_input')
+					.removeClass('menu__item_input_invalid')
+					.addClass('menu__item_input_valid');
 
-				this.$('.game-menu__form')[0].reset();
+				this.$('.js-form')[0].reset();
 			}
 		},
 		showCamera: function() {
@@ -113,7 +113,7 @@ define(function(require) {
 					$preview.append(img);
 				});
 				this.camera.stop();
-				this.$('.nav-avatar__delete').removeClass('nav-avatar__delete_invisible');
+				this.$('.avatar__delete').removeClass('avatar__delete_invisible');
 
 			} else {
 				$preview.find('video').hide();
@@ -126,7 +126,7 @@ define(function(require) {
 		},
 		deleteAvatar: function () {
 			var $preview = this.$('.js-preview');
-			this.$('.nav-avatar__delete').addClass('nav-avatar__delete_invisible');
+			this.$('.avatar__delete').addClass('avatar__delete_invisible');
 			this.camera.start();
 			$preview.find('canvas').remove();
 			$preview.find('video').show();

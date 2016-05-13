@@ -32,6 +32,7 @@
 	background: #000;
 	min-height: 650px;
 	/*cursor: none;*/
+	font-family: 'memento_regular';
 }
 
 .page__bar-top {
@@ -60,7 +61,7 @@
 	overflow: hidden;
 }
 
-.avatar {
+.bar-top__avatar-img {
 	width: 100%;
 }
 
@@ -68,7 +69,6 @@
 	display: inline;
 	float: left;
 	padding: 10px 15px;
-	font-family: 'memento_regular';
 	color: #E4E3E4;
 	font-size: 20px;
 	font-weight: bold;
@@ -197,7 +197,6 @@
 }
 
 .content__game-c2a-button {
-	font-family: "memento_regular";
 	font-size: 30px;
 	color: #E4E3E4;
 	text-decoration: none;
@@ -206,33 +205,32 @@
 	outline: none;
 }
 
-.content__game-menu {
+.game__menu-wrapper {
 	padding: 10% 5% 10% 5%;
 	text-align: center;
-	font-family: "memento_regular";
 }
 
-.content__game-menu_main {
+.game__menu-wrapper_main {
 	margin-top: 20vh;
 }
 
-.content__game-menu_register {
+.game__menu-wrapper_register {
 	margin-top: 0;
 	padding: 5% 5% 10% 5%;
 }
-.content__game-menu_game{
+.game__menu-wrapper_game{
 	padding: 0;
 }
 
-.content__game-main {
+.game__main {
 	display: none;
 }
 
-.content__game-main_visible {
+.game__main_visible {
 	animation: fadeIn 1s;
 	display: block;
 }
-.game-menu {
+.game__menu {
 	height: 100%;
 	width: 22%;
 	min-width: 225px;
@@ -242,26 +240,27 @@
 	box-shadow: 0 0 50px 6px rgba(0, 0, 0, 0.76), 0 0 50px 7px rgba(0, 0, 0, 0.39);
 }
 
-.game-menu_scoreboard {
+.game__menu_scoreboard {
 	color: #E4E3E4;
 	text-shadow: 3px 2px rgba(132, 1, 1, 0.29);
 	min-width: 550px;
 }
 
-.game-menu_howto {
+.game__menu_howto {
 	width: 50%;
 }
 
-.game-menu__nav {
+.menu__{
 	list-style-type: none;
 	padding: 0;
 }
 
-.game-menu__nav-element {
+.menu__element {
 	margin: 5px 0 5px 0;
+	display: block;
 }
 
-.game-menu__nav-avatar {
+.menu__avatar {
 	width: 220px;
 	border: 1px solid rgba(149, 160, 164, 0.08);
 	margin: 0 auto;
@@ -269,35 +268,35 @@
 	background: rgba(179, 179, 179, 0.12);
 	box-sizing: border-box;
 }
-.nav-avatar {
+.avatar {
 	height: 100%;
 }
 
-.nav-avatar__icons {
+.avatar__icons {
 	position: absolute;
 	z-index: 1;
 	height: 220px;
 	width: 220px;
 }
 
-.nav-avatar__preview {
+.avatar__preview {
 	position: absolute;
 	transition: all 0.4s ease;
 }
 
-.nav-avatar__preview_faded {
+.avatar__preview_faded {
 	/*z-index: -1;*/
 	opacity: 0.8;
 	-webkit-filter: grayscale(75%) blur(1px);
 }
 
-i.nav-avatar__delete {
+i.avatar__delete {
 	opacity: 0;
 
 }
 
-i.nav-avatar__camera,
-i.nav-avatar__delete {
+i.avatar__camera,
+i.avatar__delete {
 	font: normal normal normal 130px/1 FontAwesome;
 	color: #888788;
 	padding: 45px 0 45px;
@@ -305,62 +304,64 @@ i.nav-avatar__delete {
 	cursor: pointer;
 }
 
-.nav-avatar__camera:hover,
-.nav-avatar__camera:active,
-.nav-avatar__camera:focus,
-.nav-avatar__delete:hover,
-.nav-avatar__delete:active,
-.nav-avatar__delete:focus {
+.avatar__camera:hover,
+.avatar__camera:active,
+.avatar__camera:focus,
+.avatar__delete:hover,
+.avatar__delete:active,
+.avatar__delete:focus {
 	color: #E4E3E4;
 }
 
-i.nav-avatar__delete_invisible {
+i.avatar__delete_invisible {
 	display: none;
 }
 
-i.nav-avatar__delete_visible {
+i.avatar__delete_visible {
 	opacity: 1;
 }
 
-.game-menu__nav-shotter {
+.menu__shotter {
 	display: none;
 	animation: flicker 1s infinite;
 }
 
-.game-menu__nav-submit {
+.menu__item {
+	font-size: 35px;
+	text-decoration: none;
+	color: #888788;
+	transition: color 0.4s ease;
+	text-shadow: 3px 2px rgba(132, 1, 1, 0.29);
+}
+
+.menu__item_submit {
+	color: #840101;
 	background: 0;
 	border: 0;
 	font-family: inherit;
 	cursor: pointer;
 }
 
-.game-menu__nav-item {
-	font-size: 35px;
-	text-decoration: none;
-	color: #888788;
-	transition: color 0.4s ease;
-}
-
-.game-menu__nav-item:focus,
-.game-menu__nav-item:hover {
+.menu__item:focus,
+.menu__item:hover {
 	color: #E4E3E4;
 	outline: none;
 }
 
-.game-menu__nav-item:focus:before,
-.game-menu__nav-item:focus:after,
-.game-menu__nav-item:hover:before,
-.game-menu__nav-item:hover:after {
+.menu__item:focus:before,
+.menu__item:focus:after,
+.menu__item:hover:before,
+.menu__item:hover:after {
 	content: "•";
 	color: #E4E3E4;
 	margin-right: 10px;
 }
-.game-menu__nav-item:focus:after,
-.game-menu__nav-item:hover:after {
+.menu__item:focus:after,
+.menu__item:hover:after {
 	margin-left: 10px;
 }
 
-.game-menu__nav-item_input {
+.menu__item_input {
 	padding: 5px;
 	color: #E4E3E4;
 	font-size: 35px;
@@ -368,49 +369,49 @@ i.nav-avatar__delete_visible {
 	background: rgba(179, 179, 179, 0.12);
 	border: 1px solid rgba(149, 160, 164, 0.08);
 	box-sizing: border-box;
-	font-family: "memento_regular";
 	width: 220px;
 	text-align: center;
 	transition: all 0.8s ease;
 	/*text-transform: uppercase;*/
+    font-family: inherit;
 }
-.game-menu__nav-item_input_invalid {
+.menu__item_input_invalid {
 	background: rgba(202, 69, 69, 0.12);
 	border: 1px solid rgba(243, 41, 41, 0.35);
 }
 
-.game-menu__nav-item_input_valid {
+.menu__item_input_valid {
 	background: rgba(97, 253, 58, 0.12);
 	border: 1px solid rgba(41, 243, 75, 0.35);
 }
 
-.game-menu__nav-item_input::-webkit-input-placeholder {
+.menu__item_input::-webkit-input-placeholder {
 	color: #888788;
 }
 
-.game-menu__nav-item_input:-moz-placeholder { /* Firefox 18- */
+.menu__item_input:-moz-placeholder { /* Firefox 18- */
 	color: #888788;
 }
 
-.game-menu__nav-item_input::-moz-placeholder {  /* Firefox 19+ */
+.menu__item_input::-moz-placeholder {  /* Firefox 19+ */
 	color: #888788;
 }
 
-.game-menu__nav-item_input:-ms-input-placeholder {
+.menu__item_input:-ms-input-placeholder {
 	color: #888788;
 }
 
 
-.game-menu__title {
+.game__menu-title {
 
 }
 
-.game-menu__title-text {
+.menu-title__text {
 	font-size: 50px;
 	margin: 0;
 }
 
-.game-menu__title-text_howto {
+.menu-title__text_howto {
 	margin: 0;
 	font-family: "mkx_titleregular";
 	font-size: 7em;
@@ -421,14 +422,13 @@ i.nav-avatar__delete_visible {
 	cursor: default;
 }
 
-.game-menu__text {
-	font-family: "memento_regular";
+.game__menu_text {
 	font-size: 30px;
 	color: #E4E3E4;
 	text-align: center;
 }
 
-.game-menu__scoreboard {
+.game__menu__scoreboard {
 	margin-top: 15px;
 }
 
@@ -526,11 +526,11 @@ i.nav-avatar__delete_visible {
 	margin-bottom: 10px;
 }
 
-.content__game-splash {
+.game__splash {
 
 }
 
-.content__game-splash_hidden {
+.game__splash_hidden {
 	animation: fadeOut 1s;
 	opacity: 0;
 	/*display: none;*/
@@ -571,3 +571,9 @@ canvas {
 		opacity: 0
 	}
 }
+span.kaddak {
+  color: red;
+  background: black;
+  width: 50; }
+
+/*# sourceMappingURL=sass.css.map */

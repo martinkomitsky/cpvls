@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                 }
             },
             sass: {
-                files: ['scss/**/*.scss'],
+                files: ['scss/**/*.scss', 'public_html/css/main.src.css'],
                 tasks: ['sass:dev', 'concat']
             }
 		},

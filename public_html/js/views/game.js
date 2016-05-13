@@ -7,7 +7,7 @@ define(function(require) {
 
 	var View = BaseView.extend({
 		template: tmpl,
-		className: 'content__game-main content__game-main_visible js-game',
+		className: 'game__main game__main_visible js-game',
 		initialize: function() {
 		},
 		render: function() {
@@ -78,7 +78,7 @@ define(function(require) {
                 movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
                 timer = game.time.create(false);
                 timer.loop(6000, function() {opponent.animations.play('stay'); opponent.body.velocity.x = 0}, game);
-                timer.loop(4000, function() {opponent.animations.play('left'); 
+                timer.loop(4000, function() {opponent.animations.play('left');
                                              opponent.body.velocity.x = 100});
                 timer.loop(7000, function() {opponent.animations.play('jump'); opponent.body.velocity.x = -100;
                                                 opponent.body.velocity.y = -850;
@@ -112,7 +112,7 @@ define(function(require) {
 				} else if (legAttack.isDown) {
 					player.animations.play('leg');
 				} else {
-					if (player.body.touching.down) 
+					if (player.body.touching.down)
                         if (player.animations.currentAnim.loop || player.frame == 15) {
                             player.animations.play('stay');
                         } else {

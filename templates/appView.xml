@@ -3,7 +3,7 @@
 		<div class="page__bar-top">
 			<div class="bar-top">
 				<div class="bar-top__avatar">
-					<img class="avatar" src="images/nitr2.jpg" alt=""/>
+					<img class="bar-top__avatar-img" src="images/nitr2.jpg" alt=""/>
 				</div>
 				<div class="bar-top__name">
 					<span>Martin</span>

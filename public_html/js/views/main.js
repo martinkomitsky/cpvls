@@ -7,17 +7,26 @@ define(function(require) {
 
 	var View = BaseView.extend({
 		model: user,
-		template: function() {
+		template: function () {
 			return tmpl({user: user, session: session});
 		},
-		className: 'content__game-main content__game-main_visible js-main',
+		className: 'game__main game__main_visible js-main',
 		initialize: function () {
 			console.log('[init]', this.$el);
 
 			session.fetch({
-				success: function (model, xhr) {
+				success: function (model, xhr, c) {
 					console.log('success', xhr);
 					session.set({isSignedIn: true});
+					user.fetch({
+						success: function (model, xhr) {
+							console.log('user fetch success', model, xhr, c);
+
+						}.bind(this),
+						error: function (model, xhr) {
+							console.log('error', xhr.responseText);
+						}
+					});
 				}.bind(this),
 				error: function (model, xhr) {
 					console.log('error', xhr.responseText);
@@ -25,15 +34,15 @@ define(function(require) {
 			});
 
 			this.listenTo(this.model, 'change', function (e) {
-				console.log('change main', e)
+				console.log('[MAIN] user changed', e);
 				this.render();
 			});
 			this.listenTo(session, 'change', function (e) {
-				console.log('change session', e)
+				console.log('[MAIN] session changed', e);
 				this.render();
 			});
 		},
-		render: function() {
+		render: function () {
 			return BaseView.prototype.render.call(this);
 		}
 	});
