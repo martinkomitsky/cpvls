@@ -1,0 +1,15 @@
+.scoreboard {
+	&__item {
+		font-size: 35px;
+		&_captions {
+			font-size: 40px;
+			color: #A00A00;
+			margin-bottom: 10px;
+		}
+	}
+	@media (max-height: 667px) {
+		&__item {
+			font-size: 20px;
+		}
+	}
+}

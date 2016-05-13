@@ -1,0 +1,14 @@
+.btn-video {
+	animation: fadeIn50 1s;
+	opacity: 0.5;
+	width: 50px;
+	display: block;
+	border: 0;
+	background: #e4e3e4;
+	transition: opacity 1s ease;
+	cursor: pointer;
+
+	&:hover {
+		opacity: 1;
+	}
+}

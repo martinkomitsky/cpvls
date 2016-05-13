@@ -33,8 +33,12 @@ module.exports = function (grunt) {
                 }
             },
             sass: {
-                files: ['scss/**/*.scss', 'public_html/css/main.src.css'],
-                tasks: ['sass:dev', 'concat']
+                files: ['scss/**/*.scss', 'scss/**/**/*.scss', 'public_html/css/main.src.css'],
+                tasks: ['sass:dev', 'concat'],
+                options: {
+                    livereload: true,
+                    event: ['changed', 'added', 'deleted']
+                }
             }
 		},
 
@@ -66,8 +70,8 @@ module.exports = function (grunt) {
 
         sass: {
             options: {
-                outputStyle: 'nested',
-                sourceMap: true
+                outputStyle: 'nested'
+                //sourceMap: true
             },
             dev: {
                 files: [{
@@ -85,7 +89,7 @@ module.exports = function (grunt) {
                 //separator: ';',
             },
             dist: {
-                src: ['public_html/css/main.src.css', 'scss/css/**/*.css'],
+                src: ['public_html/css/main.src.css', 'scss/css/**/*.css', 'scss/css/**/**/*.scss'],
                 dest: 'public_html/css/main.css',
             },
         },

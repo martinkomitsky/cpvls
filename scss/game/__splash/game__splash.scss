@@ -1,0 +1,6 @@
+.game {
+	&__splash_hidden {
+		animation: fadeOut 1s;
+		opacity: 0;
+	}
+}

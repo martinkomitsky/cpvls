@@ -1,0 +1,11 @@
+.scoreboard {
+	&__player {
+		width: 40%;
+		display: inline-block;
+		text-transform: uppercase;
+		text-align: left;
+		overflow: hidden;
+		margin: 0;
+		cursor: default;
+	}
+}

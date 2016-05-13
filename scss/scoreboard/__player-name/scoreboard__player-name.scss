@@ -1,0 +1,14 @@
+.scoreboard__player-name {
+	display: block;
+
+	&_scroll {
+		animation: pulse 1s ease infinite;
+	}
+
+	&_scroll:hover {
+		animation: slide 6.0s ease infinite;
+		width: 40%;
+		margin-left: 0;
+		text-overflow: clip;
+	}
+}

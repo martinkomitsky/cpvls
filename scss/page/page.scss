@@ -1,0 +1,13 @@
+.page, html {
+	height: 100%;
+	overflow: hidden;
+	user-select: none;
+}
+
+.page {
+	margin: 0;
+	background: #000;
+	min-height: 650px;
+	/*cursor: none;*/
+	font-family: 'memento_regular';
+}

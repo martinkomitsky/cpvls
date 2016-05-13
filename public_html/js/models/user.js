@@ -24,6 +24,21 @@ define(function(require) {
 			if (hasFalseVal(error)) {
 				return error;
 			}
+		},
+		sync: function (method, model, options) {
+			console.info('method', method, model, this)
+			switch (method) {
+				case 'create':
+					options.url = '/api/orders/cancelOrder';
+					return Backbone.sync('create', model, options);
+				case 'read':
+					options.url = '/api/user/' + model.get('id');
+					return Backbone.sync(method, this, options);
+				case 'update':
+				// handle update ...
+				case 'delete':
+				// handle create ...
+			}
 		}
 	});
 

@@ -1,0 +1,10 @@
+.avatar {
+	&__preview {
+		position: absolute;
+		transition: all 0.4s ease;
+	}
+	&__preview_faded {
+		opacity: 0.8;
+		-webkit-filter: grayscale(75%) blur(1px);
+	}
+}
