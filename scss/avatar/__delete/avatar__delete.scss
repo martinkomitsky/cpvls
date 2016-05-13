@@ -1,0 +1,18 @@
+i.avatar {
+	&__delete {
+		opacity: 0;
+		font: normal normal normal 130px/1 FontAwesome;
+		color: #888788;
+		padding: 45px 0 45px;
+		transition: all 0.4s ease;
+		cursor: pointer;
+
+		&_invisible {
+			display: none;
+		}
+
+		&_visible {
+			opacity: 1;
+		}
+	}
+}

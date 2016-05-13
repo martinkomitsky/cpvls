@@ -1,12 +1,37 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
-	<div class="content__game-menu content__game-menu_main">
-		<div class="game-menu">
-			<ul class="game-menu__nav">
-				<li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#game">START GAME</a></li>
-				<li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#login">SIGN IN</a></li>
-				<li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#register">REGISTER</a></li>
-				<li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#scoreboard">SCOREBOARD</a></li>
-				<li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus" href="#howtoplay">HOW TO PLAY</a></li>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+	<fest:script>
+		console.log('[main template]', json);
+	</fest:script>
+	<div class="game__menu-wrapper game__menu-wrapper_main">
+		<div class="game__menu">
+			<ul class="menu">
+				<fest:choose>
+					<fest:when test="json.session.attributes.isSignedIn">
+						<li class="menu__element">
+							<a class="menu__item js-focus" href="#game">START GAME</a>
+						</li>
+					</fest:when>
+					<fest:otherwise>
+						<li class="menu__element">
+							<a class="menu__item js-focus" href="#login">SIGN IN</a>
+						</li>
+					<fest:choose>
+						<fest:when test="json.user.attributes.isRegistered"></fest:when>
+						<fest:otherwise>
+							<li class="menu__element">
+								<a class="menu__item js-focus" href="#register">REGISTER</a>
+							</li>
+						</fest:otherwise>
+					</fest:choose>
+					</fest:otherwise>
+				</fest:choose>
+
+				<li class="menu__element">
+					<a class="menu__item js-focus" href="#scoreboard">SCOREBOARD</a>
+				</li>
+				<li class="menu__element">
+					<a class="menu__item js-focus" href="#howtoplay">HOW TO PLAY</a>
+				</li>
 			</ul>
 		</div>
 	</div>

@@ -1,9 +1,11 @@
 define(function (require) {
 	var Backbone = require('backbone'),
 		tmpl = require('tmpl/appView'),
-		so = require('serializeObject');
+		so = require('serializeObject'),
+		session = require('models/session');
 
 	var AppView = Backbone.View.extend({
+		model: session,
 		initialize: function () {
 			this.$el = $(".page");
 			this.views.list = {};
@@ -11,6 +13,16 @@ define(function (require) {
 			this.bindEvents();
 			this.current = 0;
 			this.pressed = false;
+
+			this.listenTo(this.model, 'change', function (e) {
+				console.info('[APPVIEW] session changed', e);
+				if (e.attributes.isSignedIn) {
+					this.$('.bar-top__name span').text(e.attributes.login);
+				} else {
+					this.$('.bar-top__name span').text('kaddak');
+				}
+
+			});
 		},
 		render: function () {
 			this.$el.html(tmpl());
@@ -49,18 +61,32 @@ define(function (require) {
 		events: {
 			'click .js-video-stop': 'stop',
 			'click .js-video-play': 'play',
+			'click .js-logout': 'logout',
 			'keydown': 'keyHandler',
 			'focus .js-focus': 'focus',
 			'focusout .js-focus': 'resetFocus',
 			'mousedown .js-focus': 'mouseDown',
 			'mouseup .js-focus': 'mouseUp'
 		},
-		stop: function (e) {
+
+		logout: function (event) {
+			this.model.destroy({
+				success: function (model, xhr) {
+					console.log('success', xhr);
+					session.set({isSignedIn: false});
+				}.bind(this),
+				error: function (model, xhr) {
+					console.log('error', xhr.responseText);
+				}
+			});
+		},
+
+		stop: function (event) {
 			this.$('.js-video').toggleClass('js-video-stop js-video-play');
 			this.$('.btn-video__icon').toggleClass('fa-pause fa-play');
 			this.$('.vbg').attr('src', '');
 		},
-		play: function (e) {
+		play: function (event) {
 			this.$('.js-video').toggleClass( 'js-video-play js-video-stop');
 			this.$('.btn-video__icon').toggleClass('fa-play fa-pause');
 			$video = this.$('.vbg');

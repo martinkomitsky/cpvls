@@ -1,0 +1,12 @@
+.bar-top {
+	&__avatar {
+		display: inline;
+		float: left;
+		margin: 2.5px;
+		height: 40px;
+		width: 40px;
+		border-radius: 65px;
+		background: whitesmoke;
+		overflow: hidden;
+	}
+}

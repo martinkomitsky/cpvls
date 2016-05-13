@@ -1,0 +1,9 @@
+.game {
+	&__main {
+		display: none;
+		&_visible {
+			animation: fadeIn 1s;
+			display: block;
+		}
+	}
+}

@@ -1,0 +1,17 @@
+.menu-title {
+	&__text {
+		font-size: 50px;
+		margin: 0;
+
+		&_howto {
+			margin: 0;
+			font-family: "mkx_titleregular";
+			font-size: 7em;
+			font-weight: normal;
+			letter-spacing: 0.035em;
+			color: #E4E3E4;
+			text-shadow: 4px 3px rgba(0, 0, 0, 0.29);
+			cursor: default;
+		}
+	}
+}

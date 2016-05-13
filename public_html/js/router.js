@@ -35,6 +35,8 @@ define(function(require) {
 		},
 		initialize: function () {
 			app.get('splashscreen').on('navigate', this.goToMain.bind(this));
+			app.get('register').on('navigate', this.goToMain.bind(this));
+			app.get('login').on('navigate', this.goToMain.bind(this));
 		},
 		main: function() {
 			app.get('main').show();
