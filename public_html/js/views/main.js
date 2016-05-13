@@ -12,7 +12,6 @@ define(function(require) {
 		},
 		className: 'game__main game__main_visible js-main',
 		initialize: function () {
-			console.log('[init]', this.$el);
 
 			this.listenTo(this.model, 'change', function (e) {
 				console.log('[MAIN] user changed', e);

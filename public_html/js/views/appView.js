@@ -21,7 +21,6 @@ define(function (require) {
 
 			this.model.fetch({
 				success: function (model, xhr, c) {
-					console.log('success', xhr);
 					this.model.set({isSignedIn: true});
 					this.user.fetch({
 						success: function (model, xhr, c) {
@@ -73,13 +72,11 @@ define(function (require) {
 			}, this);
 		},
 		bindEvents: function () {
-			console.info('[bindEvents]');
 			this.listenTo(this.model, 'change', this.saveUserID);
 			this.listenTo(this.user, 'change', this.renderLogin);
 		},
 
 		saveUserID: function (event) {
-			console.info('[APPVIEW] session changed', event);
 			if (event.attributes.id) {
 				this.user.set({id: this.model.get('id')});
 			}
@@ -87,8 +84,7 @@ define(function (require) {
 		},
 
 		renderLogin: function (event) {
-			console.info('[APPVIEW] user changed', event);
-			this.$('.page__bar-top').html(toolbar.render().$el);
+			this.$('.js-toolbar').html(toolbar.render().$el);
 		},
 
 		events: {
@@ -105,9 +101,10 @@ define(function (require) {
 		logout: function (event) {
 			this.model.destroy({
 				success: function (model, xhr) {
-					console.log('success', xhr);
-					user.clear();
+					// user.clear();
 					// session.clear();
+					user.unset('id');
+					user.set({login: '', isRegistered: false});
 					session.set({isSignedIn: false});
 					session.unset('id');
 					this.trigger('navigate');

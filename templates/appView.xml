@@ -3,7 +3,7 @@
 		console.log('[app template]', json);
 	</fest:script>
 	<div class="page__game">
-		<div class="page__bar-top">
+		<div class="page__bar-top js-toolbar">
 <!-- 			<div class="bar-top {json.session.isSignedIn ? 'sas' : 'bar-top_invisible'}">
 				<div class="bar-top__avatar">
 					<img class="bar-top__avatar-img" src="images/nitr2.jpg" alt=""/>

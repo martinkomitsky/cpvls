@@ -21,15 +21,11 @@ define(function(require) {
 			'click .js-cancel': 'cancel'
 		},
 		show: function () {
-			console.log("show()", this, this.$('.game-menu__form'))
 			this.$('.game-menu__form').attr('novalidate', 'novalidate');
 			return BaseView.prototype.show.call(this);
 		},
 		initialize: function () {
-			console.log('init');
-			this.listenTo(this.model, 'change', function (e) {
-				console.log('change', e)
-			})
+
 		},
 		hoverOnPreviewImg: function (event) {
 			if (event.originalEvent.type === 'mouseover') {
@@ -39,33 +35,26 @@ define(function(require) {
 				this.$('.avatar__delete').removeClass('avatar__delete_visible');
 				this.$('.avatar__preview').removeClass('avatar__preview_faded');
 			} else {
-				console.log('errorets');
 			}
 		},
 		submit: function (event) {
 			event.preventDefault();
 			var data = this.$('.js-form').serializeObject()
-			console.info("data", data);
 
 			this.model.save(data, {
 				success: function (model, xhr) {
-					// alert('success');
-					console.log(xhr);
 					user.set({isRegistered: true});
 					this.render();
 					this.trigger('navigate')
 				}.bind(this),
 				error: function (model, xhr) {
 					alert('error');
-					console.log(xhr.responseText);
 				}
 			});
 
 			if (user.validationError) {
-				console.log('validation error', user.validationError)
 				this.$('.menu__item_input').
 					removeClass('menu__item_input_valid');
-				console.log('this', this)
 				$.each(user.validationError, function(key, val) {
 					if (!val) {
 						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_invalid');
@@ -156,7 +145,6 @@ define(function(require) {
 			FileAPI.Camera.publish($preview, { width: 218, height: 218 }, function (err, cam) {
 				this.camera = cam;
 				if (err) {
-					console.warn('error');//todo notifier
 					$preview.find('video').hide();
 					$preview.css('width','0').css('height','0');
 

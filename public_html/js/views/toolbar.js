@@ -12,7 +12,6 @@ define(function(require) {
 		},
 		className: 'toolbar__rar',
 		initialize: function () {
-			console.log('[init]', this.$el);
 			this.render();
 
 		},

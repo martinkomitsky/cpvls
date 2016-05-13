@@ -22,7 +22,7 @@ define(function(require) {
 				}
 			});
 
-			if (hasFalseVal(error)) {
+			if (hasFalseVal(error, 'isRegistered')) {
 				return error;
 			}
 		},

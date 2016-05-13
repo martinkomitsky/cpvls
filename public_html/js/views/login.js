@@ -27,7 +27,6 @@ define(function(require) {
 
 			this.model.save(data, {
 				success: function (model, xhr) {
-					// alert('success');
 					this.user.set({login: this.model.get('login')});
 					this.model.set({isSignedIn: true, login: '', password: ''});
 					this.render();
@@ -35,7 +34,6 @@ define(function(require) {
 				}.bind(this),
 				error: function (model, xhr) {
 					alert('error');
-					// console.log(xhr.responseText);
 				}
 			});
 

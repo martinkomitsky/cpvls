@@ -24,23 +24,6 @@ define(function(require) {
 				return error;
 			}
 		},
-		// sync: function (method, model, options) {
-		// 	console.info('method', method, model, options);
-		// 	switch (method) {
-		// 		case 'create':
-		// 			options.url = this.url;
-		// 			// this.set(data);
-		// 			return Backbone.sync('create', this, options);
-		// 		case 'read':
-		// 			options.url = this.url;
-		// 			return Backbone.sync('read', this, options);
-		// 		case 'update':
-		// 		// handle update ...
-		// 		case 'delete':
-		// 			options.url = this.url;
-		// 			return Backbone.sync('delete', this, options);
-		// 	}
-		// }
 	});
 
 	return new SessionModel();
