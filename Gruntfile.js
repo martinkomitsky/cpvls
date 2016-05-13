@@ -5,10 +5,13 @@ module.exports = function (grunt) {
             options: {
                 stdout: true,
                 stderr: true
-            },            
-			dev: {
-				command: "node server.js"			
-			}
+            },
+			front: {
+				command: "node server.js"
+			},
+            'back': {
+                command: "java -cp cpvls_serv.jar main.Main 8080"
+            }
 		},
 
 		watch: {
@@ -28,14 +31,18 @@ module.exports = function (grunt) {
                 options: {
                     livereload: true
                 }
-            }            
+            },
+            sass: {
+                files: ['scss/**/*.scss'],
+                tasks: ['sass:dev', 'concat']
+            }
 		},
-		
+
 		concurrent: {
-            dev: ['watch', 'shell'],
+            dev: ['watch', 'shell:front', 'shell:back'],
             options: {
                 logConcurrentOutput: true
-            }            
+            }
 		},
 
 		fest: {
@@ -57,8 +64,34 @@ module.exports = function (grunt) {
             }
         },
 
+        sass: {
+            options: {
+                outputStyle: 'nested',
+                sourceMap: true
+            },
+            dev: {
+                files: [{
+                    expand: true,
+                    cwd: 'scss',
+                    src: ['**/*.scss'],
+                    dest: 'scss/css/',
+                    ext: '.css'
+                }]
+            }
+        },
+
+        concat: {
+            options: {
+                //separator: ';',
+            },
+            dist: {
+                src: ['public_html/css/main.src.css', 'scss/css/**/*.css'],
+                dest: 'public_html/css/main.css',
+            },
+        },
+
         qunit: {
-            all: ['./public_html/tests/index.html']        
+            all: ['./public_html/tests/index.html']
         }
 
     });
@@ -69,6 +102,11 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-fest');
+
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+
+    grunt.registerTask('sas', ['sass:dev', 'concat']);
 
     grunt.registerTask('test', ['qunit:all']);
     grunt.registerTask('default', ['concurrent']);
