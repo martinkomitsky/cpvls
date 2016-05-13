@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-	<div id="playscreen" class="content__game-playscreen js-focus">
+	<div id="playscreen" class="game__playscreen js-focus">
 	</div>
 	<div class="game__menu-wrapper game__menu-wrapper_game">
 		<div class="game__menu">
