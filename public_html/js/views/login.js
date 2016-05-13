@@ -2,10 +2,12 @@ define(function(require) {
 
 	var BaseView = require('views/baseView'),
 		tmpl = require('tmpl/login'),
-		session = require('models/session');
+		session = require('models/session'),
+		user = require('models/user');
 
 	var View = BaseView.extend({
 		model: session,
+		user: user,
 		template: tmpl,
 		className: 'game__main game__main_visible js-login',
 		render: function() {
@@ -15,35 +17,30 @@ define(function(require) {
 			'submit .js-form': 'submit'
 		},
 		initialize: function () {
-			console.log('init');
-			this.listenTo(this.model, 'change', function (e) {
-				console.info('[LOGIN] session changed', e);
-			});
+
 		},
 		submit: function (event) {
 			event.preventDefault();
-			var data = this.$('.js-form').serializeObject()
+			var data = this.$('.js-form').serializeObject();
 			console.info("data", data);
 
 
-			this.model.sync('create', this.model, {
+			this.model.save(data, {
 				success: function (model, xhr) {
-					alert('success');
-					console.log(xhr);
-					session.set({isSignedIn: true});
+					// alert('success');
+					this.user.set({login: this.model.get('login')});
+					this.model.set({isSignedIn: true, login: '', password: ''});
 					this.render();
 					this.trigger('navigate')
 				}.bind(this),
 				error: function (model, xhr) {
 					alert('error');
-					console.log(xhr.responseText);
+					// console.log(xhr.responseText);
 				}
-			},
-				data
-			);
+			});
 
 			if (session.validationError) {
-				console.log('validation error', session.validationError)
+				console.log('validation error', session.validationError);
 				this.$('.menu__item_input').
 					removeClass('menu__item_input_valid');
 

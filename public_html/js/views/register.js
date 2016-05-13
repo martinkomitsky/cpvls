@@ -49,7 +49,7 @@ define(function(require) {
 
 			this.model.save(data, {
 				success: function (model, xhr) {
-					alert('success');
+					// alert('success');
 					console.log(xhr);
 					user.set({isRegistered: true});
 					this.render();

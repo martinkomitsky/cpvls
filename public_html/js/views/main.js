@@ -14,25 +14,6 @@ define(function(require) {
 		initialize: function () {
 			console.log('[init]', this.$el);
 
-			session.fetch({
-				success: function (model, xhr, c) {
-					console.log('success', xhr);
-					session.set({isSignedIn: true});
-					user.fetch({
-						success: function (model, xhr) {
-							console.log('user fetch success', model, xhr, c);
-
-						}.bind(this),
-						error: function (model, xhr) {
-							console.log('error', xhr.responseText);
-						}
-					});
-				}.bind(this),
-				error: function (model, xhr) {
-					console.log('error', xhr.responseText);
-				}
-			});
-
 			this.listenTo(this.model, 'change', function (e) {
 				console.log('[MAIN] user changed', e);
 				this.render();

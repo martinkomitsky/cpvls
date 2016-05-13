@@ -2,30 +2,47 @@ define(function (require) {
 	var Backbone = require('backbone'),
 		tmpl = require('tmpl/appView'),
 		so = require('serializeObject'),
-		session = require('models/session');
+		session = require('models/session'),
+		user = require('models/user'),
+
+		toolbar = require('views/toolbar');
 
 	var AppView = Backbone.View.extend({
 		model: session,
+		user: user,
+		template: tmpl,
 		initialize: function () {
-			this.$el = $(".page");
+			this.$el = $("#page");
 			this.views.list = {};
 			this.views.create = {};
 			this.bindEvents();
 			this.current = 0;
 			this.pressed = false;
 
-			this.listenTo(this.model, 'change', function (e) {
-				console.info('[APPVIEW] session changed', e);
-				if (e.attributes.isSignedIn) {
-					this.$('.bar-top__name span').text(e.attributes.login);
-				} else {
-					this.$('.bar-top__name span').text('kaddak');
+			this.model.fetch({
+				success: function (model, xhr, c) {
+					console.log('success', xhr);
+					this.model.set({isSignedIn: true});
+					this.user.fetch({
+						success: function (model, xhr, c) {
+							console.log('user fetch success', model, xhr, c);
+						}.bind(this),
+						error: function (model, xhr) {
+							console.log('error', xhr.responseText);
+						}
+					});
+				}.bind(this),
+				error: function (model, xhr) {
+					console.log('error', xhr.responseText);
 				}
-
 			});
+
 		},
 		render: function () {
-			this.$el.html(tmpl());
+			this.$el.html(this.template(
+				{session: this.model.toJSON(), user: this.user.toJSON()}
+			));
+			this.renderLogin();
 			return this;
 		},
 		views: {},
@@ -57,7 +74,23 @@ define(function (require) {
 		},
 		bindEvents: function () {
 			console.info('[bindEvents]');
+			this.listenTo(this.model, 'change', this.saveUserID);
+			this.listenTo(this.user, 'change', this.renderLogin);
 		},
+
+		saveUserID: function (event) {
+			console.info('[APPVIEW] session changed', event);
+			if (event.attributes.id) {
+				this.user.set({id: this.model.get('id')});
+			}
+			this.renderLogin();
+		},
+
+		renderLogin: function (event) {
+			console.info('[APPVIEW] user changed', event);
+			this.$('.page__bar-top').html(toolbar.render().$el);
+		},
+
 		events: {
 			'click .js-video-stop': 'stop',
 			'click .js-video-play': 'play',
@@ -73,7 +106,11 @@ define(function (require) {
 			this.model.destroy({
 				success: function (model, xhr) {
 					console.log('success', xhr);
+					user.clear();
+					// session.clear();
 					session.set({isSignedIn: false});
+					session.unset('id');
+					this.trigger('navigate');
 				}.bind(this),
 				error: function (model, xhr) {
 					console.log('error', xhr.responseText);

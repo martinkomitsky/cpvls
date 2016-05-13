@@ -30,10 +30,10 @@ define(function(require) {
 			console.info('method', method, model, this)
 			switch (method) {
 				case 'create':
-					options.url = '/api/orders/cancelOrder';
+					options.url = this.url;
 					return Backbone.sync('create', model, options);
 				case 'read':
-					options.url = '/api/user/' + model.get('id');
+					options.url = this.url + model.get('id');
 					return Backbone.sync(method, this, options);
 				case 'update':
 				// handle update ...

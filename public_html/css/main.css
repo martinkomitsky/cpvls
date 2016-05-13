@@ -176,6 +176,8 @@ i.avatar__delete {
   position: relative;
   display: block;
   float: right; }
+  .bar-top_invisible {
+    display: none; }
 
 .btn-video {
   animation: fadeIn50 1s;
