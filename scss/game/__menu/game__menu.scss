@@ -1,0 +1,33 @@
+.game {
+	&__menu {
+		height: 100%;
+		width: 22%;
+		min-width: 225px;
+		margin: 0 auto;
+		background: rgba(0, 0, 0, 0.42);
+		border: 1px solid black;
+		box-shadow: 0 0 50px 6px rgba(0, 0, 0, 0.76), 0 0 50px 7px rgba(0, 0, 0, 0.39);
+
+		&_scoreboard {
+			color: #E4E3E4;
+			text-shadow: 3px 2px rgba(132, 1, 1, 0.29);
+			min-width: 550px;
+		}
+
+		&_howto {
+			width: 50%;
+		}
+
+		&_text {
+			font-size: 30px;
+			color: #E4E3E4;
+			text-align: center;
+		}
+	}
+
+	&__menu__scoreboard {
+		margin-top: 15px;
+	}
+}
+
+

@@ -1,12 +1,28 @@
 define(function(require) {
 
 	var BaseView = require('views/baseView'),
-		tmpl = require('tmpl/main');
+		tmpl = require('tmpl/main'),
+		user = require('models/user'),
+		session = require('models/session');
 
 	var View = BaseView.extend({
-		template: tmpl,
-		className: 'content__game-main content__game-main_visible js-main',
-		render: function() {
+		model: user,
+		template: function () {
+			return tmpl({user: user, session: session});
+		},
+		className: 'game__main game__main_visible js-main',
+		initialize: function () {
+
+			this.listenTo(this.model, 'change', function (e) {
+				console.log('[MAIN] user changed', e);
+				this.render();
+			});
+			this.listenTo(session, 'change', function (e) {
+				console.log('[MAIN] session changed', e);
+				this.render();
+			});
+		},
+		render: function () {
 			return BaseView.prototype.render.call(this);
 		}
 	});

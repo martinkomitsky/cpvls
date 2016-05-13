@@ -1,0 +1,19 @@
+.game {
+	&__menu-wrapper {
+		padding: 10% 5% 10% 5%;
+		text-align: center;
+
+		&_main {
+			margin-top: 20vh;
+		}
+
+		&_register {
+			margin-top: 0;
+			padding: 5% 5% 10% 5%;
+		}
+
+		&_game{
+			padding: 0;
+		}
+	}
+}

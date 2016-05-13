@@ -2,31 +2,60 @@ define(function(require) {
 
 	var BaseView = require('views/baseView'),
 		tmpl = require('tmpl/login'),
-		User = require('models/user');
+		session = require('models/session'),
+		user = require('models/user');
 
 	var View = BaseView.extend({
+		model: session,
+		user: user,
 		template: tmpl,
-		className: 'content__game-main content__game-main_visible js-login',
+		className: 'game__main game__main_visible js-login',
 		render: function() {
 			return BaseView.prototype.render.call(this);
 		},
 		events: {
-			'submit .game-menu__form': 'submit'
+			'submit .js-form': 'submit'
+		},
+		initialize: function () {
+
 		},
 		submit: function (event) {
 			event.preventDefault();
-			var data = this.$('.game-menu__form').serializeObject()
+			var data = this.$('.js-form').serializeObject();
 			console.info("data", data);
 
-			var user = new User();
-			user.save(data);
 
-			if (user.validationError) {
-				console.log(user.validationError)
-				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_valid').addClass('game-menu__nav-item_input_invalid');
+			this.model.save(data, {
+				success: function (model, xhr) {
+					this.user.set({login: this.model.get('login')});
+					this.model.set({isSignedIn: true, login: '', password: ''});
+					this.render();
+					this.trigger('navigate')
+				}.bind(this),
+				error: function (model, xhr) {
+					alert('error');
+				}
+			});
+
+			if (session.validationError) {
+				console.log('validation error', session.validationError);
+				this.$('.menu__item_input').
+					removeClass('menu__item_input_valid');
+
+				$.each(session.validationError, function(key, val) {
+					if (!val) {
+						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_invalid');
+					} else {
+						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_valid');
+					}
+				}.bind(this));
+
 			} else {
-				this.$('.game-menu__nav-item_input').removeClass('game-menu__nav-item_input_invalid').addClass('game-menu__nav-item_input_valid');
-				this.$('.game-menu__form')[0].reset();
+				this.$('.menu__item_input')
+					.removeClass('menu__item_input_invalid')
+					.addClass('menu__item_input_valid');
+
+				this.$('.js-form')[0].reset();
 			}
 		}
 

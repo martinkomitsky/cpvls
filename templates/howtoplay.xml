@@ -1,13 +1,17 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-	<div class="game-menu game-menu_howto">
-		<div class="game-menu__title game-menu_scoreboard">
-			<h3 class="game-menu__title-text game-menu__title-text_howto">How to play:</h3>
+	<div class="game__menu-wrapper">
+		<div class="game__menu game__menu_howto">
+			<div class="game__menu-title game__menu_scoreboard">
+				<h3 class="menu-title__text menu-title__text_howto">How to play:</h3>
+			</div>
+			<div class="game__menu_text">
+				<p>PRESS START TO WIN</p>
+				<p>X - KICK</p>
+				<p>SPACE - PUNCH</p>
+			</div>
+			<ul class="menu">
+				<li class="menu__element"><a id="main" class="menu__item js-focus js-back" href="#main">BACK</a></li>
+			</ul>
 		</div>
-		<div class="game-menu__text">
-			<p>PRESS X TO WIN</p>
-		</div>
-		<ul class="game-menu__nav">
-			<li class="game-menu__nav-element"><a id="main" class="game-menu__nav-item js-focus js-back" href="#main">BACK</a></li>
-		</ul>
 	</div>
 </fest:template>

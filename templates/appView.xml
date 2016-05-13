@@ -1,14 +1,20 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+	<fest:script>
+		console.log('[app template]', json);
+	</fest:script>
 	<div class="page__game">
-		<div class="page__bar-top">
-			<div class="bar-top">
+		<div class="page__bar-top js-toolbar">
+<!-- 			<div class="bar-top {json.session.isSignedIn ? 'sas' : 'bar-top_invisible'}">
 				<div class="bar-top__avatar">
-					<img class="avatar" src="images/nitr2.jpg" alt=""/>
+					<img class="bar-top__avatar-img" src="images/nitr2.jpg" alt=""/>
 				</div>
 				<div class="bar-top__name">
-					<span>Martin</span>
+					<span>SOMEBODY</span>
 				</div>
-			</div>
+				<div class="bar-top__logout">
+					<button class="btn-logout js-logout" title="Logout"><i class="fa fa-sign-out"></i></button>
+				</div>
+			</div> -->
 		</div>
 		<div class="page__btn-video">
 			<button class="btn-video js-video js-video-stop">
@@ -19,7 +25,7 @@
 	</div>
 	<div class="page__vbg">
 		<video class="vbg" autoplay="autoplay" muted="muted" loop="loop" poster="images/obama_poster.png" data-src="mk.mp4">
-			<source class="vbg__src" src="mk.mp4" type="video/mp4"/>
+			<!-- <source class="vbg__src" src="mk.mp4" type="video/mp4"/> -->
 		</video>
 	</div>
 </fest:template>

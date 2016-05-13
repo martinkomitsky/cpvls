@@ -1,7 +1,10 @@
 node_modules
+node_modules1
+.sass-cache
 .DS_Store
 .idea
 lrr
 cpvls.sublime-project
 cpvls.sublime-workspace
 [Tt]humbs.db
+scss/css

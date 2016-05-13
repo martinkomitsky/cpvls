@@ -4,23 +4,19 @@
 	"description": "MK CPVLS",
 	"main": "main.js",
 	"author": "Martin Komitsky <martin00@ya.ru>",
-	"contributors": [
-		{
-			"name": "Polina Gliznutsina",
-			"email": "dezi2004@rambler.ru"
-		},
-		{
-			 "name": "Marina Belyanova",
-			 "email": "flerchy@gmail.com"
-		},
-		{
-			 "name": "Artem Максимов",
-			 "email": "puhovity@ya.ru"
-		}
-	],
-	"repository" : {
-		"type" : "git",
-		"url" : "https://github.com/martinkomitsky/cpvls.git"
+	"contributors": [{
+		"name": "Polina Gliznutsina",
+		"email": "dezi2004@rambler.ru"
+	}, {
+		"name": "Marina Belyanova",
+		"email": "flerchy@gmail.com"
+	}, {
+		"name": "Artem Максимов",
+		"email": "puhovity@ya.ru"
+	}],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/martinkomitsky/cpvls.git"
 	},
 	"keywords": [
 		"putin",
@@ -36,15 +32,18 @@
 		"grunt": "^0.4.5",
 		"grunt-cli": "^0.1.13",
 		"grunt-concurrent": "^1.0.1",
+		"grunt-contrib-concat": "^1.0.1",
 		"grunt-contrib-connect": "~0.6.0",
 		"grunt-contrib-qunit": "^0.7.0",
 		"grunt-contrib-watch": "^0.5.3",
 		"grunt-fest": "~0.1.4",
-		"grunt-shell": "^1.1.1"
+		"grunt-sass": "^1.2.0",
+		"grunt-shell": "^1.1.1",
+		"node-sass": "3.7.0"
 	},
 	"scripts": {
 		"start": "node server",
-	    "test": "grunt test"
+		"test": "grunt test"
 	},
 	"engines": {
 		"node": "^0.10.x",

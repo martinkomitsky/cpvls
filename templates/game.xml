@@ -1,10 +1,10 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-	<div id="playscreen" class="content__game-playscreen js-focus">
+	<div id="playscreen" class="game__playscreen js-focus">
 	</div>
-	<div class="content__game-menu content__game-menu_game">
-		<div class="game-menu">
-			<ul class="game-menu__nav">
-				<li class="game-menu__nav-element"><a class="game-menu__nav-item js-focus js-back" href="#main">BACK</a></li>
+	<div class="game__menu-wrapper game__menu-wrapper_game">
+		<div class="game__menu">
+			<ul class="menu">
+				<li class="menu__element"><a class="menu__item js-back" href="#main">BACK</a></li>
 			</ul>
 		</div>
 	</div>

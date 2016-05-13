@@ -1,0 +1,9 @@
+.bar-top {
+	position: relative;
+	display: block;
+	float: right;
+
+	&_invisible {
+		display: none;
+	}
+}

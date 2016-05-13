@@ -5,7 +5,7 @@ define(function(require) {
 
 	var View = BaseView.extend({
 		template: tmpl,
-		className: 'content__game-menu content__game-main_visible js-howtoplay'
+		className: 'game__main game__main_visible js-howtoplay'
 	});
 
 	return View;

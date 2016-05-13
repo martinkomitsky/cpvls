@@ -5,6 +5,7 @@ var require = {
 		underscore: 'lib/underscore',
 		jquery: 'lib/jquery',
 		serializeObject: 'lib/serializeObject',
+		objectHasFalseValue: 'lib/objectHasFalseValue',
 		backbone: 'lib/backbone',
 		phaser: 'lib/phaser',
 		FileAPI: 'lib/fileapi/FileAPI.min'

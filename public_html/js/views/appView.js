@@ -1,19 +1,47 @@
 define(function (require) {
 	var Backbone = require('backbone'),
 		tmpl = require('tmpl/appView'),
-		so = require('serializeObject');
+		so = require('serializeObject'),
+		session = require('models/session'),
+		user = require('models/user'),
+
+		toolbar = require('views/toolbar');
 
 	var AppView = Backbone.View.extend({
+		model: session,
+		user: user,
+		template: tmpl,
 		initialize: function () {
-			this.$el = $(".page");
+			this.$el = $("#page");
 			this.views.list = {};
 			this.views.create = {};
 			this.bindEvents();
 			this.current = 0;
 			this.pressed = false;
+
+			this.model.fetch({
+				success: function (model, xhr, c) {
+					this.model.set({isSignedIn: true});
+					this.user.fetch({
+						success: function (model, xhr, c) {
+							console.log('user fetch success', model, xhr, c);
+						}.bind(this),
+						error: function (model, xhr) {
+							console.log('error', xhr.responseText);
+						}
+					});
+				}.bind(this),
+				error: function (model, xhr) {
+					console.log('error', xhr.responseText);
+				}
+			});
+
 		},
 		render: function () {
-			this.$el.html(tmpl());
+			this.$el.html(this.template(
+				{session: this.model.toJSON(), user: this.user.toJSON()}
+			));
+			this.renderLogin();
 			return this;
 		},
 		views: {},
@@ -44,23 +72,55 @@ define(function (require) {
 			}, this);
 		},
 		bindEvents: function () {
-			console.info('[bindEvents]');
+			this.listenTo(this.model, 'change', this.saveUserID);
+			this.listenTo(this.user, 'change', this.renderLogin);
 		},
+
+		saveUserID: function (event) {
+			if (event.attributes.id) {
+				this.user.set({id: this.model.get('id')});
+			}
+			this.renderLogin();
+		},
+
+		renderLogin: function (event) {
+			this.$('.js-toolbar').html(toolbar.render().$el);
+		},
+
 		events: {
 			'click .js-video-stop': 'stop',
 			'click .js-video-play': 'play',
+			'click .js-logout': 'logout',
 			'keydown': 'keyHandler',
 			'focus .js-focus': 'focus',
 			'focusout .js-focus': 'resetFocus',
 			'mousedown .js-focus': 'mouseDown',
 			'mouseup .js-focus': 'mouseUp'
 		},
-		stop: function (e) {
+
+		logout: function (event) {
+			this.model.destroy({
+				success: function (model, xhr) {
+					// user.clear();
+					// session.clear();
+					user.unset('id');
+					user.set({login: '', isRegistered: false});
+					session.set({isSignedIn: false});
+					session.unset('id');
+					this.trigger('navigate');
+				}.bind(this),
+				error: function (model, xhr) {
+					console.log('error', xhr.responseText);
+				}
+			});
+		},
+
+		stop: function (event) {
 			this.$('.js-video').toggleClass('js-video-stop js-video-play');
 			this.$('.btn-video__icon').toggleClass('fa-pause fa-play');
 			this.$('.vbg').attr('src', '');
 		},
-		play: function (e) {
+		play: function (event) {
 			this.$('.js-video').toggleClass( 'js-video-play js-video-stop');
 			this.$('.btn-video__icon').toggleClass('fa-play fa-pause');
 			$video = this.$('.vbg');

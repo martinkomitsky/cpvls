@@ -1,0 +1,12 @@
+.bar-top {
+		&__name {
+		display: inline;
+		float: left;
+		padding: 10px 15px;
+		color: #E4E3E4;
+		font-size: 20px;
+		font-weight: bold;
+		text-transform: uppercase;
+		cursor: default;
+	}
+}

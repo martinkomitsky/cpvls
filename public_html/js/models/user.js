@@ -1,29 +1,44 @@
 define(function(require) {
 
-	var Backbone = require('backbone');
+	var Backbone = require('backbone'),
+		hasFalseVal = require('objectHasFalseValue');
 
 	var UserModel = Backbone.Model.extend({
 		defaults: {
-			name: 'Unknown player',
 			login: '',
-			password: ''
+			password: '',
+			email: ''
 		},
-		// url: 'http://localhost/backbone/api/save.php',
-		url: 'http://localhost:8080/api/user/',
+		url: '/api/user/',
 		validate: function (formData) {
-			console.log(formData);
+			console.log('formData', formData);
 			var error = {};
-			if (!formData.login) {
-				error.login = false;
-			}
-			if (!formData.email) {
-				error.email = false;
-			}
-			if (!formData.password) {
-				error.password = false;
-			}
-			if (error.login === false || error.password === false) {
+
+			$.each(formData, function(key, val) {
+				if (!val) {
+					error[key] = false;
+				} else {
+					error[key] = true;
+				}
+			});
+
+			if (hasFalseVal(error, 'isRegistered')) {
 				return error;
+			}
+		},
+		sync: function (method, model, options) {
+			console.info('method', method, model, this)
+			switch (method) {
+				case 'create':
+					options.url = this.url;
+					return Backbone.sync('create', model, options);
+				case 'read':
+					options.url = this.url + model.get('id');
+					return Backbone.sync(method, this, options);
+				case 'update':
+				// handle update ...
+				case 'delete':
+				// handle create ...
 			}
 		}
 	});
