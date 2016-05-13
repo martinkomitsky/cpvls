@@ -17,14 +17,70 @@
 	font-style: normal;
 }
 
+@keyframes pulse {
+	0% { transform: scale(1); }
+	50% { transform: scale(0.99); color: #DEDEDE; }
+	100% { transform: scale(1); }
+}
+
+@keyframes flicker {
+	0% { opacity: 0.4; }
+	50% { opacity: 1 }
+	100% { opacity: 0.4; }
+}
+
+@keyframes slide {
+	0% { margin-left: 0%;}
+	50% { margin-left: -40%;}
+	100% { margin-left: 0%;}
+}
+
+@keyframes cuePulse {
+	0% {
+		-webkit-transform: scale(0.5, 0.5);
+		transform: scale(0.5, 0.5);
+		box-shadow: 0px 0px 3px rgba(255,255,255,0)
+	}
+
+	50% {
+		box-shadow: 0px 0px 3px #fff;
+		opacity: 1
+	}
+
+	98% {
+		-webkit-transform: scale(1, 1);
+		transform: scale(1, 1);
+		box-shadow: 0px 0px 8px rgba(255,255,255,0);
+		opacity: 0
+	}
+
+	100% {
+		-webkit-transform: scale(1, 1);
+		transform: scale(1, 1);
+		opacity: 0
+	}
+}
+
+@keyframes fadeOut {
+	0% { display: block; opacity: 1; }
+	99% { display: block; opacity: 0}
+	100% { display: none; opacity: 0; }
+}
+
+@keyframes fadeIn {
+	0% { display: block; opacity: 0; }
+	50% { display: block; opacity: 0.5 }
+	100% { display: block; opacity: 1; }
+}
+@keyframes fadeIn50 {
+	0% { display: block; opacity: 0; }
+	100% { display: block; opacity: 0.5 }
+}
+
 .page, html {
 	height: 100%;
 	overflow: hidden;
 	user-select: none;
-	-o-user-select: none;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
 }
 
 .page {
@@ -82,9 +138,6 @@
 	position: relative;
 	overflow: hidden;
 	background: black;
-	background: -webkit-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
-	background: -o-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
-	background: -moz-radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
 	background: radial-gradient(rgba(0, 0, 0, 0.02),rgba(0, 0, 0, 0.31),rgba(0, 0, 0, 0.51));
 }
 
@@ -165,27 +218,6 @@
 	cursor: default;
 }
 
-@keyframes flicker {
-	0% { opacity: 0.4; }
-	50% { opacity: 1 }
-	100% { opacity: 0.4; }
-}
-
-@keyframes fadeOut {
-	0% { display: block; opacity: 1; }
-	99% { display: block; opacity: 0}
-	100% { display: none; opacity: 0; }
-}
-
-@keyframes fadeIn {
-	0% { display: block; opacity: 0; }
-	50% { display: block; opacity: 0.5 }
-	100% { display: block; opacity: 1; }
-}
-@keyframes fadeIn50 {
-	0% { display: block; opacity: 0; }
-	100% { display: block; opacity: 0.5 }
-}
 .content__game-c2a {
 	width: 100%;
 	margin: 0 auto;
@@ -461,54 +493,12 @@ i.avatar__delete_visible {
 	animation: pulse 1s ease infinite;
 }
 
-@keyframes pulse {
-	0% { transform: scale(1); }
-	50% { transform: scale(0.99); color: #DEDEDE; }
-	100% { transform: scale(1); }
-}
-
 .scoreboard__player-name_scroll:hover {
-	-webkit-animation: slide 6.0s ease infinite;
-	-moz-animation: slide 6.0s ease infinite;
-	-o-animation: slide 6.0s ease infinite;
 	animation: slide 6.0s ease infinite;
 	width: 40%;
 	margin-left: 0;
 	text-overflow: clip;
 }
-
-@-webkit-keyframes slide {
-	0% { margin-left: 0%;}
-	50% { margin-left: -40%;}
-	100% { margin-left: 0%;}
-}
-
-@-moz-keyframes slide {
-	0% { margin-left: 0%;}
-	50% { margin-left: -40%;}
-	100% { margin-left: 0%;}
-}
-
-@-o-keyframes slide {
-	0% { margin-left: 0%;}
-	50% { margin-left: -40%;}
-	100% { margin-left: -40%;}
-}
-
-@-khtml-keyframes slide {
-	0% { margin-left: 0%;}
-	50% { margin-left: -40%;}
-	100% { margin-left: 0%;}
-}
-
-@keyframes slide {
-	0% { margin-left: 0%;}
-	50% { margin-left: -40%;}
-	100% { margin-left: 0%;}
-}
-
-
-
 
 .scoreboard__item {
 	font-size: 35px;
@@ -546,31 +536,7 @@ canvas {
 }
 
 
-@keyframes cuePulse {
-	0% {
-		-webkit-transform: scale(0.5, 0.5);
-		transform: scale(0.5, 0.5);
-		box-shadow: 0px 0px 3px rgba(255,255,255,0)
-	}
 
-	50% {
-		box-shadow: 0px 0px 3px #fff;
-		opacity: 1
-	}
-
-	98% {
-		-webkit-transform: scale(1, 1);
-		transform: scale(1, 1);
-		box-shadow: 0px 0px 8px rgba(255,255,255,0);
-		opacity: 0
-	}
-
-	100% {
-		-webkit-transform: scale(1, 1);
-		transform: scale(1, 1);
-		opacity: 0
-	}
-}
 span.kaddak {
   color: red;
   background: black;
