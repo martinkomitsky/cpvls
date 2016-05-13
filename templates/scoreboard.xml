@@ -5,16 +5,18 @@
 				<h3 class="menu-title__text">TOP KEK</h3>
 			</div>
 			<div class="game__menu__scoreboard">
-				<div class="scoreboard__item scoreboard__item_captions">
-					<span class="scoreboard__player">PLAYER</span>
-					<span class="scoreboard__score">SCORE</span>
-				</div>
-				<fest:for iterate="data.scores" index="i" value="score">
-					<div class="scoreboard__item">
-						<p class="scoreboard__player"><span class="scoreboard__player-name {score.name.length > 11 ? 'scoreboard__player-name_scroll': 'no'}"><fest:value>score.name</fest:value></span></p>
-						<span class="scoreboard__score"><fest:value>score.score</fest:value></span>
+				<div class="scoreboard">
+					<div class="scoreboard__item scoreboard__item_captions">
+						<span class="scoreboard__player">PLAYER</span>
+						<span class="scoreboard__score">SCORE</span>
 					</div>
-				</fest:for>
+					<fest:for iterate="data.scores" index="i" value="score">
+						<div class="scoreboard__item">
+							<p class="scoreboard__player"><span class="scoreboard__player-name {score.name.length > 11 ? 'scoreboard__player-name_scroll': ''}"><fest:value>score.name</fest:value></span></p>
+							<span class="scoreboard__score"><fest:value>score.score</fest:value></span>
+						</div>
+					</fest:for>
+				</div>
 			</div>
 			<ul class="menu">
 				<li class="menu__element"><a id="main" class="menu__item js-focus js-back" href="#main">BACK</a></li>
