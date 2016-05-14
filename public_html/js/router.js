@@ -34,12 +34,7 @@ define(function(require) {
 			'*default': 'defaultAction'
 		},
 		initialize: function () {
-			app.get('splashscreen').on('navigate', this.goToMain.bind(this));
-			app.get('register').on('navigate', this.goToMain.bind(this));
-			app.get('login').on('navigate', this.goToMain.bind(this));
-			// $.each(this.routes, function (key, val) {
-			// 	app.get(val).on('navigate', this.goToMain.bind(this));
-			// }.bind(this));
+			// app.get('splashscreen').on('navigate', this.goToMain.bind(this));
 		},
 		main: function() {
 			app.get('main').show();

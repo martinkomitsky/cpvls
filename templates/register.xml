@@ -8,12 +8,15 @@
 				<form class="menu__form js-form" action="" novalidate="novalidate" autocomplete="off">
 					<li class="menu__element">
 						<input class="menu__item menu__item_input js-focus" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN"/>
+						<span class="menu__validationtip">GOWNO TWOJ LOGIN</span>
 					</li>
 					<li class="menu__element">
 						<input class="menu__item menu__item_input js-focus" name="email" type="email" required="required" maxlength="20" placeholder="E-MAIL"/>
+						<span class="menu__validationtip">GOWNO TWOJ EMAIL</span>
 					</li>
 					<li class="menu__element">
 						<input class="menu__item menu__item_input js-focus" name="password" type="password" required="required" maxlength="10" placeholder="PASSWORD"/>
+						<span class="menu__validationtip">GOWNO TWOJ PASSWORD</span>
 					</li>
 					<li class="menu__element">
 						<div class="menu__avatar">

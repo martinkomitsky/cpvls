@@ -29,7 +29,7 @@ define(function(require) {
 			console.log('init');
 			this.listenTo(this.model, 'change', function (e) {
 				console.log('change', e)
-			})
+			});
 		},
 		hoverOnPreviewImg: function (event) {
 			if (event.originalEvent.type === 'mouseover') {
@@ -49,11 +49,12 @@ define(function(require) {
 
 			this.model.save(data, {
 				success: function (model, xhr) {
-					// alert('success');
+					alert('success');
 					console.log(xhr);
 					user.set({isRegistered: true});
 					this.render();
-					this.trigger('navigate')
+					// this.trigger('navigate');
+					Backbone.history.navigate('#main', {trigger: true});
 				}.bind(this),
 				error: function (model, xhr) {
 					alert('error');
@@ -77,7 +78,7 @@ define(function(require) {
 			} else {
 				this.$('.menu__item_input')
 					.removeClass('menu__item_input_invalid')
-					.addClass('menu__item_input_valid');
+					.removeClass('menu__item_input_valid');
 
 				this.$('.js-form')[0].reset();
 			}

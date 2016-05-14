@@ -11,6 +11,7 @@ define(function(require) {
 		},
 		url: '/api/user/',
 		validate: function (formData) {
+			var reg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 			console.log('formData', formData);
 			var error = {};
 
@@ -18,7 +19,22 @@ define(function(require) {
 				if (!val) {
 					error[key] = false;
 				} else {
-					error[key] = true;
+					switch (key) {
+						case 'email':
+							error[key] = reg.test(val);
+							break;
+
+						case 'login':
+							error[key] = val.length > 5 && val.length < 20;
+							break;
+
+						case 'password':
+							error[key] = val.length > 5 && val.length < 20;
+							break;
+
+						// default:
+						// 	error[key] = false;
+					}
 				}
 			});
 
@@ -27,18 +43,20 @@ define(function(require) {
 			}
 		},
 		sync: function (method, model, options) {
-			console.info('method', method, model, this)
+			console.info('method', method, model, this);
 			switch (method) {
 				case 'create':
 					options.url = this.url;
-					return Backbone.sync('create', model, options);
+					Backbone.sync('create', this, options);
+					break;
 				case 'read':
 					options.url = this.url + model.get('id');
-					return Backbone.sync(method, this, options);
+					Backbone.sync('read', this, options);
+					break;
 				case 'update':
-				// handle update ...
+				console.log('[user: handle update]');// later
 				case 'delete':
-				// handle create ...
+				console.log('[user: handle create]');// later
 			}
 		}
 	});

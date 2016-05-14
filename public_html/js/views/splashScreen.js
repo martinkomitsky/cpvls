@@ -15,7 +15,7 @@ define(function(require) {
 				this.$el.addClass('game__splash_hidden');
 			},
 			'animationend': function(e) {
-				this.trigger('navigate');
+				Backbone.history.navigate('#main', {trigger: true});
 				this.$el.removeClass('game__splash_hidden')
 			}
 		}

@@ -88,7 +88,7 @@ define(function (require) {
 
 		renderLogin: function (event) {
 			console.info('[APPVIEW] user changed', event);
-			this.$('.page__bar-top').html(toolbar.render().$el);
+			this.$('.js-toolbar').html(toolbar.render().$el);
 		},
 
 		events: {
@@ -110,7 +110,7 @@ define(function (require) {
 					// session.clear();
 					session.set({isSignedIn: false});
 					session.unset('id');
-					this.trigger('navigate');
+					Backbone.history.navigate('#main', {trigger: true});
 				}.bind(this),
 				error: function (model, xhr) {
 					console.log('error', xhr.responseText);

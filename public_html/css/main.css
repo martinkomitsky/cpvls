@@ -329,6 +329,11 @@ i.avatar__delete {
   display: none;
   animation: flicker 1s infinite; }
 
+.menu__validationtip {
+  display: block;
+  color: #840101;
+  font-size: 20px; }
+
 .menu {
   list-style-type: none;
   padding: 0; }

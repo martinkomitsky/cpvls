@@ -31,11 +31,11 @@ define(function(require) {
 					this.user.set({login: this.model.get('login')});
 					this.model.set({isSignedIn: true, login: '', password: ''});
 					this.render();
-					this.trigger('navigate')
+					Backbone.history.navigate('#main', {trigger: true});
 				}.bind(this),
 				error: function (model, xhr) {
+					console.log(xhr.responseText);
 					alert('error');
-					// console.log(xhr.responseText);
 				}
 			});
 
@@ -55,7 +55,7 @@ define(function(require) {
 			} else {
 				this.$('.menu__item_input')
 					.removeClass('menu__item_input_invalid')
-					.addClass('menu__item_input_valid');
+					.removeClass('menu__item_input_valid');
 
 				this.$('.js-form')[0].reset();
 			}
