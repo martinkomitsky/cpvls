@@ -230,8 +230,6 @@ i.avatar__delete {
 .game__menu__scoreboard {
   margin-top: 15px; }
 
-.game__playscreen {
-  margin: 5vh auto; }
 
 .game__splash_hidden {
   animation: fadeOut 1s;

@@ -11,14 +11,27 @@ define(function(require) {
 		},
 		render: function() {
 			console.log("Script is in action");
-			var game = new Phaser.Game(800, 600, Phaser.AUTO, 'playscreen', {
+			// var game = new Phaser.Game(800, 600, Phaser.AUTO, 'playscreen', {
+			var game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', {
 				preload: function() {
-					game.load.image('sky', 'images/assets/landscape.jpg');
-					game.load.image('sky2', 'images/assets/landscape2.jpg');
-					game.load.image('sky3', 'images/assets/landscape3.jpg');
-					game.load.image('sky4', 'images/assets/landscape4.jpeg');
-					game.load.image('sky5', 'images/assets/landscape5.jpg');
+					// game.load.image('sky', 'images/assets/landscape.jpg');
+					// game.load.image('sky2', 'images/assets/landscape2.jpg');
+					// game.load.image('sky3', 'images/assets/landscape3.jpg');
+					// game.load.image('sky4', 'images/assets/landscape4.jpeg');
+					// game.load.image('sky5', 'images/assets/landscape5.jpg');
 					game.load.image('ground', 'images/assets/platform.png');
+
+					game.load.image('arena1', 'images/assets/1408104008_shao_kahn_throne.jpg');
+					game.load.image('arena2', 'images/assets/1408104091_soul_chamber.jpg');
+					game.load.image('arena3', 'images/assets/1408104102_thepit_day.jpg');
+					game.load.image('arena4', 'images/assets/1408104212_thepit_night.jpg');
+					game.load.image('arena5', 'images/assets/1408104262_wastelands.jpg');
+					game.load.image('arena6', 'images/assets/1408104297_the_cathedral.jpg');
+					game.load.image('arena7', 'images/assets/1408104361_desert.jpg');
+					game.load.image('arena8', 'images/assets/1408104421_the_subway.jpg');
+					game.load.image('arena9', 'images/assets/1408104505_tower.jpg');
+					game.load.image('arena10', 'images/assets/1408104606_the_armory.jpg');
+
 					game.load.spritesheet('dude', 'images/assets/zero.png', 141, 0);
                     game.load.spritesheet('opponent', 'images/assets/scorpion.png', 141, 0);
 				},
@@ -34,10 +47,11 @@ define(function(require) {
 
 			function create() {
 				game.physics.startSystem(Phaser.Physics.ARCADE);
-				skies = ['sky', 'sky2', 'sky3', 'sky4', 'sky5'];
-				//var rand = Math.random() * 5^0,
-                var rand = 0;
-					sky = game.add.sprite(0, 0, skies[rand]);
+				// skies = ['sky', 'sky2', 'sky3', 'sky4', 'sky5', 'arena1', 'arena2', 'arena3', 'arena4', 'arena5', 'arena6', 'arena7', 'arena8', 'arena9', 'arena10'];
+				skies = ['arena1', 'arena2', 'arena3', 'arena4', 'arena5', 'arena6', 'arena7', 'arena8', 'arena9', 'arena10'];
+				var rand = Math.random() * 10^0,
+                // var rand = 0;
+				sky = game.add.sprite(0, 0, skies[rand]);
                 firstFrame = true;
 				ground = game.add.sprite(0, game.world.height - 16, 'ground');
 				ground.scale.setTo(2, 2);
