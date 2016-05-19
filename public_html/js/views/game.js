@@ -52,9 +52,10 @@ define(function(require) {
 				var rand = Math.random() * 10^0,
                 // var rand = 0;
 				sky = game.add.sprite(0, 0, skies[rand]);
+                sky.scale.setTo(window.innerWidth/sky.width, window.innerHeight/sky.height);
                 firstFrame = true;
 				ground = game.add.sprite(0, game.world.height - 16, 'ground');
-				ground.scale.setTo(2, 2);
+				ground.scale.setTo(5, 2);
 				ground.game.physics.arcade.enableBody(ground);
 				ground.visible = false;
 				ground.body.immovable = true;
@@ -62,10 +63,11 @@ define(function(require) {
 				cursors = game.input.keyboard.createCursorKeys();
 				attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				legAttack = game.input.keyboard.addKey(Phaser.Keyboard.X);
-				player = game.add.sprite(32, game.world.height - 450, 'dude');
-                opponent = game.add.sprite(game.world.width - 150, game.world.height - 450, 'opponent');
+				player = game.add.sprite(32, game.world.height - 750, 'dude');
+                opponent = game.add.sprite(game.world.width - 150, game.world.height - 750, 'opponent');
+                player.scale.setTo(3,3);
+                opponent.scale.setTo(-3,3);
                 opponent.anchor.setTo(0.5);
-                opponent.scale.setTo(-1, 1);
 				game.physics.arcade.enable(player);
                 game.physics.arcade.enable(opponent);
                 opponent.body.bounce.y = 0;
@@ -111,13 +113,13 @@ define(function(require) {
                 }
 				 if (cursors.left.isDown) {
 					console.log("Move to the left");
-					player.body.velocity.x = -200;
+					player.body.velocity.x = -300;
 					if (player.body.touching.down) {
 						player.animations.play('left');
 					}
 				} else if (cursors.right.isDown) {
 					console.log("Move to the right");
-					player.body.velocity.x = 200;
+					player.body.velocity.x = 300;
 					if (player.body.touching.down)
 						player.animations.play('right');
 				} else if (attack.isDown) {
@@ -145,7 +147,7 @@ define(function(require) {
 						player.animations.play('jump');
 					}
 					player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
-					player.body.velocity.y = -850;
+					player.body.velocity.y = -1550;
 				}
 			}
 			return BaseView.prototype.render.call(this);
