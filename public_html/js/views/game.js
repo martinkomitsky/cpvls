@@ -63,10 +63,10 @@ define(function(require) {
 				cursors = game.input.keyboard.createCursorKeys();
 				attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				legAttack = game.input.keyboard.addKey(Phaser.Keyboard.X);
-				player = game.add.sprite(32, game.world.height - 750, 'dude');
-                opponent = game.add.sprite(game.world.width - 150, game.world.height - 750, 'opponent');
-                player.scale.setTo(3,3);
-                opponent.scale.setTo(-3,3);
+				player = game.add.sprite(game.world.width/100*25, game.world.height - 750, 'dude');
+                opponent = game.add.sprite(game.world.width/100*75 , game.world.height - 750, 'opponent');
+                player.scale.setTo(2.5,2.5);
+                opponent.scale.setTo(-2.5,2.5);
                 opponent.anchor.setTo(0.5);
 				game.physics.arcade.enable(player);
                 game.physics.arcade.enable(opponent);
