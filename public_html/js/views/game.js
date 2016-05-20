@@ -31,7 +31,7 @@ define(function(require) {
 					game.load.image('arena8', 'images/assets/1408104421_the_subway.jpg');
 					game.load.image('arena9', 'images/assets/1408104505_tower.jpg');
 					game.load.image('arena10', 'images/assets/1408104606_the_armory.jpg');
-
+                    game.load.image('hpbar', 'images/assets/hpbar.jpg')
 					game.load.spritesheet('dude', 'images/assets/zero.png', 141, 0);
                     game.load.spritesheet('opponent', 'images/assets/scorpion.png', 141, 0);
 				},
@@ -45,7 +45,13 @@ define(function(require) {
                 firstFrame,
                 movesList;
 
-			function create() {
+            function checkOverlap(spriteA, spriteB) {
+                var boundsA = spriteA.getBounds();
+                var boundsB = spriteB.getBounds();
+                return Phaser.Rectangle.intersects(boundsA, boundsB);
+            }
+    
+    		function create() {
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				// skies = ['sky', 'sky2', 'sky3', 'sky4', 'sky5', 'arena1', 'arena2', 'arena3', 'arena4', 'arena5', 'arena6', 'arena7', 'arena8', 'arena9', 'arena10'];
 				skies = ['arena1', 'arena2', 'arena3', 'arena4', 'arena5', 'arena6', 'arena7', 'arena8', 'arena9', 'arena10'];
@@ -59,8 +65,9 @@ define(function(require) {
 				ground.game.physics.arcade.enableBody(ground);
 				ground.visible = false;
 				ground.body.immovable = true;
-
-				cursors = game.input.keyboard.createCursorKeys();
+                hpbarplayer = game.add.sprite(50 , 50, 'hpbar');
+				hpbaropponent = game.add.sprite(game.world.width/100*70, 50, 'hpbar');
+                cursors = game.input.keyboard.createCursorKeys();
 				attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				legAttack = game.input.keyboard.addKey(Phaser.Keyboard.X);
 				player = game.add.sprite(game.world.width/100*25, game.world.height - 750, 'dude');
@@ -90,6 +97,15 @@ define(function(require) {
                 opponent.animations.add('jumpleft', [22, 21, 20, 19, 18, 17, 16, 15], 10, false);
                 opponent.animations.add('kick', [23, 24], 10, false);
                 opponent.animations.add('leg', [26, 27, 28, 29, 30, 31, 32], 10, false);
+                opponent.body.customSeparateX = true;
+                player.body.customSeparateX = true;          
+                playerHP = 100;
+                opponentHP = 100;
+                cropRect = new Phaser.Rectangle(0, 0, 500, 50);
+                hpbaropponent.crop(cropRect);
+                stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
+                stateText.anchor.setTo(0.5, 0.5);
+                stateText.visible = false;
                 movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
                 timer = game.time.create(false);
                 timer.loop(6000, function() {opponent.animations.play('stay'); opponent.body.velocity.x = 0}, game);
@@ -104,10 +120,12 @@ define(function(require) {
                 }
 
 			function update() {
+
 				game.physics.arcade.collide(player, ground);
                 game.physics.arcade.collide(opponent, ground);
                 game.physics.arcade.collide(player, opponent);
 				player.body.velocity.x = 0;
+                console.log(cropRect.width, hpbaropponent.width, opponentHP);
                 if (player.body.touching.down) {
                     firstFrame = false;
                 }
@@ -124,8 +142,17 @@ define(function(require) {
 						player.animations.play('right');
 				} else if (attack.isDown) {
 					player.animations.play('kick');
+                    if(checkOverlap(player, opponent)) {
+                        opponentHP -= 1;
+                        cropRect.width = 500/100*opponentHP;  
+                    }
 				} else if (legAttack.isDown) {
 					player.animations.play('leg');
+                    if(checkOverlap(player, opponent)) {
+                        console.log("hit");
+                        opponentHP -= 2;
+                        cropRect.width = 500/100*opponentHP;
+                    }
 				} else {
 					if (player.body.touching.down)
                         if (player.animations.currentAnim.loop || player.frame == 15) {
@@ -149,6 +176,12 @@ define(function(require) {
 					player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
 					player.body.velocity.y = -1550;
 				}
+                hpbaropponent.updateCrop();
+                if (opponentHP == 0) {
+                    opponent.kill();
+                    stateText.text = "GAME OVER";
+                    stateText.visible = true;
+                }
 			}
 			return BaseView.prototype.render.call(this);
 		},
