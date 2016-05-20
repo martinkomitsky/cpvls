@@ -101,20 +101,24 @@ define(function(require) {
                 player.body.customSeparateX = true;          
                 playerHP = 100;
                 opponentHP = 100;
-                cropRect = new Phaser.Rectangle(0, 0, 500, 50);
-                hpbaropponent.crop(cropRect);
+                cropRectOpponentHP = new Phaser.Rectangle(0, 0, 500, 50);
+                cropRectPlayerHP = new Phaser.Rectangle(0,0,500,50);
+                hpbarplayer.crop(cropRectPlayerHP)
+                hpbaropponent.crop(cropRectOpponentHP);
                 stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
                 stateText.anchor.setTo(0.5, 0.5);
                 stateText.visible = false;
                 movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
                 timer = game.time.create(false);
-                timer.loop(6000, function() {opponent.animations.play('stay'); opponent.body.velocity.x = 0}, game);
-                timer.loop(4000, function() {opponent.animations.play('left');
+                timer.loop(11000, function() {opponent.animations.play('stay'); opponent.body.velocity.x = 0}, game);
+                timer.loop(3000, function() {opponent.animations.play('left');
                                              opponent.body.velocity.x = 100});
+                timer.loop(2000, function() {opponent.animations.play('kick');
+                                                opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);});
                 timer.loop(7000, function() {opponent.animations.play('jump'); opponent.body.velocity.x = -100;
                                                 opponent.body.velocity.y = -850;
-                                                opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);})
-                timer.loop(2000, function() {opponent.animations.play('right');
+                                                opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);});
+                timer.loop(5000, function() {opponent.animations.play('right');
                                             opponent.body.velocity.x = -100});
                 timer.start();
                 }
@@ -125,8 +129,7 @@ define(function(require) {
                 game.physics.arcade.collide(opponent, ground);
                 game.physics.arcade.collide(player, opponent);
 				player.body.velocity.x = 0;
-                console.log(cropRect.width, hpbaropponent.width, opponentHP);
-                if (player.body.touching.down) {
+               if (player.body.touching.down) {
                     firstFrame = false;
                 }
 				 if (cursors.left.isDown) {
@@ -144,14 +147,14 @@ define(function(require) {
 					player.animations.play('kick');
                     if(checkOverlap(player, opponent)) {
                         opponentHP -= 1;
-                        cropRect.width = 500/100*opponentHP;  
+                        cropRectOpponentHP.width = 500/100*opponentHP;  
                     }
 				} else if (legAttack.isDown) {
 					player.animations.play('leg');
                     if(checkOverlap(player, opponent)) {
                         console.log("hit");
                         opponentHP -= 2;
-                        cropRect.width = 500/100*opponentHP;
+                        cropRectOpponentHP.width = 500/100*opponentHP;
                     }
 				} else {
 					if (player.body.touching.down)
@@ -176,12 +179,26 @@ define(function(require) {
 					player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
 					player.body.velocity.y = -1550;
 				}
-                hpbaropponent.updateCrop();
+                if (opponent.animations.currentAnim.name == 'kick') {
+                    if(checkOverlap(player, opponent)) {
+                        playerHP -= 2;
+                        cropRectPlayerHP.width = 500/100*playerHP;
+                    }
+                }
                 if (opponentHP == 0) {
                     opponent.kill();
                     stateText.text = "GAME OVER";
                     stateText.visible = true;
+                    hpbaropponent.visible = false;
                 }
+                if (playerHP == 0) {
+                    player.kill();
+                    stateText.text = "GAME OVER";
+                    stateText.visible = true;
+                    hpbarplayer.visible = false;
+                }
+                hpbaropponent.updateCrop();
+                hpbarplayer.updateCrop();
 			}
 			return BaseView.prototype.render.call(this);
 		},
