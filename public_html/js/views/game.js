@@ -32,7 +32,8 @@ define(function(require) {
 					game.load.image('arena9', 'images/assets/1408104505_tower.jpg');
 					game.load.image('arena10', 'images/assets/1408104606_the_armory.jpg');
                     game.load.image('hpbar', 'images/assets/hpbar.png');
-                    game.load.image('hpbar-empty', 'images/assets/hpbar_empty.png')
+                    game.load.image('hpbar-empty', 'images/assets/hpbar_empty.png');
+                    game.load.image('wall', 'images/assets/wall.png');
 					game.load.spritesheet('dude', 'images/assets/zero.png', 141, 0);
                     game.load.spritesheet('opponent', 'images/assets/scorpion.png', 141, 0);
 				},
@@ -62,6 +63,16 @@ define(function(require) {
                 sky.scale.setTo(window.innerWidth/sky.width, window.innerHeight/sky.height);
                 firstFrame = true;
 				ground = game.add.sprite(0, game.world.height - 16, 'ground');
+                leftWall = game.add.sprite(0, 0, 'wall');
+                rightWall = game.add.sprite(window.innerWidth-10, 0, 'wall');
+                leftWall.scale.setTo(10, 25);
+                rightWall.scale.setTo(10, 25);
+                leftWall.game.physics.arcade.enableBody(leftWall);
+                //leftWall.visible = false;
+                leftWall.body.immovable = true;
+                rightWall.game.physics.arcade.enableBody(rightWall);
+                //rightWall.visible = false;
+                rightWall.body.immovable = true;
 				ground.scale.setTo(5, 2);
 				ground.game.physics.arcade.enableBody(ground);
 				ground.visible = false;
@@ -85,7 +96,7 @@ define(function(require) {
                 opponent.body.collideWorldBounds = true;
 				player.body.bounce.y = 0;
 				player.body.gravity.y = 1600;
-				player.body.collideWorldBounds = true;
+				player.body.collideWorldBounds = false;
 				player.animations.add('stay', [0, 1, 2, 3, 4, 5, 6], 10, true);
                 player.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 12, true);
                 player.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 12, true);
@@ -101,13 +112,15 @@ define(function(require) {
                 opponent.animations.add('kick', [23, 24], 10, false);
                 opponent.animations.add('leg', [26, 27, 28, 29, 30, 31, 32], 10, false);
                 opponent.body.customSeparateX = true;
-                player.body.customSeparateX = true;          
+                player.body.customSeparateX = false;          
                 playerHP = 100;
                 opponentHP = 100;
-                cropRectOpponentHP = new Phaser.Rectangle(0, 0, 519, 50);
-                cropRectPlayerHP = new Phaser.Rectangle(0,0,519,50);
+                cropRectOpponentHP = new Phaser.Rectangle(0, 0, hpbaropponent.width, hpbaropponent.height);
+                cropRectPlayerHP = new Phaser.Rectangle(0, 0, hpbarplayer.width, hpbarplayer.height);
                 hpbarplayer.crop(cropRectPlayerHP)
                 hpbaropponent.crop(cropRectOpponentHP);
+                hpbaropponent.initialWidth = hpbaropponent.width;
+                hpbarplayer.initialWidth = hpbarplayer.width;
                 stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
                 stateText.anchor.setTo(0.5, 0.5);
                 stateText.visible = false;
@@ -128,11 +141,17 @@ define(function(require) {
 
 			function update() {
 
+                hpbaropponent.updateCrop();
+                hpbarplayer.updateCrop();
 				game.physics.arcade.collide(player, ground);
                 game.physics.arcade.collide(opponent, ground);
                 game.physics.arcade.collide(player, opponent);
+                game.physics.arcade.collide(player, leftWall);
+                game.physics.arcade.collide(player, rightWall);
+                game.physics.arcade.collide(opponent, leftWall);
+                game.physics.arcade.collide(opponent, rightWall);
 				player.body.velocity.x = 0;
-               if (player.body.touching.down) {
+                if (player.body.touching.down) {
                     firstFrame = false;
                 }
 				 if (cursors.left.isDown) {
@@ -150,14 +169,14 @@ define(function(require) {
 					player.animations.play('kick');
                     if(checkOverlap(player, opponent)) {
                         opponentHP -= 1;
-                        cropRectOpponentHP.width = 500/100*opponentHP;  
+                        cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;  
                     }
 				} else if (legAttack.isDown) {
 					player.animations.play('leg');
                     if(checkOverlap(player, opponent)) {
                         console.log("hit");
                         opponentHP -= 2;
-                        cropRectOpponentHP.width = 500/100*opponentHP;
+                        cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;
                     }
 				} else {
 					if (player.body.touching.down)
@@ -183,25 +202,24 @@ define(function(require) {
 					player.body.velocity.y = -1550;
 				}
                 if (opponent.animations.currentAnim.name == 'kick') {
-                    if(checkOverlap(player, opponent)) {
+                   if(checkOverlap(player, opponent) && (player.body.exists) && (opponent.body.exists)) {
                         playerHP -= 2;
-                        cropRectPlayerHP.width = 500/100*playerHP;
+                        cropRectPlayerHP.width = hpbarplayer.initialWidth/100*playerHP;
                     }
                 }
-                if (opponentHP == 0) {
+                if (opponentHP <= 0) {
                     opponent.kill();
-                    stateText.text = "GAME OVER";
-                    stateText.visible = true;
                     hpbaropponent.visible = false;
+                    stateText.text = "GAME OVER, you win!";
+                    stateText.visible = true;
+                    
                 }
-                if (playerHP == 0) {
+                if (playerHP <= 0) {
                     player.kill();
-                    stateText.text = "GAME OVER";
+                    stateText.text = "GAME OVER, bot win!";
                     stateText.visible = true;
                     hpbarplayer.visible = false;
                 }
-                hpbaropponent.updateCrop();
-                hpbarplayer.updateCrop();
 			}
 			return BaseView.prototype.render.call(this);
 		},
