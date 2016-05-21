@@ -11,25 +11,27 @@ define(function(require) {
 		},
 		url: '/api/user/',
 		validate: function (formData) {
-			var reg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-			console.log('formData', formData);
+			var emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+				passwordStrengthExp = new RegExp(/(?=^.{5,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/);
+
+			console.info('[formData]', formData);
 			var error = {};
 
-			$.each(formData, function(key, val) {
+			$.each(formData, function (key, val) {
 				if (!val) {
 					error[key] = false;
 				} else {
 					switch (key) {
 						case 'email':
-							error[key] = reg.test(val);
+							error[key] = emailRegExp.test(val);
 							break;
 
 						case 'login':
-							error[key] = val.length > 5 && val.length < 20;
+							error[key] = val.length >= 4 && val.length <= 20;
 							break;
 
 						case 'password':
-							error[key] = val.length > 5 && val.length < 20;
+							error[key] = val.length >= 5 && val.length <= 20;
 							break;
 
 						// default:
@@ -54,9 +56,11 @@ define(function(require) {
 					Backbone.sync('read', this, options);
 					break;
 				case 'update':
-				console.log('[user: handle update]');// later
+					console.log('[user: handle update]');// later
+					break;
 				case 'delete':
-				console.log('[user: handle create]');// later
+					console.log('[user: handle create]');// later
+					break;
 			}
 		}
 	});

@@ -21,11 +21,11 @@ define(function(require) {
 		},
 		submit: function (event) {
 			event.preventDefault();
-			var data = this.$('.js-form').serializeObject();
-			console.info("data", data);
+			var formData = this.$('.js-form').serializeObject();
+			formData.login = formData.login.toLowerCase();
 
 
-			this.model.save(data, {
+			this.model.save(formData, {
 				success: function (model, xhr) {
 					// alert('success');
 					this.user.set({login: this.model.get('login')});

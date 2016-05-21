@@ -11,7 +11,7 @@ define(function(require) {
 		},
 		url: '/api/session/',
 		validate: function (formData) {
-			console.log('formData', formData);
+			console.info('[formData]', formData);
 			var error = {};
 			$.each(formData, function(key, val) {
 				if (!val) {
