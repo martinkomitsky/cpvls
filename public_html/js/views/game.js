@@ -31,7 +31,8 @@ define(function(require) {
 					game.load.image('arena8', 'images/assets/1408104421_the_subway.jpg');
 					game.load.image('arena9', 'images/assets/1408104505_tower.jpg');
 					game.load.image('arena10', 'images/assets/1408104606_the_armory.jpg');
-                    game.load.image('hpbar', 'images/assets/hpbar.jpg')
+                    game.load.image('hpbar', 'images/assets/hpbar.png');
+                    game.load.image('hpbar-empty', 'images/assets/hpbar_empty.png')
 					game.load.spritesheet('dude', 'images/assets/zero.png', 141, 0);
                     game.load.spritesheet('opponent', 'images/assets/scorpion.png', 141, 0);
 				},
@@ -65,6 +66,8 @@ define(function(require) {
 				ground.game.physics.arcade.enableBody(ground);
 				ground.visible = false;
 				ground.body.immovable = true;
+                hpbarplayer_e = game.add.sprite(50,50,'hpbar-empty');
+                hpbaropponent_e = game.add.sprite(game.world.width/100*70, 50, 'hpbar-empty');
                 hpbarplayer = game.add.sprite(50 , 50, 'hpbar');
 				hpbaropponent = game.add.sprite(game.world.width/100*70, 50, 'hpbar');
                 cursors = game.input.keyboard.createCursorKeys();
@@ -101,8 +104,8 @@ define(function(require) {
                 player.body.customSeparateX = true;          
                 playerHP = 100;
                 opponentHP = 100;
-                cropRectOpponentHP = new Phaser.Rectangle(0, 0, 500, 50);
-                cropRectPlayerHP = new Phaser.Rectangle(0,0,500,50);
+                cropRectOpponentHP = new Phaser.Rectangle(0, 0, 519, 50);
+                cropRectPlayerHP = new Phaser.Rectangle(0,0,519,50);
                 hpbarplayer.crop(cropRectPlayerHP)
                 hpbaropponent.crop(cropRectOpponentHP);
                 stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
