@@ -2,60 +2,80 @@
 	<fest:script>
 		console.log('[register json]', json);
 	</fest:script>
-	<div class="game__menu-wrapper game__menu-wrapper_register">
-		<div class="game__menu-caption">
-			<div class="game__menu game__menu_caption">
-				<fest:choose>
-					<fest:when test="json.errorReason">
-						<span class="game__menu-header"><fest:value>json.errorReason</fest:value></span>
-					</fest:when>
-					<fest:otherwise>
-						<span class="game__menu-header">ERROR</span>
-					</fest:otherwise>
-				</fest:choose>
+	<fest:choose>
+		<fest:when test="json.user.id">
+			<div class="game__menu-wrapper game__menu-wrapper_m ain">
+				<div class="game__menu-caption">
+					<div class="game__menu game__menu_caption game__menu_caption_visible game__menu_caption_visible_animation">
+						<span class="game__menu-header">HOW DID YOU FUCKING GET THERE?! FUCK OFF!!!</span>
+					</div>
+				</div>
+				<div class="game__menu game__menu_fail">
+					<ul class="menu">
+						<li class="menu__element">
+							<a class="menu__item js-focus js-back" href="#main">BACK</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-		</div>
-		<div class="game__menu {json.errorReason !== false ? 'game__menu_fail' : '' }">
-			<ul class="menu">
-				<form class="menu__form js-form" action="" novalidate="novalidate" autocomplete="off">
-					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus {json.validationError.login ? 'menu__item_input_valid' : json.validationError.login === undefined ? '' : 'menu__item_input_invalid'}" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN" value="{json.formData.login ? json.formData.login : ''}"/>
-						<span class="menu__validationtip {json.validationError.login ? '' : json.validationError.login === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ LOGIN</span>
-					</li>
-					<!-- LOGIN MUST BE 4-20 LETTERS LONG -->
-					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus {json.validationError.email ? 'menu__item_input_valid' : json.validationError.email === undefined ? '' : 'menu__item_input_invalid'}" name="email" type="email" required="required" maxlength="20" placeholder="E-MAIL" value="{json.formData.email ? json.formData.email : ''}"/>
-						<span class="menu__validationtip {json.validationError.email ? '' : json.validationError.email === undefined ? '' : 'menu__validationtip_visible'}">ENTER A VALID EMAIL</span>
-					</li>
-					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus {json.validationError.password ? 'menu__item_input_valid' : json.validationError.password === undefined ? '' : 'menu__item_input_invalid'}" name="password" type="password" required="required" maxlength="10" placeholder="PASSWORD" value="{json.formData.password ? json.formData.password : ''}"/>
-						<span class="menu__validationtip {json.validationError.password ? '' : json.validationError.password === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ PASSWORD</span>
-					</li>
-					<li class="menu__element">
-						<div class="menu__avatar">
-							<div class="avatar">
-								<div class="avatar__icons">
-									<i class="fa fa-trash-o avatar__delete avatar__delete_invisible js-delete-avatar" title="Delete this pic!"></i>
-									<i class="fa fa-camera avatar__camera js-camera" title="Take a pic now!"></i>
+		</fest:when>
+		<fest:otherwise>
+			<div class="game__menu-wrapper game__menu-wrapper_register">
+				<div class="game__menu-caption">
+					<div class="game__menu game__menu_caption {json.errorReason ? 'game__menu_caption_visible' : ''} {json.errorAnimation ? 'game__menu_caption_visible_animation' : ''}">
+						<fest:choose>
+							<fest:when test="json.errorReason">
+								<span class="game__menu-header"><fest:value>json.errorReason</fest:value></span>
+							</fest:when>
+							<fest:otherwise>
+								<span class="game__menu-header">ERROR</span>
+							</fest:otherwise>
+						</fest:choose>
+					</div>
+				</div>
+				<div class="game__menu {json.errorReason !== false ? 'game__menu_fail' : '' }">
+					<ul class="menu">
+						<form class="menu__form js-form" action="" novalidate="novalidate" autocomplete="off">
+							<li class="menu__element">
+								<input class="menu__item menu__item_input js-focus js-input {json.validationError.login ? 'menu__item_input_valid' : json.validationError.login === undefined ? '' : 'menu__item_input_invalid'}" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN" value="{json.formData.login ? json.formData.login : ''}"/>
+								<span class="menu__validationtip {json.validationError.login ? '' : json.validationError.login === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ LOGIN</span>
+							</li>
+							<!-- LOGIN MUST BE 4-20 LETTERS LONG -->
+							<li class="menu__element">
+								<input class="menu__item menu__item_input js-focus js-input {json.validationError.email ? 'menu__item_input_valid' : json.validationError.email === undefined ? '' : 'menu__item_input_invalid'}" name="email" type="email" required="required" maxlength="25" placeholder="E-MAIL" value="{json.formData.email ? json.formData.email : ''}"/>
+								<span class="menu__validationtip {json.validationError.email ? '' : json.validationError.email === undefined ? '' : 'menu__validationtip_visible'}">ENTER A VALID EMAIL</span>
+							</li>
+							<li class="menu__element">
+								<input class="menu__item menu__item_input js-focus js-input {json.validationError.password ? 'menu__item_input_valid' : json.validationError.password === undefined ? '' : 'menu__item_input_invalid'}" name="password" type="password" required="required" maxlength="15" placeholder="PASSWORD" value="{json.formData.password ? json.formData.password : ''}"/>
+								<span class="menu__validationtip {json.validationError.password ? '' : json.validationError.password === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ PASSWORD</span>
+							</li>
+							<li class="menu__element">
+								<div class="menu__avatar">
+									<div class="avatar">
+										<div class="avatar__icons">
+											<i class="fa fa-trash-o avatar__delete avatar__delete_invisible js-delete-avatar" title="Delete this pic!"></i>
+											<i class="fa fa-camera avatar__camera js-camera" title="Take a pic now!"></i>
+										</div>
+										<div class="avatar__preview js-preview"></div>
+									</div>
 								</div>
-								<div class="avatar__preview js-preview"></div>
-							</div>
-						</div>
-					</li>
-					<li class="menu__element">
-						<a class="menu__item menu__shotter js-shotter" href="#">CAPTURE</a>
-					</li>
-					<li class="menu__element">
-						<a class="menu__item menu__shotter js-cancel" href="#">CANCEL</a>
-					</li>
-					<li class="menu__element">
-						<button class="menu__item menu__item_submit js-focus" type="submit">REGISTER</button>
-					</li>
-					<li class="menu__element">
-						<a class="menu__item js-focus js-back" href="#main">BACK</a>
-					</li>
-				</form>
-			</ul>
-		</div>
-	</div>
+							</li>
+							<li class="menu__element">
+								<a class="menu__item menu__shotter js-shotter" href="#">CAPTURE</a>
+							</li>
+							<li class="menu__element">
+								<a class="menu__item menu__shotter js-cancel" href="#">CANCEL</a>
+							</li>
+							<li class="menu__element">
+								<button class="menu__item menu__item_submit js-focus" type="submit">REGISTER</button>
+							</li>
+							<li class="menu__element">
+								<a class="menu__item js-focus js-back" href="#main">BACK</a>
+							</li>
+						</form>
+					</ul>
+				</div>
+			</div>
+		</fest:otherwise>
+	</fest:choose>
 </fest:template>

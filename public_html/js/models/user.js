@@ -11,10 +11,10 @@ define(function(require) {
 		},
 		url: '/api/user/',
 		validate: function (formData) {
+			console.info('[formData]', formData);
 			var emailRegExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
 				passwordStrengthExp = new RegExp(/(?=^.{5,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/);
 
-			console.info('[formData]', formData);
 			var error = {};
 
 			$.each(formData, function (key, val) {
@@ -45,7 +45,7 @@ define(function(require) {
 			}
 		},
 		sync: function (method, model, options) {
-			console.info('method', method, model, this);
+			console.info('method', method, model, options);
 			switch (method) {
 				case 'create':
 					options.url = this.url;

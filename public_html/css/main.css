@@ -231,19 +231,30 @@ i.avatar__delete {
     color: #E4E3E4;
     background: rgba(202, 69, 69, 0.12);
     margin-bottom: 5vh;
-    width: initial;
+    width: 50%;
     border: #792728 solid 1px; }
+    .game__menu_caption_visible {
+      display: block;
+      overflow: hidden; }
+      .game__menu_caption_visible_animation {
+        animation: slideDown3 1s ease; }
   @media (max-height: 800px) {
     .game__menu_caption {
       position: relative;
       left: -50%;
       top: 0;
+      width: initial;
       font-size: 30px;
       height: 49px;
-      margin: 0; } }
+      margin: 0; }
+      .game__menu_caption_visible {
+        display: block;
+        overflow: hidden; }
+        .game__menu_caption_visible_animation {
+          animation: slideDown2 1s ease; } }
   .game__menu_fail {
     border: #792728 solid 1px;
-    animation: invalidate__menu 0.4s ease; }
+    animation: shake .3s ease-in-out, invalidate__menu 0.4s ease; }
 
 .game__menu__scoreboard {
   margin-top: 15px; }
@@ -264,6 +275,32 @@ i.avatar__delete {
     border: black solid 1px; }
   to {
     border: #792728 solid 1px; } }
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0); }
+  20% {
+    transform: translate(-30, 0); }
+  40% {
+    transform: translate(30px, 0); }
+  60% {
+    transform: translate(-30px, 0); }
+  80% {
+    transform: translate(30px, 0); }
+  100% {
+    transform: translate(0, 0); } }
+
+@keyframes slideDown2 {
+  from {
+    height: 0; }
+  to {
+    height: 49px; } }
+
+@keyframes slideDown3 {
+  from {
+    height: 0; }
+  to {
+    height: 83px; } }
 
 
 .game__splash_hidden {
@@ -375,7 +412,16 @@ i.avatar__delete {
   font-size: 20px;
   display: none; }
   .menu__validationtip_visible {
-    display: block; }
+    display: block;
+    height: 23px;
+    animation: slideDown 1s ease;
+    overflow: hidden; }
+
+@keyframes slideDown {
+  from {
+    height: 0; }
+  to {
+    height: 23px; } }
 
 .menu {
   list-style-type: none;

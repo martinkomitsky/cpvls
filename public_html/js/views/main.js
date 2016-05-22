@@ -11,20 +11,13 @@ define(function(require) {
 			return tmpl({user: user, session: session});
 		},
 		className: 'game__main game__main_visible js-main',
-		initialize: function () {
-			console.log('[init]', this.$el);
-
-			this.listenTo(this.model, 'change', function (e) {
-				console.log('[MAIN] user changed', e);
-				this.render();
-			});
-			this.listenTo(session, 'change', function (e) {
-				console.log('[MAIN] session changed', e);
-				this.render();
-			});
+		bindEvents: function () {
+			this.listenTo(this.model, 'change', this.renderAfterChange.bind(this, 'user'));
+			this.listenTo(session, 'change', this.renderAfterChange.bind(this, 'session'));
 		},
-		render: function () {
-			return BaseView.prototype.render.call(this);
+		renderAfterChange: function (name, model) {
+			console.log('[MAIN] ' + name + ' changed', model.toJSON());
+			this.render();
 		}
 	});
 
