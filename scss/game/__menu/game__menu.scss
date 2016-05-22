@@ -23,11 +23,54 @@
 			color: #E4E3E4;
 			text-align: center;
 		}
+
+		&_caption {
+			display: none;
+			font-size: 60px;
+			color: #E4E3E4;
+			background: rgba(202, 69, 69, 0.12);
+			margin-bottom: 5vh;
+			width: initial;
+			border: #792728 solid 1px;
+		}
+		@media (max-height: 800px) {
+			&_caption {
+				position: relative;
+				left: -50%;
+				top: 0;
+				// width: 20%;
+				font-size: 30px;
+				height: 49px;
+				margin: 0;
+			}
+		}
+
+		&_fail {
+			border: #792728 solid 1px;
+			animation: invalidate__menu 0.4s ease;
+		}
 	}
 
 	&__menu__scoreboard {
 		margin-top: 15px;
 	}
+
+	@media (max-height: 800px) {
+		&__menu-caption {
+			position: absolute;
+			left: 50%;
+			top: 0;
+		}
+	}
+
+	&__menu-header {
+		top: 120px;
+		display: block;
+		padding: 7px 10px;
+	}
+
+	@keyframes invalidate__menu {
+		from {border: black solid 1px;}
+		to {border: #792728 solid 1px;}
+	}
 }
-
-

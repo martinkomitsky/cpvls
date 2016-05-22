@@ -11,6 +11,7 @@ define(function (require) {
 		},
 		render: function () {
 			this.$el.html(this.template());
+			// this.$('.js-focus').eq(0).focus();
 			console.log('render');
 			return this;
 		},
@@ -26,7 +27,7 @@ define(function (require) {
 		},
 		events: {
 
-        }
+		}
 	});
 
 	return View;

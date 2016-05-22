@@ -1,22 +1,35 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
 	<fest:script>
-		console.log('json', json);
+		console.log('[register json]', json);
 	</fest:script>
 	<div class="game__menu-wrapper game__menu-wrapper_register">
-		<div class="game__menu">
+		<div class="game__menu-caption">
+			<div class="game__menu game__menu_caption">
+				<fest:choose>
+					<fest:when test="json.errorReason">
+						<span class="game__menu-header"><fest:value>json.errorReason</fest:value></span>
+					</fest:when>
+					<fest:otherwise>
+						<span class="game__menu-header">ERROR</span>
+					</fest:otherwise>
+				</fest:choose>
+			</div>
+		</div>
+		<div class="game__menu {json.errorReason !== false ? 'game__menu_fail' : '' }">
 			<ul class="menu">
 				<form class="menu__form js-form" action="" novalidate="novalidate" autocomplete="off">
 					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN"/>
-						<span class="menu__validationtip">GOWNO TWOJ LOGIN</span>
+						<input class="menu__item menu__item_input js-focus {json.validationError.login ? 'menu__item_input_valid' : json.validationError.login === undefined ? '' : 'menu__item_input_invalid'}" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN" value="{json.formData.login ? json.formData.login : ''}"/>
+						<span class="menu__validationtip {json.validationError.login ? '' : json.validationError.login === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ LOGIN</span>
+					</li>
+					<!-- LOGIN MUST BE 4-20 LETTERS LONG -->
+					<li class="menu__element">
+						<input class="menu__item menu__item_input js-focus {json.validationError.email ? 'menu__item_input_valid' : json.validationError.email === undefined ? '' : 'menu__item_input_invalid'}" name="email" type="email" required="required" maxlength="20" placeholder="E-MAIL" value="{json.formData.email ? json.formData.email : ''}"/>
+						<span class="menu__validationtip {json.validationError.email ? '' : json.validationError.email === undefined ? '' : 'menu__validationtip_visible'}">ENTER A VALID EMAIL</span>
 					</li>
 					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus" name="email" type="email" required="required" maxlength="20" placeholder="E-MAIL"/>
-						<span class="menu__validationtip">GOWNO TWOJ EMAIL</span>
-					</li>
-					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus" name="password" type="password" required="required" maxlength="10" placeholder="PASSWORD"/>
-						<span class="menu__validationtip">GOWNO TWOJ PASSWORD</span>
+						<input class="menu__item menu__item_input js-focus {json.validationError.password ? 'menu__item_input_valid' : json.validationError.password === undefined ? '' : 'menu__item_input_invalid'}" name="password" type="password" required="required" maxlength="10" placeholder="PASSWORD" value="{json.formData.password ? json.formData.password : ''}"/>
+						<span class="menu__validationtip {json.validationError.password ? '' : json.validationError.password === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ PASSWORD</span>
 					</li>
 					<li class="menu__element">
 						<div class="menu__avatar">

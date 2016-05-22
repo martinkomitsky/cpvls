@@ -100,7 +100,6 @@
 canvas {
 	margin: 0 auto;
 }
-
 i.avatar__camera {
   font: normal normal normal 130px/1 FontAwesome;
   color: #888788;
@@ -226,9 +225,45 @@ i.avatar__delete {
     font-size: 30px;
     color: #E4E3E4;
     text-align: center; }
+  .game__menu_caption {
+    display: none;
+    font-size: 60px;
+    color: #E4E3E4;
+    background: rgba(202, 69, 69, 0.12);
+    margin-bottom: 5vh;
+    width: initial;
+    border: #792728 solid 1px; }
+  @media (max-height: 800px) {
+    .game__menu_caption {
+      position: relative;
+      left: -50%;
+      top: 0;
+      font-size: 30px;
+      height: 49px;
+      margin: 0; } }
+  .game__menu_fail {
+    border: #792728 solid 1px;
+    animation: invalidate__menu 0.4s ease; }
 
 .game__menu__scoreboard {
   margin-top: 15px; }
+
+@media (max-height: 800px) {
+  .game__menu-caption {
+    position: absolute;
+    left: 50%;
+    top: 0; } }
+
+.game__menu-header {
+  top: 120px;
+  display: block;
+  padding: 7px 10px; }
+
+@keyframes invalidate__menu {
+  from {
+    border: black solid 1px; }
+  to {
+    border: #792728 solid 1px; } }
 
 
 .game__splash_hidden {
@@ -270,58 +305,65 @@ i.avatar__delete {
   color: #888788;
   transition: color 0.4s ease;
   text-shadow: 3px 2px rgba(132, 1, 1, 0.29); }
+  .menu__item_submit {
+    color: #840101;
+    background: 0;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer; }
+  .menu__item:focus, .menu__item:hover {
+    color: #E4E3E4;
+    outline: none; }
+  .menu__item:focus:before, .menu__item:focus:after, .menu__item:hover:before, .menu__item:hover:after {
+    content: "•";
+    color: #E4E3E4;
+    margin-right: 10px; }
+  .menu__item:focus:after, .menu__item:hover:after {
+    margin-left: 10px; }
+  .menu__item_input {
+    padding: 5px;
+    color: #E4E3E4;
+    font-size: 35px;
+    background: rgba(179, 179, 179, 0.12);
+    border: 1px solid rgba(149, 160, 164, 0.08);
+    box-sizing: border-box;
+    width: 220px;
+    text-align: center;
+    transition: all 0.8s ease;
+    /*text-transform: uppercase;*/
+    font-family: inherit; }
+  .menu__item_input_invalid {
+    background: rgba(202, 69, 69, 0.12);
+    border: 1px solid rgba(243, 41, 41, 0.35);
+    animation: invalidate 1s ease; }
+  .menu__item_input_valid {
+    background: rgba(97, 253, 58, 0.12);
+    border: 1px solid rgba(41, 243, 75, 0.35);
+    animation: validate 1s ease; }
+  .menu__item_input::-webkit-input-placeholder {
+    color: #888788; }
+  .menu__item_input:-moz-placeholder {
+    color: #888788; }
+  .menu__item_input::-moz-placeholder {
+    color: #888788; }
+  .menu__item_input:-ms-input-placeholder {
+    color: #888788; }
 
-.menu__item_submit {
-  color: #840101;
-  background: 0;
-  border: 0;
-  font-family: inherit;
-  cursor: pointer; }
+@keyframes invalidate {
+  from {
+    background: rgba(179, 179, 179, 0.12);
+    border: 1px solid rgba(149, 160, 164, 0.08); }
+  to {
+    background: rgba(202, 69, 69, 0.12);
+    border: 1px solid rgba(243, 41, 41, 0.35); } }
 
-.menu__item:focus, .menu__item:hover {
-  color: #E4E3E4;
-  outline: none; }
-
-.menu__item:focus:before, .menu__item:focus:after, .menu__item:hover:before, .menu__item:hover:after {
-  content: "•";
-  color: #E4E3E4;
-  margin-right: 10px; }
-
-.menu__item:focus:after, .menu__item:hover:after {
-  margin-left: 10px; }
-
-.menu__item_input {
-  padding: 5px;
-  color: #E4E3E4;
-  font-size: 35px;
-  background: rgba(179, 179, 179, 0.12);
-  border: 1px solid rgba(149, 160, 164, 0.08);
-  box-sizing: border-box;
-  width: 220px;
-  text-align: center;
-  transition: all 0.8s ease;
-  /*text-transform: uppercase;*/
-  font-family: inherit; }
-
-.menu__item_input_invalid {
-  background: rgba(202, 69, 69, 0.12);
-  border: 1px solid rgba(243, 41, 41, 0.35); }
-
-.menu__item_input_valid {
-  background: rgba(97, 253, 58, 0.12);
-  border: 1px solid rgba(41, 243, 75, 0.35); }
-
-.menu__item_input::-webkit-input-placeholder {
-  color: #888788; }
-
-.menu__item_input:-moz-placeholder {
-  color: #888788; }
-
-.menu__item_input::-moz-placeholder {
-  color: #888788; }
-
-.menu__item_input:-ms-input-placeholder {
-  color: #888788; }
+@keyframes validate {
+  from {
+    background: rgba(179, 179, 179, 0.12);
+    border: 1px solid rgba(149, 160, 164, 0.08); }
+  to {
+    background: rgba(97, 253, 58, 0.12);
+    border: 1px solid rgba(41, 243, 75, 0.35); } }
 
 .menu__shotter {
   display: none;
@@ -330,7 +372,10 @@ i.avatar__delete {
 .menu__validationtip {
   display: block;
   color: #840101;
-  font-size: 20px; }
+  font-size: 20px;
+  display: none; }
+  .menu__validationtip_visible {
+    display: block; }
 
 .menu {
   list-style-type: none;

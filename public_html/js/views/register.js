@@ -7,7 +7,12 @@ define(function(require) {
 
 	var View = BaseView.extend({
 		template: function() {
-			return tmpl({user: user});
+			return tmpl({
+				user: user,
+				errorReason: this.errorReason,
+				validationError: user.validationError || {},
+				formData: this.formData || {}
+			});
 		},
 		model: user,
 		className: 'game__main game__main_visible js-register',
@@ -27,6 +32,7 @@ define(function(require) {
 		},
 		initialize: function () {
 			console.log('init');
+			this.errorReason = false;
 			this.listenTo(this.model, 'change', function (e) {
 				console.log('change', e)
 			});
@@ -44,44 +50,50 @@ define(function(require) {
 		},
 		submit: function (event) {
 			event.preventDefault();
-			var formData = this.$('.js-form').serializeObject();
-			formData.email = formData.email.toLowerCase();
-			formData.login = formData.login.toLowerCase();
+			this.formData = this.$('.js-form').serializeObject();
+			this.formData.email = this.formData.email.toLowerCase();
+			this.formData.login = this.formData.login.toLowerCase();
 
-			this.model.save(formData, {
+			this.model.save(this.formData, {
 				success: function (model, xhr) {
 					alert('success');
 					console.log(xhr);
 					user.set({isRegistered: true});
+					this.errorReason = false;
 					this.render();
-					// this.trigger('navigate');
+					this.show();
+					this.$('.js-form')[0].reset();
 					Backbone.history.navigate('#main', {trigger: true});
 				}.bind(this),
 				error: function (model, xhr) {
-					alert('error');
-					console.log(xhr.responseText);
-				}
+					xhr.responseText == xhr.responseText || '{}';
+					this.errorReason = JSON.parse(xhr.responseText).error;
+					console.log(this.errorReason);
+					this.render();
+					this.show();
+					$('.game__menu_caption').slideDown();
+				}.bind(this)
 			});
 
 			if (user.validationError) {
-				console.log('validation error', user.validationError)
-				this.$('.menu__item_input').
-					removeClass('menu__item_input_valid');
-				console.log('this', this)
-				$.each(user.validationError, function(key, val) {
-					if (!val) {
-						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_invalid');
-					} else {
-						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_valid');
-					}
-				}.bind(this));
+				console.warn('[validation error]', user.validationError);
+				// this.$('.menu__item_input').removeClass('menu__item_input_valid');
+				this.render();
+				this.show();
+				// $.each(user.validationError, function(key, val) {
+				// 	if (!val) {
+				// 		this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_invalid');
+				// 	} else {
+				// 		this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_valid');
+				// 	}
+				// }.bind(this));
 
 			} else {
-				this.$('.menu__item_input')
-					.removeClass('menu__item_input_invalid')
-					.removeClass('menu__item_input_valid');
-
-				this.$('.js-form')[0].reset();
+				this.render();
+				this.show();
+				// this.$('.menu__item_input')
+				// 	.removeClass('menu__item_input_invalid')
+				// 	.removeClass('menu__item_input_valid');
 			}
 		},
 		showCamera: function() {
