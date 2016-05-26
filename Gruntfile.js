@@ -90,9 +90,30 @@ module.exports = function (grunt) {
                 //separator: ';',
             },
             dist: {
-                src: ['public_html/css/main.src.css', 'scss/css/**/*.css', 'scss/css/**/**/*.scss'],
+                src: ['public_html/css/font-awesome.min.css', 'public_html/css/main.src.css', 'scss/css/**/*.css', 'scss/css/**/**/*.scss'],
                 dest: 'public_html/css/main.css',
             },
+        },
+
+        requirejs: {
+            build: {
+                options: {
+                    almond: true,
+                    baseUrl: "public_html/js",
+                    mainConfigFile: "public_html/js/config.js",
+                    name: "main",
+                    optimize: "uglify",
+                    out: "public_html/js/build/app.js",
+                }
+            },
+            css: {
+                options: {
+                    optimizeCss: "standard",
+                    cssImportIgnore: null,
+                    cssIn: "public_html/css/main.css",
+                    out: "public_html/css/main.min.css",
+                }
+            }
         },
 
         qunit: {
@@ -110,10 +131,11 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
     grunt.registerTask('sas', ['sass:dev', 'concat']);
 
     grunt.registerTask('test', ['qunit:all']);
-    grunt.registerTask('front', ['concurrent:devfront']);
+    grunt.registerTask('front', ['requirejs:build', 'concurrent:devfront']);
     grunt.registerTask('default', ['concurrent']);
 };

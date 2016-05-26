@@ -2,7 +2,7 @@ define(function(require) {
 
 	var BaseView = require('views/baseView'),
 		tmpl = require('tmpl/game'),
-		phaser = require('phaser');
+		phaser = require('Phaser');
 
 	var View = BaseView.extend({
 		template: tmpl,

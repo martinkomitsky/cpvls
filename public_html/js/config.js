@@ -7,7 +7,7 @@ var require = {
 		serializeObject: 'lib/serializeObject',
 		objectHasFalseValue: 'lib/objectHasFalseValue',
 		backbone: 'lib/backbone',
-		phaser: 'lib/phaser',
+		Phaser: 'lib/Phaser',
 		FileAPI: 'lib/fileapi/FileAPI.min'
 	},
 	shim: {
