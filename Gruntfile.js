@@ -44,6 +44,7 @@ module.exports = function (grunt) {
 
 		concurrent: {
             dev: ['watch', 'shell:front', 'shell:back'],
+            devfront: ['watch', 'shell:front'],
             options: {
                 logConcurrentOutput: true
             }
@@ -113,5 +114,6 @@ module.exports = function (grunt) {
     grunt.registerTask('sas', ['sass:dev', 'concat']);
 
     grunt.registerTask('test', ['qunit:all']);
+    grunt.registerTask('front', ['concurrent:devfront']);
     grunt.registerTask('default', ['concurrent']);
 };
