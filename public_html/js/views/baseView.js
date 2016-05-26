@@ -5,13 +5,14 @@ define(function (require) {
 	var View = Backbone.View.extend({
 		template: {},
 		initialize: function () {
-			console.log('[INIT]', this.$el);
+			console.info('[INIT]', this.$el);
 			this.bindEvents();
 			return this;
 		},
 		render: function () {
 			this.$el.html(this.template());
-			console.log('render');
+			// this.$('.js-focus').eq(0).focus();
+			// console.log('render');
 			return this;
 		},
 		show: function () {
@@ -26,7 +27,7 @@ define(function (require) {
 		},
 		events: {
 
-        }
+		}
 	});
 
 	return View;

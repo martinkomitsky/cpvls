@@ -23,11 +23,112 @@
 			color: #E4E3E4;
 			text-align: center;
 		}
+
+		&_caption {
+			display: none;
+			font-size: 60px;
+			color: #E4E3E4;
+			background: rgba(202, 69, 69, 0.12);
+			margin-bottom: 5vh;
+			width: 50%;
+			border: #792728 solid 1px;
+			&_visible {
+				display: block;
+				overflow: hidden;
+				&_animation {
+					animation: slideDown3 1s ease;
+				}
+			}
+		}
+		@media (max-height: 800px) {
+			&_caption {
+				position: relative;
+				left: -50%;
+				top: 0;
+				// width: 20%;
+				width: initial;
+				font-size: 30px;
+				height: 49px;
+				margin: 0;
+					&_visible {
+						display: block;
+						overflow: hidden;
+						&_animation {
+							animation: slideDown2 1s ease;
+						}
+					}
+			}
+		}
+
+		&_fail {
+			border: #792728 solid 1px;
+			animation: shake .3s ease-in-out, invalidate__menu 0.4s ease;
+			// animation: invalidate__menu 0.4s ease;
+		}
 	}
 
 	&__menu__scoreboard {
 		margin-top: 15px;
 	}
+
+	@media (max-height: 800px) {
+		&__menu-caption {
+			position: absolute;
+			left: 50%;
+			top: 0;
+		}
+	}
+
+	&__menu-header {
+		top: 120px;
+		display: block;
+		padding: 7px 10px;
+	}
+
+	@keyframes invalidate__menu {
+		from {border: black solid 1px;}
+		to {border: #792728 solid 1px;}
+	}
 }
 
 
+
+
+
+@keyframes shake {
+	0% {
+		transform: translate(0,0)
+	}
+
+	20% {
+		transform: translate(-30,0)
+	}
+
+	40% {
+		transform: translate(30px,0)
+	}
+
+	60% {
+		transform: translate(-30px,0)
+	}
+
+	80% {
+		transform: translate(30px,0)
+	}
+
+	100% {
+		transform: translate(0,0)
+	}
+}
+
+
+
+@keyframes slideDown2 {
+	from {height: 0;}
+	to {height: 49px;}
+}
+
+@keyframes slideDown3 {
+	from {height: 0;}
+	to {height: 83px;}
+}

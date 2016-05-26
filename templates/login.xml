@@ -1,18 +1,55 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
-	<div class="game__menu-wrapper game__menu-wrapper_main">
-		<div class="game__menu">
-			<ul class="menu">
-				<form class="menu__form js-form" action="" novalidate="novalidate" autocomplete="off">
-					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN" />
-					</li>
-					<li class="menu__element">
-						<input class="menu__item menu__item_input js-focus" name="password" type="password" required="required" maxlength="10" placeholder="PASSWORD" />
-					</li>
-					<li class="menu__element"><button class="menu__item menu__item_submit js-focus" type="submit">SIGN IN</button></li>
-					<li class="menu__element"><a class="menu__item js-focus js-back" href="#main">BACK</a></li>
-				</form>
-			</ul>
-		</div>
-	</div>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+	<fest:script>
+		console.log('[login json]', json);
+	</fest:script>
+	<fest:choose>
+		<fest:when test="json.session.id">
+			<div class="game__menu-wrapper game__menu-wrapper_m ain">
+				<div class="game__menu-caption">
+					<div class="game__menu game__menu_caption game__menu_caption_visible game__menu_caption_visible_animation">
+						<span class="game__menu-header">HOW DID YOU FREAKING GET THERE?! GO BACK!!!</span>
+					</div>
+				</div>
+				<div class="game__menu game__menu_fail">
+					<ul class="menu">
+						<li class="menu__element">
+							<a class="menu__item js-focus js-back" href="#main">BACK</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</fest:when>
+		<fest:otherwise>
+			<div class="game__menu-wrapper game__menu-wrapper_m ain">
+				<div class="game__menu-caption">
+					<div class="game__menu game__menu_caption {json.errorReason ? 'game__menu_caption_visible' : ''} {json.errorAnimation ? 'game__menu_caption_visible_animation' : ''}">
+						<fest:choose>
+							<fest:when test="json.errorReason">
+								<span class="game__menu-header"><fest:value>json.errorReason</fest:value></span>
+							</fest:when>
+							<fest:otherwise>
+								<span class="game__menu-header">ERROR</span>
+							</fest:otherwise>
+						</fest:choose>
+					</div>
+				</div>
+				<div class="game__menu {json.errorReason !== false ? 'game__menu_fail' : '' }">
+					<ul class="menu">
+						<form class="menu__form js-form" action="" autocomplete="off">
+							<li class="menu__element">
+								<input class="menu__item menu__item_input js-focus js-input {json.validationError.login ? 'menu__item_input_valid' : json.validationError.login === undefined ? '' : 'menu__item_input_invalid'}" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN" value="{json.formData.login ? json.formData.login : ''}"/>
+								<span class="menu__validationtip {json.validationError.login ? '' : json.validationError.login === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ LOGIN</span>
+							</li>
+							<li class="menu__element">
+								<input class="menu__item menu__item_input js-focus js-input {json.validationError.password ? 'menu__item_input_valid' : json.validationError.password === undefined ? '' : 'menu__item_input_invalid'}" name="password" type="password" required="required" maxlength="15" placeholder="PASSWORD" value="{json.formData.password ? json.formData.password : ''}"/>
+								<span class="menu__validationtip {json.validationError.password ? '' : json.validationError.password === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ PASSWORD</span>
+							</li>
+							<li class="menu__element"><button class="menu__item menu__item_submit js-focus" type="submit">SIGN IN</button></li>
+							<li class="menu__element"><a class="menu__item js-focus js-back" href="#main">BACK</a></li>
+						</form>
+					</ul>
+				</div>
+			</div>
+		</fest:otherwise>
+	</fest:choose>
 </fest:template>
