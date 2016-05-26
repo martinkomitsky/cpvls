@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 				command: "node server.js"
 			},
             'back': {
-                command: "java -cp cpvls_serv.jar main.Main 8080"
+                command: "java -cp cpvls_serv.jar main.Main"
             }
 		},
 

@@ -1,76 +1,103 @@
 .menu {
-
 	&__item {
 		font-size: 35px;
 		text-decoration: none;
 		color: #888788;
 		transition: color 0.4s ease;
 		text-shadow: 3px 2px rgba(132, 1, 1, 0.29);
+
+
+		&_submit {
+			color: #840101;
+			background: 0;
+			border: 0;
+			font-family: inherit;
+			cursor: pointer;
+		}
+
+		&:focus,
+		&:hover {
+			color: #E4E3E4;
+			outline: none;
+		}
+
+		&:focus:before,
+		&:focus:after,
+		&:hover:before,
+		&:hover:after {
+			content: "•";
+			color: #E4E3E4;
+			margin-right: 10px;
+		}
+		&:focus:after,
+		&:hover:after {
+			margin-left: 10px;
+		}
+
+		&_input {
+			padding: 5px;
+			color: #E4E3E4;
+			font-size: 35px;
+			background: rgba(179, 179, 179, 0.12);
+			border: 1px solid rgba(149, 160, 164, 0.08);
+			box-sizing: border-box;
+			width: 220px;
+			text-align: center;
+			transition: all 0.8s ease;
+			/*text-transform: uppercase;*/
+			font-family: inherit;
+		}
+		&_input_invalid {
+			background: rgba(202, 69, 69, 0.12);
+			border: 1px solid rgba(243, 41, 41, 0.35);
+			animation: invalidate 1s ease;
+		}
+
+		&_input_valid {
+			background: rgba(97, 253, 58, 0.12);
+			border: 1px solid rgba(41, 243, 75, 0.35);
+			animation: validate 1s ease;
+		}
+
+		&_input::-webkit-input-placeholder {
+			color: #888788;
+		}
+
+		&_input:-moz-placeholder {
+			color: #888788;
+		}
+
+		&_input::-moz-placeholder {
+			color: #888788;
+		}
+
+		&_input:-ms-input-placeholder {
+			color: #888788;
+		}
 	}
 
-	&__item_submit {
-		color: #840101;
-		background: 0;
-		border: 0;
-		font-family: inherit;
-		cursor: pointer;
-	}
+}
 
-	&__item:focus,
-	&__item:hover {
-		color: #E4E3E4;
-		outline: none;
-	}
 
-	&__item:focus:before,
-	&__item:focus:after,
-	&__item:hover:before,
-	&__item:hover:after {
-		content: "•";
-		color: #E4E3E4;
-		margin-right: 10px;
-	}
-	&__item:focus:after,
-	&__item:hover:after {
-		margin-left: 10px;
-	}
 
-	&__item_input {
-		padding: 5px;
-		color: #E4E3E4;
-		font-size: 35px;
+@keyframes invalidate {
+	from {
 		background: rgba(179, 179, 179, 0.12);
 		border: 1px solid rgba(149, 160, 164, 0.08);
-		box-sizing: border-box;
-		width: 220px;
-		text-align: center;
-		transition: all 0.8s ease;
-		/*text-transform: uppercase;*/
-	    font-family: inherit;
 	}
-	&__item_input_invalid {
+	to {
 		background: rgba(202, 69, 69, 0.12);
 		border: 1px solid rgba(243, 41, 41, 0.35);
 	}
+}
 
-	&__item_input_valid {
+@keyframes validate {
+	from {
+		background: rgba(179, 179, 179, 0.12);
+		border: 1px solid rgba(149, 160, 164, 0.08);
+	}
+	to {
 		background: rgba(97, 253, 58, 0.12);
 		border: 1px solid rgba(41, 243, 75, 0.35);
-	}
-
-	&__item_input::-webkit-input-placeholder {
-		color: #888788;
-	}
-
-	&__item_input:-moz-placeholder {
-		color: #888788;
-	}
-
-	&__item_input::-moz-placeholder {
-		color: #888788;
-	}
-
-	&__item_input:-ms-input-placeholder {
-		color: #888788;
 	}
 }

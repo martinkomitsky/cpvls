@@ -6,59 +6,78 @@ define(function(require) {
 		user = require('models/user');
 
 	var View = BaseView.extend({
+		template: function() {
+			return tmpl({
+				user: user,
+				session: session,
+				errorReason: this.errorReason,
+				validationError: session.validationError || {},
+				formData: this.formData || {},
+				errorAnimation: this.errorAnimation
+			});
+		},
 		model: session,
 		user: user,
-		template: tmpl,
 		className: 'game__main game__main_visible js-login',
-		render: function() {
-			return BaseView.prototype.render.call(this);
+		show: function () {
+			console.log("[show]");
+			this.$('.js-form').attr('novalidate', 'novalidate');
+			return BaseView.prototype.show.call(this);
 		},
 		events: {
-			'submit .js-form': 'submit'
+			'submit .js-form': 'submit',
+			'reset .js-form': 'reset'
 		},
 		initialize: function () {
-
+			this.errorReason = false;
+			this.errorAnimation = true;
+			return BaseView.prototype.initialize.call(this);
 		},
 		submit: function (event) {
 			event.preventDefault();
-			var data = this.$('.js-form').serializeObject();
-			console.info("data", data);
+			this.formData = this.$('.js-form').serializeObject();
+			this.formData.login = this.formData.login.toLowerCase();
 
-
-			this.model.save(data, {
+			this.model.save(this.formData, {
 				success: function (model, xhr) {
-					// alert('success');
 					this.user.set({login: this.model.get('login')});
 					this.model.set({isSignedIn: true, login: '', password: ''});
-					this.render();
+					this.errorReason = false;
+					// this.render();
+					this.formData = null;
+					this.$('.js-form').trigger('reset');
+					this.errorAnimation = true;
 					Backbone.history.navigate('#main', {trigger: true});
 				}.bind(this),
 				error: function (model, xhr) {
-					console.log(xhr.responseText);
-					alert('error');
-				}
+					this.errorReason = JSON.parse(xhr.responseText).error;
+					this.model.set({isSignedIn: false, trigger: "kek"});
+					// this.render();
+					// this.show();
+					this.errorAnimation = false;
+					console.warn('[error reason]', this.errorReason);
+				}.bind(this)
 			});
 
 			if (session.validationError) {
-				console.log('validation error', session.validationError);
-				this.$('.menu__item_input').
-					removeClass('menu__item_input_valid');
-
-				$.each(session.validationError, function(key, val) {
-					if (!val) {
-						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_invalid');
-					} else {
-						this.$('.menu__item_input[name=' + key + ']').addClass('menu__item_input_valid');
-					}
-				}.bind(this));
-
-			} else {
-				this.$('.menu__item_input')
-					.removeClass('menu__item_input_invalid')
-					.removeClass('menu__item_input_valid');
-
-				this.$('.js-form')[0].reset();
+				console.warn('[validation error]', session.validationError);
 			}
+			this.render();
+			this.show();
+		},
+		reset: function (event) {
+			$.each(this.$('.js-input'), function (key, val) {
+				$(val).attr('value', '');
+			});
+		},
+		bindEvents: function () {
+			this.listenTo(this.model, 'change', function (model) {
+				this.render();
+				if (Backbone.history.fragment === 'login') {
+					this.show();
+				}
+				console.log('[login] session change', model);
+			});
 		}
 
 	});

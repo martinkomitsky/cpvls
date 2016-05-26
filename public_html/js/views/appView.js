@@ -107,9 +107,8 @@ define(function (require) {
 				success: function (model, xhr) {
 					console.log('success', xhr);
 					user.clear();
-					// session.clear();
+					session.clear();
 					session.set({isSignedIn: false});
-					session.unset('id');
 					Backbone.history.navigate('#main', {trigger: true});
 				}.bind(this),
 				error: function (model, xhr) {

@@ -3,5 +3,18 @@
 		display: block;
 		color: #840101;
 		font-size: 20px;
+		display: none;
+
+		&_visible {
+			display: block;
+			height: 23px;
+			animation: slideDown 1s ease;
+			overflow: hidden;
+		}
 	}
+}
+
+@keyframes slideDown {
+	from {height: 0;}
+	to {height: 23px;}
 }
