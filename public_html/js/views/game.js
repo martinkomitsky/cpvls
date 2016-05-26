@@ -52,7 +52,7 @@ define(function(require) {
                 var boundsB = spriteB.getBounds();
                 return Phaser.Rectangle.intersects(boundsA, boundsB);
             }
-    
+
     		function create() {
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				// skies = ['sky', 'sky2', 'sky3', 'sky4', 'sky5', 'arena1', 'arena2', 'arena3', 'arena4', 'arena5', 'arena6', 'arena7', 'arena8', 'arena9', 'arena10'];
@@ -63,37 +63,37 @@ define(function(require) {
                 sky.scale.setTo(window.innerWidth/sky.width, window.innerHeight/sky.height);
                 firstFrame = true;
 				ground = game.add.sprite(0, game.world.height - 16, 'ground');
-                leftWall = game.add.sprite(0, 0, 'wall');
-                rightWall = game.add.sprite(window.innerWidth-10, 0, 'wall');
-                leftWall.scale.setTo(10, 25);
-                rightWall.scale.setTo(10, 25);
-                leftWall.game.physics.arcade.enableBody(leftWall);
+                //leftWall = game.add.sprite(0, 0, 'wall');
+                //rightWall = game.add.sprite(window.innerWidth-10, 0, 'wall');
+                //leftWall.scale.setTo(10, 25);
+                //rightWall.scale.setTo(10, 25);
+                //leftWall.game.physics.arcade.enableBody(leftWall);
                 //leftWall.visible = false;
-                leftWall.body.immovable = true;
-                rightWall.game.physics.arcade.enableBody(rightWall);
+                // leftWall.body.immovable = true;
+                // rightWall.game.physics.arcade.enableBody(rightWall);
                 //rightWall.visible = false;
-                rightWall.body.immovable = true;
+                // rightWall.body.immovable = true;
 				ground.scale.setTo(5, 2);
 				ground.game.physics.arcade.enableBody(ground);
 				ground.visible = false;
 				ground.body.immovable = true;
                 hpbarplayer_e = game.add.sprite(50,50,'hpbar-empty');
-                hpbaropponent_e = game.add.sprite(game.world.width/100*70, 50, 'hpbar-empty');
-                hpbarplayer = game.add.sprite(50 , 50, 'hpbar');
-				hpbaropponent = game.add.sprite(game.world.width/100*70, 50, 'hpbar');
+                hpbaropponent_e = game.add.sprite(game.world.width/100*60, 50, 'hpbar-empty');
+                hpbarplayer = game.add.sprite(50, 50, 'hpbar');
+				hpbaropponent = game.add.sprite(game.world.width/100*60, 50, 'hpbar');
                 cursors = game.input.keyboard.createCursorKeys();
 				attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				legAttack = game.input.keyboard.addKey(Phaser.Keyboard.X);
 				player = game.add.sprite(game.world.width/100*25, game.world.height - 750, 'dude');
                 opponent = game.add.sprite(game.world.width/100*75 , game.world.height - 750, 'opponent');
-                player.scale.setTo(2.5,2.5);
-                opponent.scale.setTo(-2.5,2.5);
+                player.scale.setTo(2.2,2.2);
+                opponent.scale.setTo(-2.2,2.2);
                 opponent.anchor.setTo(0.5);
 				game.physics.arcade.enable(player);
                 game.physics.arcade.enable(opponent);
                 opponent.body.bounce.y = 0;
                 opponent.body.gravity.y = 1600;
-                opponent.body.collideWorldBounds = true;
+                opponent.body.collideWorldBounds = false;
 				player.body.bounce.y = 0;
 				player.body.gravity.y = 1600;
 				player.body.collideWorldBounds = false;
@@ -112,7 +112,7 @@ define(function(require) {
                 opponent.animations.add('kick', [23, 24], 10, false);
                 opponent.animations.add('leg', [26, 27, 28, 29, 30, 31, 32], 10, false);
                 opponent.body.customSeparateX = true;
-                player.body.customSeparateX = false;          
+                player.body.customSeparateX = false;
                 playerHP = 100;
                 opponentHP = 100;
                 cropRectOpponentHP = new Phaser.Rectangle(0, 0, hpbaropponent.width, hpbaropponent.height);
@@ -121,7 +121,7 @@ define(function(require) {
                 hpbaropponent.crop(cropRectOpponentHP);
                 hpbaropponent.initialWidth = hpbaropponent.width;
                 hpbarplayer.initialWidth = hpbarplayer.width;
-                stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
+                stateText = game.add.text(game.world.centerX,game.world.centerY -50,' ', { font: '84px Arial', fill: '#fff' });
                 stateText.anchor.setTo(0.5, 0.5);
                 stateText.visible = false;
                 movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
@@ -132,7 +132,7 @@ define(function(require) {
                 timer.loop(2000, function() {opponent.animations.play('kick');
                                                 opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);});
                 timer.loop(7000, function() {opponent.animations.play('jump'); opponent.body.velocity.x = -100;
-                                                opponent.body.velocity.y = -850;
+                                                opponent.body.velocity.y = -1150;
                                                 opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);});
                 timer.loop(5000, function() {opponent.animations.play('right');
                                             opponent.body.velocity.x = -100});
@@ -146,10 +146,10 @@ define(function(require) {
 				game.physics.arcade.collide(player, ground);
                 game.physics.arcade.collide(opponent, ground);
                 game.physics.arcade.collide(player, opponent);
-                game.physics.arcade.collide(player, leftWall);
-                game.physics.arcade.collide(player, rightWall);
-                game.physics.arcade.collide(opponent, leftWall);
-                game.physics.arcade.collide(opponent, rightWall);
+                // game.physics.arcade.collide(player, leftWall);
+                // game.physics.arcade.collide(player, rightWall);
+                // game.physics.arcade.collide(opponent, leftWall);
+                // game.physics.arcade.collide(opponent, rightWall);
 				player.body.velocity.x = 0;
                 if (player.body.touching.down) {
                     firstFrame = false;
@@ -169,7 +169,7 @@ define(function(require) {
 					player.animations.play('kick');
                     if(checkOverlap(player, opponent)) {
                         opponentHP -= 1;
-                        cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;  
+                        cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;
                     }
 				} else if (legAttack.isDown) {
 					player.animations.play('leg');
@@ -199,10 +199,10 @@ define(function(require) {
 						player.animations.play('jump');
 					}
 					player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
-					player.body.velocity.y = -1550;
+					player.body.velocity.y = -1150;
 				}
                 if (opponent.animations.currentAnim.name == 'kick') {
-                   if(checkOverlap(player, opponent) && (player.body.exists) && (opponent.body.exists)) {
+                   if(checkOverlap(player, opponent)) {
                         playerHP -= 2;
                         cropRectPlayerHP.width = hpbarplayer.initialWidth/100*playerHP;
                     }
@@ -210,16 +210,15 @@ define(function(require) {
                 if (opponentHP <= 0) {
                     opponent.kill();
                     hpbaropponent.visible = false;
-                    stateText.text = "GAME OVER, you win!";
+                    stateText.text = "GAME OVER\n   You win!!!";
                     stateText.visible = true;
-                    
-                }
-                if (playerHP <= 0) {
-                    player.kill();
-                    stateText.text = "GAME OVER, bot win!";
-                    stateText.visible = true;
+                    hpbarplayer_e.visible = false;
                     hpbarplayer.visible = false;
+                    hpbaropponent.visible = false;
+                    hpbaropponent_e.visible = false;
+
                 }
+
 			}
 			return BaseView.prototype.render.call(this);
 		},
