@@ -12,14 +12,22 @@ define(function(require) {
 		url: '/api/session/',
 		validate: function (formData) {
 			console.info('[formData]', formData);
-			var error = {};
-			$.each(formData, function(key, val) {
-				if (!val) {
-					error[key] = false;
-				} else {
-					error[key] = true;
+			var error = {},
+				rules = {
+				login: function (val) {
+					return val.length >= 4 && val.length <= 20;
+				},
+				password: function (val) {
+					return val.length >= 5 && val.length <= 20;
+				}
+			}
+
+			Object.keys(formData).forEach(function (key) {
+				if (rules[key]) {
+					error[key] = rules[key](formData[key]);
 				}
 			});
+
 			if (hasFalseVal(error, 'isSignedIn')) {
 				return error;
 			}
