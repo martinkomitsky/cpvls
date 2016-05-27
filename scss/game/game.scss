@@ -1,3 +1,9 @@
+@import "__main/game__main.scss";
+@import "__menu/game__menu.scss";
+@import "__menu-wrapper/game__menu-wrapper.scss";
+@import "__playscreen/game__playscreen.scss";
+@import "__splash/game__splash.scss";
+
 .game {
 	overflow: hidden;
 }

@@ -1,18 +1,30 @@
+@import "avatar/avatar";
+@import "bar-top/bar-top";
+@import "btn-video/btn-video";
+@import "game/game";
+@import "menu/menu";
+@import "menu-title/menu-title";
+@import "page/page";
+@import "scoreboard/scoreboard";
+@import "splash/splash";
+@import "vbg/vbg";
+
+
 @font-face {
 	font-family: 'mkx_titleregular';
-	src: url('../fonts/mkx_title-webfont.eot');
-	src: url('../fonts/mkx_title-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../fonts/mkx_title-webfont.woff2') format('woff2'),
-		 url('../fonts/mkx_title-webfont.woff') format('woff'),
-		 url('../fonts/mkx_title-webfont.ttf') format('truetype'),
-		 url('../fonts/mkx_title-webfont.svg#mkx_titleregular') format('svg');
+	src: url('/fonts/mkx_title-webfont.eot');
+	src: url('/fonts/mkx_title-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/mkx_title-webfont.woff2') format('woff2'),
+		 url('/fonts/mkx_title-webfont.woff') format('woff'),
+		 url('/fonts/mkx_title-webfont.ttf') format('truetype'),
+		 url('/fonts/mkx_title-webfont.svg#mkx_titleregular') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'memento_regular';
-	src: url('../fonts/Memento.ttf');
+	src: url('/fonts/Memento.ttf');
 	font-weight: normal;
 	font-style: normal;
 }

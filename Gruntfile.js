@@ -33,8 +33,8 @@ module.exports = function (grunt) {
                 }
             },
             sass: {
-                files: ['scss/**/*.scss', 'scss/**/**/*.scss', 'public_html/css/main.src.css'],
-                tasks: ['sass:dev', 'concat'],
+                files: ['scss/**/*.scss', 'scss/**/**/*.scss', 'public_html/css/font-awesome.min.css'],
+                tasks: ['sass:dev', 'concat:css'],
                 options: {
                     livereload: true,
                     event: ['changed', 'added', 'deleted']
@@ -78,32 +78,34 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'scss',
-                    src: ['**/*.scss'],
-                    dest: 'scss/css/',
+                    // src: ['**/*.scss'],
+                    src: ['main.scss'],
+                    dest: 'public_html/css/',
                     ext: '.css'
-                }]
+            	}]
             }
         },
 
         concat: {
-            options: {
-                //separator: ';',
-            },
-            dist: {
-                src: ['public_html/css/font-awesome.min.css', 'public_html/css/main.src.css', 'scss/css/**/*.css', 'scss/css/**/**/*.scss'],
+        	css: {
+                src: ['public_html/css/font-awesome.min.css', 'public_html/css/main.css'],
                 dest: 'public_html/css/main.css',
-            },
+        	},
+        	js: {
+				src: ['public_html/js/lib/almond.js', 'public_html/build/js/app.js'],
+				dest: 'public_html/build/js/app.js',
+        	}
         },
 
         requirejs: {
-            build: {
+            js: {
                 options: {
                     almond: true,
                     baseUrl: "public_html/js",
                     mainConfigFile: "public_html/js/config.js",
                     name: "main",
                     optimize: "uglify",
-                    out: "public_html/js/build/app.js",
+                    out: "public_html/build/js/app.js",
                 }
             },
             css: {
@@ -111,7 +113,7 @@ module.exports = function (grunt) {
                     optimizeCss: "standard",
                     cssImportIgnore: null,
                     cssIn: "public_html/css/main.css",
-                    out: "public_html/css/main.min.css",
+                    out: "public_html/build/css/main.min.css",
                 }
             }
         },
@@ -125,17 +127,17 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-concurrent');
-
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-fest');
-
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
 
     grunt.registerTask('sas', ['sass:dev', 'concat']);
+    grunt.registerTask('build', ['requirejs', 'concat:js']);
+
 
     grunt.registerTask('test', ['qunit:all']);
-    grunt.registerTask('front', ['requirejs:build', 'concurrent:devfront']);
+    grunt.registerTask('front', ['requirejs', 'concurrent:devfront']);
     grunt.registerTask('default', ['concurrent']);
 };
