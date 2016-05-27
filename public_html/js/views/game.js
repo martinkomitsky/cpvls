@@ -40,9 +40,8 @@ define(function(require) {
 				preload: function() {
 					game.load.image('ground', 'images/assets/platform.png');
 
-					var rand = Math.random() * 10^0;
-					gameObj.currentArena = rand;
-					game.load.image('arena' + rand, gameObj.arenas[rand]);
+					gameObj.currentArena = Math.random() * 10^0;
+					game.load.image('arena' + gameObj.currentArena, gameObj.arenas[gameObj.currentArena]);
 
                     game.load.image('hpbar', 'images/assets/hpbar.png');
                     game.load.image('hpbar-empty', 'images/assets/hpbar_empty.png');
