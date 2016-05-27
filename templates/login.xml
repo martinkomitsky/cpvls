@@ -38,11 +38,11 @@
 						<form class="menu__form js-form" action="" autocomplete="off">
 							<li class="menu__element">
 								<input class="menu__item menu__item_input js-focus js-input {json.validationError.login ? 'menu__item_input_valid' : json.validationError.login === undefined ? '' : 'menu__item_input_invalid'}" name="login" type="text" required="required" maxlength="20" placeholder="LOGIN" value="{json.formData.login ? json.formData.login : ''}"/>
-								<span class="menu__validationtip {json.validationError.login ? '' : json.validationError.login === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ LOGIN</span>
+								<span class="menu__validationtip {json.validationError.login ? '' : json.validationError.login === undefined ? '' : 'menu__validationtip_visible'}">VALUE IS TOO SHORT</span>
 							</li>
 							<li class="menu__element">
 								<input class="menu__item menu__item_input js-focus js-input {json.validationError.password ? 'menu__item_input_valid' : json.validationError.password === undefined ? '' : 'menu__item_input_invalid'}" name="password" type="password" required="required" maxlength="15" placeholder="PASSWORD" value="{json.formData.password ? json.formData.password : ''}"/>
-								<span class="menu__validationtip {json.validationError.password ? '' : json.validationError.password === undefined ? '' : 'menu__validationtip_visible'}">GOWNO TWOJ PASSWORD</span>
+								<span class="menu__validationtip {json.validationError.password ? '' : json.validationError.password === undefined ? '' : 'menu__validationtip_visible'}">VALUE IS TOO SHORT</span>
 							</li>
 							<li class="menu__element"><button class="menu__item menu__item_submit js-focus" type="submit">SIGN IN</button></li>
 							<li class="menu__element"><a class="menu__item js-focus js-back" href="#main">BACK</a></li>
