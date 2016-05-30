@@ -2,7 +2,7 @@ define(function(require) {
 
 	var BaseView = require('views/baseView'),
 		tmpl = require('tmpl/game'),
-		phaser = require('Phaser');
+		phaser = require('lib/phaser');
 
 	var View = BaseView.extend({
 		template: tmpl,
@@ -45,7 +45,8 @@ define(function(require) {
 
                     game.load.image('hpbar', 'images/assets/hpbar.png');
                     game.load.image('hpbar-empty', 'images/assets/hpbar_empty.png');
-                    // game.load.image('wall', 'images/assets/wall.png');
+                    game.load.image('menu', 'images/assets/menu.png');
+                    game.load.image('wall', 'images/assets/wall.png');
 					game.load.spritesheet('dude', 'images/assets/zero.png', 141, 0);
                     game.load.spritesheet('opponent', 'images/assets/scorpion.png', 141, 0);
 				},
@@ -72,16 +73,16 @@ define(function(require) {
                 sky.scale.setTo(window.innerWidth/sky.width, window.innerHeight/sky.height);
                 firstFrame = true;
 				ground = game.add.sprite(0, game.world.height - 16, 'ground');
-                //leftWall = game.add.sprite(0, 0, 'wall');
-                //rightWall = game.add.sprite(window.innerWidth-10, 0, 'wall');
-                //leftWall.scale.setTo(10, 25);
-                //rightWall.scale.setTo(10, 25);
-                //leftWall.game.physics.arcade.enableBody(leftWall);
-                //leftWall.visible = false;
-                // leftWall.body.immovable = true;
-                // rightWall.game.physics.arcade.enableBody(rightWall);
-                //rightWall.visible = false;
-                // rightWall.body.immovable = true;
+                leftWall = game.add.sprite(0, 0, 'wall');
+                rightWall = game.add.sprite(window.innerWidth-10, 0, 'wall');
+                leftWall.scale.setTo(10, 25);
+                rightWall.scale.setTo(10, 25);
+                leftWall.game.physics.arcade.enableBody(leftWall);
+                leftWall.visible = false;
+                leftWall.body.immovable = true;
+                rightWall.game.physics.arcade.enableBody(rightWall);
+                rightWall.visible = false;
+                rightWall.body.immovable = true;
 				ground.scale.setTo(5, 2);
 				ground.game.physics.arcade.enableBody(ground);
 				ground.visible = false;
@@ -90,10 +91,12 @@ define(function(require) {
                 hpbaropponent_e = game.add.sprite(game.world.width/100*60, 50, 'hpbar-empty');
                 hpbarplayer = game.add.sprite(50, 50, 'hpbar');
 				hpbaropponent = game.add.sprite(game.world.width/100*60, 50, 'hpbar');
+                
                 cursors = game.input.keyboard.createCursorKeys();
 				attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				legAttack = game.input.keyboard.addKey(Phaser.Keyboard.X);
-				player = game.add.sprite(game.world.width/100*25, game.world.height - 750, 'dude');
+			
+                player = game.add.sprite(game.world.width/100*25, game.world.height - 750, 'dude');
                 opponent = game.add.sprite(game.world.width/100*75 , game.world.height - 750, 'opponent');
                 player.scale.setTo(2.2,2.2);
                 opponent.scale.setTo(-2.2,2.2);
@@ -120,6 +123,34 @@ define(function(require) {
                 opponent.animations.add('jumpleft', [22, 21, 20, 19, 18, 17, 16, 15], 10, false);
                 opponent.animations.add('kick', [23, 24], 10, false);
                 opponent.animations.add('leg', [26, 27, 28, 29, 30, 31, 32], 10, false);
+
+                opponent.moveRight = function() {
+                    opponent.animations.play('right');
+                    opponent.body.velocity.x = -100;
+                }
+
+                opponent.moveLeft = function() {
+                    opponent.animations.play('left');
+                    opponent.body.velocity.x = 100;
+                }
+
+                opponent.stay = function() {
+                    opponent.animations.play('stay');
+                    opponent.body.velocity.x = 0;
+                }
+
+                opponent.kick = function() {
+                    opponent.animations.play('kick');
+                    opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game)
+                }
+
+                opponent.jump = function() {
+                    opponent.animations.play('jump');
+                    opponent.body.velocity.x = -100;
+                    opponent.body.velocity.y = -1000;
+                    opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);
+                };             
+
                 opponent.body.customSeparateX = true;
                 player.body.customSeparateX = false;
                 playerHP = 100;
@@ -134,32 +165,26 @@ define(function(require) {
                 stateText.anchor.setTo(0.5, 0.5);
                 stateText.visible = false;
                 movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
-                timer = game.time.create(false);
-                timer.loop(11000, function() {opponent.animations.play('stay'); opponent.body.velocity.x = 0}, game);
-                timer.loop(3000, function() {opponent.animations.play('left');
-                                             opponent.body.velocity.x = 100});
-                timer.loop(2000, function() {opponent.animations.play('kick');
-                                                opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);});
-                timer.loop(7000, function() {opponent.animations.play('jump'); opponent.body.velocity.x = -100;
-                                                opponent.body.velocity.y = -1150;
-                                                opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);});
-                timer.loop(5000, function() {opponent.animations.play('right');
-                                            opponent.body.velocity.x = -100});
-                timer.start();
+                // timer = game.time.create(false);
+                // timer.loop(11000, opponent.stay(), game);
+                // timer.loop(3000, opponent.moveLeft());
+                // timer.loop(2000, opponent.kick());
+                // timer.loop(7000, opponent.jump());
+                // timer.loop(5000, opponent.moveRight());
+                // timer.start();
                 }
-
+            
 			function update() {
-
                 hpbaropponent.updateCrop();
                 hpbarplayer.updateCrop();
 				game.physics.arcade.collide(player, ground);
                 game.physics.arcade.collide(opponent, ground);
                 game.physics.arcade.collide(player, opponent);
-                // game.physics.arcade.collide(player, leftWall);
-                // game.physics.arcade.collide(player, rightWall);
-                // game.physics.arcade.collide(opponent, leftWall);
-                // game.physics.arcade.collide(opponent, rightWall);
-				player.body.velocity.x = 0;
+                game.physics.arcade.collide(player, leftWall);
+                game.physics.arcade.collide(player, rightWall);
+                game.physics.arcade.collide(opponent, leftWall);
+                game.physics.arcade.collide(opponent, rightWall);
+				player.body.velocity.x = 0;          
                 if (player.body.touching.down) {
                     firstFrame = false;
                 }
@@ -177,15 +202,18 @@ define(function(require) {
 				} else if (attack.isDown) {
 					player.animations.play('kick');
                     if(checkOverlap(player, opponent)) {
-                        opponentHP -= 1;
-                        cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;
+                        if (player.frame == 24) {
+                            opponentHP -= 1;
+                            cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;
+                        }
                     }
 				} else if (legAttack.isDown) {
 					player.animations.play('leg');
                     if(checkOverlap(player, opponent)) {
-                        console.log("hit");
-                        opponentHP -= 2;
-                        cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;
+                        if (player.frame == 27) {
+                            opponentHP -= 3;
+                            cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;
+                        }
                     }
 				} else {
 					if (player.body.touching.down)
@@ -196,7 +224,6 @@ define(function(require) {
                         }
                     else { if (firstFrame == true) {
                         console.log ('we are flying for the first time');
-
                     opponent.animations.play('stay');
                     player.frame = 15}}
 				}
@@ -225,9 +252,7 @@ define(function(require) {
                     hpbarplayer.visible = false;
                     hpbaropponent.visible = false;
                     hpbaropponent_e.visible = false;
-
                 }
-
 			}
 			return BaseView.prototype.render.call(this);
 		},
