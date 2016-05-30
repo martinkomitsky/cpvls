@@ -140,6 +140,6 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['qunit:all']);
     grunt.registerTask('front', ['concurrent:devfront']);
 
-    grunt.registerTask('build', ['sass:dev', 'concat:css', 'requirejs']);
+    grunt.registerTask('build', ['sass:dev', 'concat:css', 'requirejs', 'concat:js']);
     grunt.registerTask('default', ['concurrent']);
 };
