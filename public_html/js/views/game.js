@@ -87,11 +87,13 @@ define(function(require) {
 				ground.game.physics.arcade.enableBody(ground);
 				ground.visible = false;
 				ground.body.immovable = true;
-                hpbarplayer_e = game.add.sprite(50,50,'hpbar-empty');
-                hpbaropponent_e = game.add.sprite(game.world.width/100*60, 50, 'hpbar-empty');
-                hpbarplayer = game.add.sprite(50, 50, 'hpbar');
-				hpbaropponent = game.add.sprite(game.world.width/100*60, 50, 'hpbar');
+
+                hpbarplayer_e = game.add.sprite(game.world.width/2, 50,'hpbar-empty');
+                hpbaropponent_e = game.add.sprite(game.world.width/2, 50, 'hpbar-empty');
+                hpbarplayer = game.add.sprite(game.world.width/2, 50, 'hpbar');
+				hpbaropponent = game.add.sprite(game.world.width/2, 50, 'hpbar');
                 
+
                 cursors = game.input.keyboard.createCursorKeys();
 				attack = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				legAttack = game.input.keyboard.addKey(Phaser.Keyboard.X);
@@ -157,7 +159,7 @@ define(function(require) {
                 opponentHP = 100;
                 cropRectOpponentHP = new Phaser.Rectangle(0, 0, hpbaropponent.width, hpbaropponent.height);
                 cropRectPlayerHP = new Phaser.Rectangle(0, 0, hpbarplayer.width, hpbarplayer.height);
-                hpbarplayer.crop(cropRectPlayerHP)
+                hpbarplayer.crop(cropRectPlayerHP);
                 hpbaropponent.crop(cropRectOpponentHP);
                 hpbaropponent.initialWidth = hpbaropponent.width;
                 hpbarplayer.initialWidth = hpbarplayer.width;
@@ -165,6 +167,8 @@ define(function(require) {
                 stateText.anchor.setTo(0.5, 0.5);
                 stateText.visible = false;
                 movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
+                hpbarplayer_e.scale.setTo(-1, 1);
+                hpbarplayer.scale.setTo(-1, 1);
                 // timer = game.time.create(false);
                 // timer.loop(11000, opponent.stay(), game);
                 // timer.loop(3000, opponent.moveLeft());
@@ -175,6 +179,7 @@ define(function(require) {
                 }
             
 			function update() {
+                
                 hpbaropponent.updateCrop();
                 hpbarplayer.updateCrop();
 				game.physics.arcade.collide(player, ground);
@@ -210,8 +215,8 @@ define(function(require) {
 				} else if (legAttack.isDown) {
 					player.animations.play('leg');
                     if(checkOverlap(player, opponent)) {
-                        if (player.frame == 27) {
-                            opponentHP -= 3;
+                        if (player.frame == 28) {
+                            opponentHP -= 2;
                             cropRectOpponentHP.width = hpbaropponent.initialWidth/100*opponentHP;
                         }
                     }
