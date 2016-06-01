@@ -60,6 +60,8 @@ define(function(require) {
                 firstFrame,
                 movesList;
 
+                 
+
             function checkOverlap(spriteA, spriteB) {
                 var boundsA = spriteA.getBounds();
                 var boundsB = spriteB.getBounds();
@@ -127,8 +129,8 @@ define(function(require) {
                 opponent.animations.add('leg', [26, 27, 28, 29, 30, 31, 32], 10, false);
 
                 opponent.moveRight = function() {
-                    opponent.animations.play('right');
-                    opponent.body.velocity.x = -100;
+                opponent.animations.play('right');
+                opponent.body.velocity.x = -100;
                 }
 
                 opponent.moveLeft = function() {
@@ -151,7 +153,7 @@ define(function(require) {
                     opponent.body.velocity.x = -100;
                     opponent.body.velocity.y = -1000;
                     opponent.animations.currentAnim.onComplete.add(function() {opponent.animations.play('stay')}, game);
-                };             
+                };        
 
                 opponent.body.customSeparateX = true;
                 player.body.customSeparateX = false;
@@ -167,21 +169,24 @@ define(function(require) {
                 stateText.anchor.setTo(0.5, 0.5);
                 stateText.visible = false;
                 movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'kick', 'leg'];
-                hpbarplayer_e.scale.setTo(-1, 1);
-                hpbarplayer.scale.setTo(-1, 1);
-                // timer = game.time.create(false);
-                // timer.loop(11000, opponent.stay(), game);
-                // timer.loop(3000, opponent.moveLeft());
-                // timer.loop(2000, opponent.kick());
-                // timer.loop(7000, opponent.jump());
-                // timer.loop(5000, opponent.moveRight());
-                // timer.start();
-                }
+                
+                timer = game.time.create(false);
+                timer.loop(11000, opponent.stay, game);
+                timer.loop(3000, opponent.moveLeft);
+                timer.loop(2000, opponent.kick);
+                timer.loop(7000, opponent.jump);
+                timer.loop(5000, opponent.moveRight);
+                timer.start();
+            }
+
+            
             
 			function update() {
                 
                 hpbaropponent.updateCrop();
                 hpbarplayer.updateCrop();
+                hpbarplayer_e.scale.setTo(-1, 1);
+                hpbarplayer.scale.setTo(-1, 1);
 				game.physics.arcade.collide(player, ground);
                 game.physics.arcade.collide(opponent, ground);
                 game.physics.arcade.collide(player, opponent);
