@@ -263,6 +263,16 @@ define(function(require) {
 					hpbaropponent.visible = false;
 					hpbaropponent_e.visible = false;
 				}
+				if (playerHP <= 0) {
+					player.kill();
+					hpbarplayer.visible = false;
+					stateText.text = "PUTIN WINS!";
+					stateText.visible = true;
+					hpbaropponent_e.visible = false;
+					hpbaropponent.visible = false;
+					hpbarplayer.visible = false;
+					hpbarplayer_e.visible = false;
+				}
 			}
 			return BaseView.prototype.render.call(this);
 		},
