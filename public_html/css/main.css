@@ -52,11 +52,17 @@ i.avatar__delete {
   height: 40px;
   width: 40px;
   border-radius: 65px;
-  background: whitesmoke;
+  background: #E4E3E4;
   overflow: hidden; }
 
 .bar-top__avatar-img {
   width: 100%; }
+
+i.bar-top__avatar-placeholder {
+  display: block;
+  font-size: 24px;
+  margin-top: 6px;
+  text-align: center; }
 
 .bar-top__logout {
   display: inline;

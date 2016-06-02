@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>MK CPVLS</title>
+		<link rel="stylesheet" href="css/font-awesome.min.css" />
+		<script src="js/lib/peer.js"></script>
+		<script src="js/lib/jquery.js"></script>
+
+		<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/favicon/android-chrome-192x192.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/favicon/manifest.json">
+		<link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+		<link rel="shortcut icon" href="/favicon/favicon.ico">
+		<meta name="apple-mobile-web-app-title" content="Mortal Kombat CPVLS">
+		<meta name="application-name" content="Mortal Kombat CPVLS">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="msapplication-TileImage" content="/favicon/mstile-144x144.png">
+		<meta name="msapplication-config" content="/favicon/browserconfig.xml">
+		<meta name="theme-color" content="#ffffff">
+		<style>
+			.page {
+				background: black;
+			}
+
+			.bg {
+				position: fixed;
+				width: 100%;
+			}
+
+			@keyframes preloader {
+				from {transform: rotate(0deg);}
+				to {transform: rotate(360deg);}
+			}
+
+			.bg__preloader {
+				margin: 40vh auto;
+				display: block;
+				width: 95px;
+				height: 95px;
+				padding: 0px;
+				border-radius: 100%;
+				border: 10px solid;
+				border-top-color: rgba(37, 112, 171, 0.85);
+				border-bottom-color: rgba(37, 112, 171, 0.85);
+				border-left-color: rgba(255,255,255, 0.15);
+				border-right-color: rgba(255,255,255, 0.15);
+				animation: preloader 0.8s ease-in-out infinite alternate;
+				cursor: pointer;
+			}
+
+			.id {
+				display: inline;
+				padding: 10px 15px;
+				color: lime;
+			}
+
+			.peerID {
+				display: inline;
+			}
+
+			.container {
+				margin: 30vh auto;
+				width: 50%;
+			}
+		</style>
+	</head>
+	<body id="page" class="page">
+		<div class="bg">
+			<!-- <div class="bg__preloader"></div> -->
+			<div class="container">
+				<div class="id">
+					Your peerID is:  <span class="id__val"></span>
+				</div>
+				<div class="peerID">
+					<input class="peerID__input" type="text">
+					<button class="peerID__connect">Connect to peer</button>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script>
+
+		var peer = new Peer({key: 'qe9bruuypj02j4i'}),
+			conn = null,
+			currentID = null;
+
+		peer.on('open', function(id) {
+			currentID = id;
+			console.log('My peer ID is: ' + id);
+			$('.id__val').text(id);
+			$.post('/api/game.html', {name: id});
+			var ws = new WebSocket('ws://' + window.location.hostname + ':' + window.location.port + '/api/gameplay');
+			// ws = new WebSocket('ws://192.168.1.42:80/api/gameplay');
+
+			ws.onopen = function (event) {
+				console.info('[ws opened]');
+			};
+
+			ws.onmessage = function (event) {
+				var wsdata;
+				try {
+					wsdata = JSON.parse(event.data)
+				} catch (e) {
+					console.warn('huge shit');
+				}
+				console.log('ws message', wsdata);
+
+				var peerID = wsdata.enemyName
+				if (peerID) {
+					console.info(peerID + " is our enemy");
+					conn = peer.connect(peerID);
+					conn.on('open', function(){
+						conn.send('HI! I am peer ' + currentID);
+					});
+
+					peer.on('connection', function (conn) {
+						conn.on('data', function (data) {
+							console.log('Received', data);
+						});
+					});
+					let i = 0;
+					setInterval(function () {
+						i++;
+						conn.send('fuck you! ' + i);
+					}, 1000);
+				}
+			}
+		});
+
+		$('.peerID__connect').click(function () {
+			var peerID = $('.peerID__input').val().replace(/\s/g, '');
+			console.log('peerID', peerID);
+
+			conn = peer.connect(peerID);
+			conn.on('open', function(){
+				conn.send('HI! I am peer ' + currentID);
+			});
+
+			peer.on('connection', function (conn) {
+				conn.on('data', function (data) {
+					console.log('Received', data);
+				});
+			});
+			setTimeout(function () {
+
+			}, 1000);
+		});
+
+
+	</script>
+</html>
