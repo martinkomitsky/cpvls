@@ -19,6 +19,7 @@ app.listen(PORT, function () {
 });
 
 app.use('/', proxy('http://192.168.1.42:8800/', {
+// app.use('/', proxy('http://192.168.1.42:80/', {
 	forwardPath: function(req, res) {
 		console.log('proxy', require('url').parse(req.url).path);
 		return require('url').parse(req.url).path;
