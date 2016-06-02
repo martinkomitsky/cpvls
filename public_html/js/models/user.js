@@ -7,7 +7,8 @@ define(function(require) {
 		defaults: {
 			login: '',
 			password: '',
-			email: ''
+			email: '',
+			highscore: 0
 		},
 		url: '/api/user/',
 		validate: function (formData) {
