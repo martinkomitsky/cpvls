@@ -32,7 +32,7 @@ define(function(require) {
 			},
 			characters: {
 				obama: {
-					sprite: 'images/assets/zero.png',
+					sprite: 'images/assets/zero1.png',
 					animations: {
 						'stay': {
 							frames: [0, 1, 2, 3, 4, 5, 6],
@@ -65,7 +65,17 @@ define(function(require) {
 							loop: false
 						},
 						'kick': {
-							frames: [26, 27, 28, 29, 30],
+							frames: [26, 27, 28, 29, 30, 31, 32],
+							fps: 10,
+							loop: false
+						},
+						'death': {
+							frames: [33, 34, 35, 36, 37, 38],
+							fps: 10,
+							loop: false
+						},
+						'victory': {
+							frames: [39, 40, 41, 42],
 							fps: 10,
 							loop: false
 						}
@@ -326,12 +336,15 @@ define(function(require) {
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
 		gameObj.const.aiTimer = game.time.create(false);
-		gameObj.const.aiTimer.loop(11000, opponent.stay, game);
-		gameObj.const.aiTimer.loop(3000, opponent.moveLeft);
-		gameObj.const.aiTimer.loop(2000, opponent.punch);
-		gameObj.const.aiTimer.loop(7000, opponent.jump);
-		gameObj.const.aiTimer.loop(5000, opponent.moveRight);
-		gameObj.const.aiTimer.loop(13000, opponent.kick);
+
+		gameObj.const.aiTimer.loop(5000, opponent.victory);
+
+		// gameObj.const.aiTimer.loop(11000, opponent.stay, game);
+		// gameObj.const.aiTimer.loop(3000, opponent.moveLeft);
+		// gameObj.const.aiTimer.loop(2000, opponent.punch);
+		// gameObj.const.aiTimer.loop(7000, opponent.jump);
+		// gameObj.const.aiTimer.loop(5000, opponent.moveRight);
+		// gameObj.const.aiTimer.loop(13000, opponent.kick);
 		gameObj.const.aiTimer.start();
 	};
 
