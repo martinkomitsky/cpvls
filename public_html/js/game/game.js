@@ -338,6 +338,24 @@ define(function(require) {
 		gameObj.objects.opponentNickText.stroke = '#000';
 		gameObj.objects.opponentNickText.strokeThickness = 2;
 
+		gameObj.objects.playerHitText = game.add.text(100, game.world.centerY - 100, ' ', {
+			font: '48px mkx_titleregular',
+			fill: '#dddcba',
+			fontWeight: 'bold'
+		});
+		gameObj.objects.playerHitText.stroke = '#000';
+		gameObj.objects.playerHitText.strokeThickness = 2;		
+		gameObj.objects.playerHitText.visible = false;
+
+		gameObj.objects.opponentHitText = game.add.text(game.world.width - 200, game.world.centerY - 100, ' ', {
+			font: '48px mkx_titleregular',
+			fill: '#dddcba',
+			fontWeight: 'bold'
+		});
+		gameObj.objects.opponentHitText.stroke = '#000';
+		gameObj.objects.opponentHitText.strokeThickness = 2;	
+		gameObj.objects.opponentHitText.visible = false;
+
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
 		gameObj.const.aiTimer = game.time.create(false);
@@ -347,7 +365,14 @@ define(function(require) {
 		gameObj.const.aiTimer.loop(7000, opponent.jump);
 		gameObj.const.aiTimer.loop(5000, opponent.moveRight);
 		gameObj.const.aiTimer.loop(13000, opponent.kick);
+		gameObj.const.aiTimer.loop(7000, function() {
+			gameObj.objects.opponentHitText.visible = false;
+			gameObj.objects.playerHitText.visible = false;
+		});
 		gameObj.const.aiTimer.start();
+		playerHitTextCurrentTime = 0;
+		opponentHitTextCurrentTime = 0;
+		
 	};
 
 	Game.prototype.update = function (gameObj) {
@@ -358,6 +383,13 @@ define(function(require) {
 		gameObj.objects.hpbaropponent.updateCrop();
 		gameObj.objects.timeText.text = 91 - gameObj.const.aiTimer.seconds^0;
 
+
+		if ((gameObj.const.aiTimer.seconds - playerHitTextCurrentTime) >= 2) {
+			gameObj.objects.playerHitText.visible = false;
+		}
+		if ((gameObj.const.aiTimer.seconds - opponentHitTextCurrentTime) >= 2) {
+			gameObj.objects.opponentHitText.visible = false;
+		}
 
 		gameObj.objects.playerNickText.text = gameObj.const.players.player.nick.toUpperCase();
 		gameObj.objects.opponentNickText.text = gameObj.const.players.opponent.nick.toUpperCase();
@@ -373,7 +405,7 @@ define(function(require) {
 		game.physics.arcade.collide(player, gameObj.objects.rightWall);
 		game.physics.arcade.collide(opponent, gameObj.objects.leftWall);
 		game.physics.arcade.collide(opponent, gameObj.objects.rightWall);
-
+	
 		player.body.velocity.x = 0;
 		if (gameObj.const.currentGameStatus === 'round') {
 			if (player.body.touching.down) {
@@ -397,6 +429,9 @@ define(function(require) {
 						opponentHP -= 1;
 						if (opponentHP >= 0) {
 							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+							playerHitTextCurrentTime = gameObj.const.aiTimer.seconds;
+							gameObj.objects.playerHitText.text = "PUNCH";
+							gameObj.objects.playerHitText.visible = true;
 						}
 					}
 				}
@@ -407,6 +442,9 @@ define(function(require) {
 						opponentHP -= 2;
 						if (opponentHP >= 0) {
 							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+							playerHitTextCurrentTime = gameObj.const.aiTimer.seconds;
+							gameObj.objects.playerHitText.text = "KICK";
+							gameObj.objects.playerHitText.visible = true;
 						}
 					}
 				}
@@ -440,6 +478,9 @@ define(function(require) {
 					playerHP -= 1;
 					if (playerHP >= 0) {
 						gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+						opponentHitTextCurrentTime = gameObj.const.aiTimer.seconds;
+						gameObj.objects.opponentHitText.text = "PUNCH";
+						gameObj.objects.opponentHitText.visible = true;
 					}
 				}
 			}
@@ -448,15 +489,18 @@ define(function(require) {
 					playerHP -= 2;
 					if (playerHP >= 0) {
 						gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+						opponentHitTextCurrentTime = gameObj.const.aiTimer.seconds;
+						gameObj.objects.opponentHitText.text = "KICK";
+						gameObj.objects.opponentHitText.visible = true;
 					}
 				}
 			}
 
-			if (opponentHP <= 0) {
+			if (opponentHP <= 4) {
 				opponent.animations.play('death');
 				player.animations.play('victory');
 				gameObj.fn.finishRound(opponent, gameObj.const.players.player.name);
-			} else if (playerHP <= 0) {
+			} else if (playerHP <= 4) {
 				player.animations.play('death');
 				opponent.animations.play('victory');
 				gameObj.fn.finishRound(player, gameObj.const.players.opponent.name);
