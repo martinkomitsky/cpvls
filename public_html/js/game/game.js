@@ -223,7 +223,7 @@ define(function(require) {
 
 		gameObj.const.players.opponent.inst = game.add.sprite(game.world.width / 100 * 75 , game.world.height - 750, 'opponent');
 		var opponent = gameObj.const.players.opponent.inst;
-		opponent.scale.setTo(2.2, 2.2);
+		opponent.scale.setTo(-2.2, 2.2);
 
 		game.physics.arcade.enable(player);
 		game.physics.arcade.enable(opponent);
