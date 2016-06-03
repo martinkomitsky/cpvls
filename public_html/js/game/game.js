@@ -51,7 +51,7 @@ define(function(require) {
 				return wall;
 			},
 			finishRound: function (loser, winnerName) {
-				console.info('[round fisinsed!]')
+				console.info('[round fisinsed!]');
 				loser.kill();
 				stateText.text = winnerName + ' WINS!';
 				stateText.visible = true;
@@ -78,7 +78,7 @@ define(function(require) {
 		gameObj.objects.leftWall = gameObj.fn.initWall(0, 0);
 		gameObj.objects.rightWall = gameObj.fn.initWall(window.innerWidth - 10, 0);
 
-		ground = game.add.sprite(0, game.world.height - 16, 'ground');
+		ground = game.add.sprite(0, game.world.height - 20, 'ground');
 		ground.scale.setTo(5, 2);
 		ground.game.physics.arcade.enableBody(ground);
 		ground.visible = false;
@@ -98,7 +98,6 @@ define(function(require) {
 
 		opponent = game.add.sprite(game.world.width / 100 * 75 , game.world.height - 750, 'opponent');
 		opponent.scale.setTo(-2.2, 2.2);
-		opponent.anchor.setTo(0.5);
 
 		game.physics.arcade.enable(player);
 		game.physics.arcade.enable(opponent);
@@ -143,7 +142,7 @@ define(function(require) {
 		opponent.jump = function() {
 			opponent.animations.play('jump');
 			opponent.body.velocity.x = -100;
-			opponent.body.velocity.y = -1000;
+			opponent.body.velocity.y = -1150;
 			opponent.animations.currentAnim.onComplete.add(function() {
 				opponent.animations.play('stay')
 			}, game);
@@ -152,7 +151,7 @@ define(function(require) {
 		player.body.customSeparateX = false;
 		playerHP = 100;
 
-		opponent.body.customSeparateX = true;
+		opponent.body.customSeparateX = false;
 		opponentHP = 100;
 
 		cropRectOpponentHP = new Phaser.Rectangle(0, 0, gameObj.objects.hpbaropponent.width, gameObj.objects.hpbaropponent.height);
@@ -163,14 +162,14 @@ define(function(require) {
 		gameObj.objects.hpbaropponent.initialWidth = gameObj.objects.hpbaropponent.width;
 		gameObj.objects.hpbarplayer.initialWidth = gameObj.objects.hpbarplayer.width;
 
-		stateText = game.add.text(game.world.centerX,game.world.centerY -50, ' ', {
+		stateText = game.add.text(game.world.centerX, game.world.centerY - 50, ' ', {
 			font: '84px mkx_titleregular',
 			fill: '#fff',
 			fontStyle: 'italic'
 		});
 		stateText.stroke = '#963131';
 		stateText.strokeThickness = 4;
-		stateText.anchor.setTo(0.5, 0.3);
+		stateText.anchor.setTo(0.5, 0.5);
 		stateText.visible = false;
 
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
@@ -233,17 +232,17 @@ define(function(require) {
 				}
 			}
 		} else {
-			if (player.body.touching.down)
+			if (player.body.touching.down) {
 				if (player.animations.currentAnim.loop || player.frame == 15) {
 					player.animations.play('stay');
 				} else {
 					player.animations.currentAnim.onComplete.add(function() {player.animations.play('stay')}, game);
 				}
-			else {
+			} else {
 				if (firstFrame == true) {
 					console.log ('we are flying for the first time');
 					opponent.animations.play('stay');
-					player.frame = 15
+					player.frame = 15;
 				}
 			}
 		}
