@@ -37,12 +37,13 @@ define(function(require) {
 			gameModes: [
 				'singleplayer',//todo
 				'multiplayer'
-			]
+			],
+			currentGameStatus: 'game'
 		}
 		this.res.objects['arena'] = this.res.arenas[this.res.currentArena];
 
 		this.fn = {
-			initWall: function  (x, y) {
+			initWall: function (x, y) {
 				wall = game.add.sprite(x, y, 'wall');
 				wall.scale.setTo(10, 25);
 				wall.game.physics.arcade.enableBody(wall);
