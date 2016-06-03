@@ -10,16 +10,17 @@ define(function(require) {
 		className: 'game__main game__main_visible js-game',
 		initialize: function() {
 			g = new G();
-			debugger;
+			// debugger;
 		},
 		render: function() {
 			console.log("Script is in action");
-			var helpers = {
+			var state = {
 				preload: g.preload.bind(this, g),
 				create: g.create.bind(this, g),
 				update: g.update.bind(this, g)
 			};
-			this.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', helpers);
+			this.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', state);
+			window.game = this.game;
 
 			return BaseView.prototype.render.call(this);
 		},

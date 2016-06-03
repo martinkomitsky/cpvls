@@ -39,16 +39,17 @@ define(function(require) {
 				'multiplayer'
 			]
 		}
-		this.data.objects['arena' + this.data.currentArena] = this.data.arenas[this.data.currentArena];
+		this.data.objects['arena'] = this.data.arenas[this.data.currentArena];
 	};
 
 	Game.prototype.create = function (gameObj) {
 		var game = this.game;
 
+		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		firstFrame = true;
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-		sky = game.add.sprite(0, 0, 'arena' + gameObj.data.currentArena);
+		sky = game.add.sprite(0, 0, 'arena');
 
 		sky.scale.setTo(window.innerWidth/sky.width, window.innerHeight/sky.height);
 
@@ -101,8 +102,8 @@ define(function(require) {
 			val.animations.add('jumpleft', [22, 21, 20, 19, 18, 17, 16, 15], 10, false);
 			val.animations.add('punch', [23, 24], 10, false);
 			// if (val === obama)
-			val.animations.add('leg', [26, 27, 28, 29, 30, 31, 32], 10, false);
-		// player.animations.add('leg', [26, 27, 28, 29, 30], 10, false);
+			val.animations.add('kick', [26, 27, 28, 29, 30, 31, 32], 10, false);
+		// player.animations.add('kick', [26, 27, 28, 29, 30], 10, false); //у обамы анимация на 2 тика меньше
 		});
 
 		opponent.moveRight = function() {
@@ -160,7 +161,7 @@ define(function(require) {
 		stateText.anchor.setTo(0.5, 0.3);
 		stateText.visible = false;
 
-		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'leg'];
+		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
 		timer = game.time.create(false);
 		timer.loop(11000, opponent.stay, game);
@@ -212,7 +213,7 @@ define(function(require) {
 				}
 			}
 		} else if (kickKey.isDown) {
-			player.animations.play('leg');
+			player.animations.play('kick');
 			if (gameObj.checkOverlap(player, opponent)) {
 				if (player.frame == 28) {
 					opponentHP -= 2;
@@ -251,21 +252,13 @@ define(function(require) {
 			}
 		}
 		if (opponentHP <= 0) {
-			finishRound(opponent, 'PLAYER 1')
+			gameObj.finishRound(opponent, 'PLAYER 1');
 		}
 		if (playerHP <= 0) {
-			finishRound(player, 'PLAYER 2')
+			gameObj.finishRound(player, 'PLAYER 2');
 		}
 
-		function finishRound (loser, winnerName) {
-			loser.kill();
-			stateText.text = winnerName + ' WINS!';
-			stateText.visible = true;
-			hpbaropponent_e.visible = false;
-			hpbaropponent.visible = false;
-			hpbarplayer.visible = false;
-			hpbarplayer_e.visible = false;
-		}
+
 	};
 	Game.prototype.preload = function (gameObj) {
 		var game = this.game,
@@ -289,5 +282,14 @@ define(function(require) {
 		return Phaser.Rectangle.intersects(boundsA, boundsB);
 	}
 
+	Game.prototype.finishRound = function (loser, winnerName) {
+			loser.kill();
+			stateText.text = winnerName + ' WINS!';
+			stateText.visible = true;
+			hpbaropponent_e.visible = false;
+			hpbaropponent.visible = false;
+			hpbarplayer.visible = false;
+			hpbarplayer_e.visible = false;
+		}
 	return Game;
 });
