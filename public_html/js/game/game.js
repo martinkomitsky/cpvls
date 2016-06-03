@@ -219,6 +219,20 @@ define(function(require) {
 		gameObj.objects.timeText.strokeThickness = 2;
 		gameObj.objects.timeText.anchor.setTo(0.5, -0.1)
 
+		gameObj.objects.playerNickText = game.add.text( game.world.centerX/3 - 250	, 65, ' ', {
+			font: "25px mkx_titleregular",
+			fill: "#e4e3e4",
+		});
+		gameObj.objects.playerNickText.stroke='#847f7f';
+		gameObj.objects.playerNickText.strokeThickness = 2;
+		
+		gameObj.objects.opponentNickText = game.add.text(game.world.centerX + 2*game.world.centerX/3, 65, ' ', {
+			font: "25px mkx_titleregular",
+			fill: "#e4e3e4",
+		});
+		gameObj.objects.opponentNickText.stroke='#847f7f';
+		gameObj.objects.opponentNickText.strokeThickness = 2;
+
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
 		gameObj.const.aiTimer = game.time.create(false);
@@ -235,6 +249,10 @@ define(function(require) {
 		var game = this.game;
 		gameObj.objects.hpbaropponent.updateCrop();
 		gameObj.objects.timeText.text = 90 - gameObj.const.aiTimer.seconds^0;
+
+
+		gameObj.objects.playerNickText.text = gameObj.const.players.player.nick;
+		gameObj.objects.opponentNickText.text = gameObj.const.players.opponent.nick;
 
 		gameObj.objects.hpbarplayer.updateCrop();
 		gameObj.objects.hpbarplayer_e.scale.setTo(-1, 1);
