@@ -108,7 +108,18 @@ define(function(require) {
 							frames: [26, 27, 28, 29, 30, 31, 32],
 							fps: 10,
 							loop: false
-						}
+						},
+						'death': {
+							frames: [33, 34, 35, 36, 37, 38, 39],
+							fps: 10,
+							loop: false
+						},
+						'victory': {
+							frames: [40, 41, 42, 43],
+							fps: 10,
+							loop: false
+						},
+
 					}
 				}
 			},
@@ -256,6 +267,14 @@ define(function(require) {
 			opponent.animations.currentAnim.onComplete.add(function() {
 				opponent.animations.play('stay');
 			}, game);
+		}
+		opponent.death = function() {
+			opponent.body.velocity.x = 0;
+			opponent.animations.play('death');
+		}
+		opponent.victory = function() {
+			opponent.body.velocity.x = 0;
+			opponent.animations.play('victory');
 		}
 
 		player.body.customSeparateX = false;
