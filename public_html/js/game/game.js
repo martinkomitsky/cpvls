@@ -32,10 +32,10 @@ define(function(require) {
 			},
 			characters: {
 				obama: {
-					sprite: 'images/assets/zero.png',
+					sprite: 'images/assets/zero1.png',
 				},
 				putin: {
-					sprite: 'images/assets/scorpion.png',
+					sprite: 'images/assets/scorpion1.png',
 				}
 
 
@@ -70,10 +70,11 @@ define(function(require) {
 				return wall;
 			},
 			finishRound: function (loser, winnerName) {
+				loser.animations.play('death');
 				winnerName = winnerName.toUpperCase();
 				console.info('[round fisinsed!]');
 				this.const.currentGameStatus = 'fisinsed';
-				loser.kill();
+				
 				this.objects.stateText.text = winnerName + ' WINS!';
 				this.objects.stateText.visible = true;
 				this.objects.hpbaropponent_e.visible = false;
@@ -184,6 +185,22 @@ define(function(require) {
 			opponent.animations.play('kick');
 			opponent.animations.currentAnim.onComplete.add(function() {
 				opponent.animations.play('stay');
+			}, game);
+		}
+
+		opponent.death = function() {
+			opponent.body.velocity.x = 0;
+			opponent.animations.play('death');
+			opponent.animations.currentAnim.onComplete.add(function() {
+				opponent.frame = 37;
+			}, game);
+		}
+
+		opponent.victory = function() {
+			opponent.body.velocity.x = 0;
+			opponent.animations.play('victory');
+			opponent.animations.currentAnim.onComplete.add(function() {
+				opponent.frame = 43;
 			}, game);
 		}
 
