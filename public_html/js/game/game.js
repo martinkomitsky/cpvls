@@ -27,34 +27,108 @@ define(function(require) {
 				ground: 'images/assets/platform.png',
 				hpbar: 'images/assets/hpbar.png',
 				hpbar_empty: 'images/assets/hpbar_empty.png',
-				menu: 'images/assets/menu.png',
+				// menu: 'images/assets/menu.png',
 				wall: 'images/assets/wall.png',
 			},
 			characters: {
 				obama: {
 					sprite: 'images/assets/zero.png',
+					animations: {
+						'stay': {
+							frames: [0, 1, 2, 3, 4, 5, 6],
+							fps: 10,
+							loop: true
+						},
+						'left': {
+							frames: [14, 13, 12, 11, 10, 9, 8, 7],
+							fps: 12,
+							loop: true
+						},
+						'right': {
+							frames: [7, 8, 9, 10, 11, 12, 13, 14],
+							fps: 12,
+							loop: true
+						},
+						'jump': {
+							frames: [15, 16, 17, 18, 19, 20, 21, 22],
+							fps: 10,
+							loop: false
+						},
+						'jumpleft': {
+							frames: [22, 21, 20, 19, 18, 17, 16, 15],
+							fps: 10,
+							loop: false
+						},
+						'punch': {
+							frames: [23, 24],
+							fps: 10,
+							loop: false
+						},
+						'kick': {
+							frames: [26, 27, 28, 29, 30],
+							fps: 10,
+							loop: false
+						}
+					}
 				},
 				putin: {
 					sprite: 'images/assets/scorpion.png',
+					animations: {
+						'stay': {
+							frames: [0, 1, 2, 3, 4, 5, 6],
+							fps: 10,
+							loop: true
+						},
+						'left': {
+							frames: [14, 13, 12, 11, 10, 9, 8, 7],
+							fps: 12,
+							loop: true
+						},
+						'right': {
+							frames: [7, 8, 9, 10, 11, 12, 13, 14],
+							fps: 12,
+							loop: true
+						},
+						'jump': {
+							frames: [15, 16, 17, 18, 19, 20, 21, 22],
+							fps: 10,
+							loop: false
+						},
+						'jumpleft': {
+							frames: [22, 21, 20, 19, 18, 17, 16, 15],
+							fps: 10,
+							loop: false
+						},
+						'punch': {
+							frames: [23, 24],
+							fps: 10,
+							loop: false
+						},
+						'kick': {
+							frames: [26, 27, 28, 29, 30, 31, 32],
+							fps: 10,
+							loop: false
+						}
+					}
 				}
-
-
 			},
 			gameModes: [
 				'singleplayer',//todo
 				'multiplayer'
 			],
 		};
+
 		this.const = {
 			currentGameStatus: 'round',
 			players: {
 				player: {
 					name: Object.keys(this.res.characters)[Math.random() * 2^0],
-					nick: 'xxxMerOPNXAPbxxx'
+					nick: 'xxxMerOPNXAPbxxx',
+
 				},
 				opponent: {
 					name: Object.keys(this.res.characters)[Math.random() * 2^0],
-					nick: 'vip://PoKanoVzrivatel777'
+					nick: 'vip://PoKanoVzrivatel777',
 				}
 			},
 		};
@@ -122,28 +196,25 @@ define(function(require) {
 		punchKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		kickKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
 
-		player = game.add.sprite(game.world.width / 100 * 25, game.world.height - 750, 'player');
+		gameObj.const.players.player.inst = game.add.sprite(game.world.width / 100 * 25, game.world.height - 750, 'player');
+		var player = gameObj.const.players.player.inst;
 		player.scale.setTo(2.2, 2.2);
 
-		opponent = game.add.sprite(game.world.width / 100 * 75 , game.world.height - 750, 'opponent');
+		gameObj.const.players.opponent.inst = game.add.sprite(game.world.width / 100 * 75 , game.world.height - 750, 'opponent');
+		var opponent = gameObj.const.players.opponent.inst;
 		opponent.scale.setTo(-2.2, 2.2);
 
 		game.physics.arcade.enable(player);
 		game.physics.arcade.enable(opponent);
 
-		$.each([player, opponent], function (key, val) {
-			val.body.bounce.y = 0;
-			val.body.gravity.y = 1600;
-			val.body.collideWorldBounds = false;
-			val.animations.add('stay', [0, 1, 2, 3, 4, 5, 6], 10, true);
-			val.animations.add('left', [14, 13, 12, 11, 10, 9, 8, 7], 12, true);
-			val.animations.add('right', [7, 8, 9, 10, 11, 12, 13, 14], 12, true);
-			val.animations.add('jump', [15, 16, 17, 18, 19, 20, 21, 22], 10, false);
-			val.animations.add('jumpleft', [22, 21, 20, 19, 18, 17, 16, 15], 10, false);
-			val.animations.add('punch', [23, 24], 10, false);
-			// if (val === obama)
-			val.animations.add('kick', [26, 27, 28, 29, 30], 10, false);
-		// player.animations.add('kick', [26, 27, 28, 29, 30], 10, false); //у обамы анимация на 2 тика меньше
+		$.each(gameObj.const.players, function (key, val) {
+			val.inst.body.bounce.y = 0;
+			val.inst.body.gravity.y = 1600;
+			val.inst.body.collideWorldBounds = false;
+
+			$.each(gameObj.res.characters[val.name].animations, function (animationName, animationParam) {
+				val.inst.animations.add(animationName, animationParam.frames, animationParam.fps, animationParam.loop);
+			});
 		});
 
 		opponent.moveRight = function() {
@@ -246,7 +317,10 @@ define(function(require) {
 	};
 
 	Game.prototype.update = function (gameObj) {
-		var game = this.game;
+		var game = this.game,
+			player = gameObj.const.players.player.inst,
+			opponent = gameObj.const.players.opponent.inst;
+
 		gameObj.objects.hpbaropponent.updateCrop();
 		gameObj.objects.timeText.text = 90 - gameObj.const.aiTimer.seconds^0;
 
