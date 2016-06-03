@@ -214,6 +214,51 @@ define(function(require) {
 		gameObj.objects.hpbarplayer = game.add.sprite(game.world.width / 2, 50, 'hpbar');
 		gameObj.objects.hpbaropponent = game.add.sprite(game.world.width / 2, 50, 'hpbar');
 
+
+		gameObj.objects.timeText = game.add.text(game.world.centerX, 55, ' ', {
+			font: '40px mkx_titleregular',
+			fill: '#E4E3E4',
+		});
+		gameObj.objects.timeText.stroke = '#847F7F';
+		gameObj.objects.timeText.strokeThickness = 2;
+		gameObj.objects.timeText.anchor.setTo(0.5, -0.1)
+
+		gameObj.objects.playerNickText = game.add.text(game.world.centerX / 2, 100, ' ', {
+			font: '21px mkx_titleregular',
+			fill: '#DDDCBA',
+			fontWeight: 'bold'
+		});
+		gameObj.objects.playerNickText.stroke = '#000';
+		gameObj.objects.playerNickText.strokeThickness = 2;
+
+		// gameObj.objects.opponentNickText = game.add.text(-100, 63, ' ', {
+		gameObj.objects.opponentNickText = game.add.text(game.world.centerX + 1 * game.world.centerX / 2 - 275, 100, ' ', {
+
+			font: '21px mkx_titleregular',
+			fill: '#DDDCBA',
+			fontWeight: "bold"
+		});
+		gameObj.objects.opponentNickText.stroke = '#000';
+		gameObj.objects.opponentNickText.strokeThickness = 2;
+
+		gameObj.objects.playerHitText = game.add.text(100, game.world.centerY - 100, ' ', {
+			font: '48px mkx_titleregular',
+			fill: '#dddcba',
+			fontWeight: 'bold'
+		});
+		gameObj.objects.playerHitText.stroke = '#000';
+		gameObj.objects.playerHitText.strokeThickness = 2;		
+		gameObj.objects.playerHitText.visible = false;
+
+		gameObj.objects.opponentHitText = game.add.text(game.world.width - 200, game.world.centerY - 100, ' ', {
+			font: '48px mkx_titleregular',
+			fill: '#dddcba',
+			fontWeight: 'bold'
+		});
+		gameObj.objects.opponentHitText.stroke = '#000';
+		gameObj.objects.opponentHitText.strokeThickness = 2;	
+		gameObj.objects.opponentHitText.visible = false;
+
 		cursors = game.input.keyboard.createCursorKeys();
 		punchKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		kickKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
@@ -312,49 +357,7 @@ define(function(require) {
 		gameObj.objects.stateText.anchor.setTo(0.5, 0.5);
 		gameObj.objects.stateText.visible = false;
 
-		gameObj.objects.timeText = game.add.text(game.world.centerX, 55, ' ', {
-			font: '40px mkx_titleregular',
-			fill: '#E4E3E4',
-		});
-		gameObj.objects.timeText.stroke = '#847F7F';
-		gameObj.objects.timeText.strokeThickness = 2;
-		gameObj.objects.timeText.anchor.setTo(0.5, -0.1)
-
-		gameObj.objects.playerNickText = game.add.text(game.world.centerX / 2, 100, ' ', {
-			font: '21px mkx_titleregular',
-			fill: '#DDDCBA',
-			fontWeight: 'bold'
-		});
-		gameObj.objects.playerNickText.stroke = '#000';
-		gameObj.objects.playerNickText.strokeThickness = 2;
-
-		// gameObj.objects.opponentNickText = game.add.text(-100, 63, ' ', {
-		gameObj.objects.opponentNickText = game.add.text(game.world.centerX + 1 * game.world.centerX / 2 - 275, 100, ' ', {
-
-			font: '21px mkx_titleregular',
-			fill: '#DDDCBA',
-			fontWeight: "bold"
-		});
-		gameObj.objects.opponentNickText.stroke = '#000';
-		gameObj.objects.opponentNickText.strokeThickness = 2;
-
-		gameObj.objects.playerHitText = game.add.text(100, game.world.centerY - 100, ' ', {
-			font: '48px mkx_titleregular',
-			fill: '#dddcba',
-			fontWeight: 'bold'
-		});
-		gameObj.objects.playerHitText.stroke = '#000';
-		gameObj.objects.playerHitText.strokeThickness = 2;		
-		gameObj.objects.playerHitText.visible = false;
-
-		gameObj.objects.opponentHitText = game.add.text(game.world.width - 200, game.world.centerY - 100, ' ', {
-			font: '48px mkx_titleregular',
-			fill: '#dddcba',
-			fontWeight: 'bold'
-		});
-		gameObj.objects.opponentHitText.stroke = '#000';
-		gameObj.objects.opponentHitText.strokeThickness = 2;	
-		gameObj.objects.opponentHitText.visible = false;
+		
 
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
@@ -426,11 +429,12 @@ define(function(require) {
 				player.animations.play('punch');
 				if (gameObj.fn.checkOverlap(player, opponent)) {
 					if (player.frame == 24) {
+						prevOpponentHP = opponentHP;
 						opponentHP -= 1;
 						if (opponentHP >= 0) {
 							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
 							playerHitTextCurrentTime = gameObj.const.aiTimer.seconds;
-							gameObj.objects.playerHitText.text = "PUNCH";
+							gameObj.objects.playerHitText.text = "PUNCH\n" + (prevOpponentHP - opponentHP) + " damage";
 							gameObj.objects.playerHitText.visible = true;
 						}
 					}
@@ -439,11 +443,12 @@ define(function(require) {
 				player.animations.play('kick');
 				if (gameObj.fn.checkOverlap(player, opponent)) {
 					if (player.frame == 28) {
+						prevOpponentHP = opponentHP;
 						opponentHP -= 2;
 						if (opponentHP >= 0) {
 							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
 							playerHitTextCurrentTime = gameObj.const.aiTimer.seconds;
-							gameObj.objects.playerHitText.text = "KICK";
+							gameObj.objects.playerHitText.text = "KICK\n" + (prevOpponentHP - opponentHP) + " damage";
 							gameObj.objects.playerHitText.visible = true;
 						}
 					}
@@ -475,23 +480,29 @@ define(function(require) {
 			}
 			if (opponent.animations.currentAnim.name == 'punch') {
 				if (gameObj.fn.checkOverlap(player, opponent)) {
-					playerHP -= 1;
-					if (playerHP >= 0) {
-						gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
-						opponentHitTextCurrentTime = gameObj.const.aiTimer.seconds;
-						gameObj.objects.opponentHitText.text = "PUNCH";
-						gameObj.objects.opponentHitText.visible = true;
+					if (opponent.frame == 24) {
+						prevPlayerHP = playerHP;
+						playerHP -= 1;
+						if (playerHP >= 0) {
+							gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+							opponentHitTextCurrentTime = gameObj.const.aiTimer.seconds;
+							gameObj.objects.opponentHitText.text = "PUNCH\n" + (prevPlayerHP - playerHP) + " damage";
+							gameObj.objects.opponentHitText.visible = true;
+						}
 					}
 				}
 			}
 			if (opponent.animations.currentAnim.name == 'kick') {
 				if (gameObj.fn.checkOverlap(player, opponent)) {
-					playerHP -= 2;
-					if (playerHP >= 0) {
-						gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
-						opponentHitTextCurrentTime = gameObj.const.aiTimer.seconds;
-						gameObj.objects.opponentHitText.text = "KICK";
-						gameObj.objects.opponentHitText.visible = true;
+					if (opponent.frame == 24) {
+						prevPlayerHP = playerHP;
+						playerHP -= 2;
+						if (playerHP >= 0) {
+							gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+							opponentHitTextCurrentTime = gameObj.const.aiTimer.seconds;
+							gameObj.objects.opponentHitText.text = "KICK\n" +  (prevPlayerHP - playerHP) + " damage";
+							gameObj.objects.opponentHitText.visible = true;
+						}
 					}
 				}
 			}
