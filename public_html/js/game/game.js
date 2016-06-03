@@ -100,7 +100,7 @@ define(function(require) {
 							loop: false
 						},
 						'punch': {
-							frames: [23, 24],
+							frames: [23, 24, 25],
 							fps: 10,
 							loop: false
 						},
@@ -439,10 +439,12 @@ define(function(require) {
 
 		if (gameObj.const.currentGameStatus === 'round') {
 			if (opponentHP <= 0) {
-				opponent.animations.play('stay');
+				opponent.animations.play('death');
+				player.animations.play('victory');
 				gameObj.fn.finishRound(opponent, gameObj.const.players.player.name);
 			} else if (playerHP <= 0) {
-				player.animations.play('stay');
+				player.animations.play('death');
+				opponent.animations.play('victory');
 				gameObj.fn.finishRound(player, gameObj.const.players.opponent.name);
 			} else {
 				console.warn('pizda');
