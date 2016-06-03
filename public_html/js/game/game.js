@@ -61,9 +61,9 @@ define(function(require) {
 				this.objects.hpbarplayer.visible = false;
 				this.objects.hpbarplayer_e.visible = false;
 			}.bind(this),
-		.updateBarHP: function (cropRectBar, initialWidth, amount) {
+			updateBarHP: function (cropRectBar, initialWidth, amount) {
 				cropRectBar.width = initialWidth / 100 * amount;
-	}
+			}
 
 		}
 		this.objects = {};
@@ -313,7 +313,7 @@ define(function(require) {
 		});
 
 	};
-	
+
 	Game.prototype.checkOverlap = function (spriteA, spriteB) {
 		var boundsA = spriteA.getBounds(),
 			boundsB = spriteB.getBounds();
