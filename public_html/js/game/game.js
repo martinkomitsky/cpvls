@@ -150,7 +150,7 @@ define(function(require) {
 				},
 				opponent: {
 					name: Object.keys(this.res.characters)[Math.random() * 2^0],
-					nick: 'vip://PoKanoVzrivatel777',
+					nick: 'хуй',
 				}
 			},
 		};
@@ -320,7 +320,7 @@ define(function(require) {
 		gameObj.objects.timeText.strokeThickness = 2;
 		gameObj.objects.timeText.anchor.setTo(0.5, -0.1)
 
-		gameObj.objects.playerNickText = game.add.text(game.world.centerX / 2, 63, ' ', {
+		gameObj.objects.playerNickText = game.add.text(game.world.centerX / 2, 100, ' ', {
 			font: '21px mkx_titleregular',
 			fill: '#DDDCBA',
 			fontWeight: 'bold'
@@ -329,7 +329,7 @@ define(function(require) {
 		gameObj.objects.playerNickText.strokeThickness = 2;
 
 		// gameObj.objects.opponentNickText = game.add.text(-100, 63, ' ', {
-		gameObj.objects.opponentNickText = game.add.text(game.world.centerX + 1 * game.world.centerX / 2 - 350, 63, ' ', {
+		gameObj.objects.opponentNickText = game.add.text(game.world.centerX + 1 * game.world.centerX / 2 - 275, 100, ' ', {
 
 			font: '21px mkx_titleregular',
 			fill: '#DDDCBA',
