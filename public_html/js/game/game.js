@@ -60,7 +60,7 @@ define(function(require) {
 				this.objects.hpbarplayer.visible = false;
 				this.objects.hpbarplayer_e.visible = false;
 			}.bind(this),
-			hpbarupdate: function (cropRectBar, initialWidth, amount) {
+		.updateBarHP: function (cropRectBar, initialWidth, amount) {
 				cropRectBar.width = initialWidth / 100 * amount;
 	}
 
@@ -241,7 +241,7 @@ define(function(require) {
 			if (gameObj.checkOverlap(player, opponent)) {
 				if (player.frame == 24) {
 					opponentHP -= 1;
-					gameObj.fn.hpbarupdate(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+					gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
 				}
 			}
 		} else if (kickKey.isDown) {
@@ -249,7 +249,7 @@ define(function(require) {
 			if (gameObj.checkOverlap(player, opponent)) {
 				if (player.frame == 28) {
 					opponentHP -= 2;
-					gameObj.fn.hpbarupdate(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+					gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
 				}
 			}
 		} else {
@@ -280,13 +280,13 @@ define(function(require) {
 		if (opponent.animations.currentAnim.name == 'punch') {
 			if (gameObj.checkOverlap(player, opponent)) {
 				playerHP -= 1;
-				gameObj.fn.hpbarupdate(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+				gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
 			}
 		}
 		if (opponent.animations.currentAnim.name == 'kick') {
 			if (gameObj.checkOverlap(player, opponent)) {
 				playerHP -= 2;
-				gameObj.fn.hpbarupdate(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+				gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
 			}
 		}
 		if (opponentHP <= 0) {
