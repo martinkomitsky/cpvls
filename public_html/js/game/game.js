@@ -32,7 +32,7 @@ define(function(require) {
 			},
 			characters: {
 				obama: {
-					sprite: 'images/assets/zero1.png',
+					sprite: 'images/assets/zero.png',
 					animations: {
 						'stay': {
 							frames: [0, 1, 2, 3, 4, 5, 6],
@@ -65,7 +65,8 @@ define(function(require) {
 							loop: false
 						},
 						'kick': {
-							frames: [26, 27, 28, 29, 30, 31, 32],
+							// frames: [26, 27, 28, 29, 30, 31, 32],
+							frames: [26, 27, 28, 29, 30],
 							fps: 10,
 							loop: false
 						},
@@ -354,7 +355,7 @@ define(function(require) {
 			opponent = gameObj.const.players.opponent.inst;
 
 		gameObj.objects.hpbaropponent.updateCrop();
-		gameObj.objects.timeText.text = 90 - gameObj.const.aiTimer.seconds^0;
+		gameObj.objects.timeText.text = 91 - gameObj.const.aiTimer.seconds^0;
 
 
 		gameObj.objects.playerNickText.text = gameObj.const.players.player.nick;
