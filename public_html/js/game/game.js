@@ -59,7 +59,11 @@ define(function(require) {
 				this.objects.hpbaropponent.visible = false;
 				this.objects.hpbarplayer.visible = false;
 				this.objects.hpbarplayer_e.visible = false;
-			}.bind(this)
+			}.bind(this),
+			hpbarupdate: function (cropRectBar, initialWidth, amount) {
+				cropRectBar.width = initialWidth / 100 * amount;
+	}
+
 		}
 		this.objects = {};
 	};
@@ -113,7 +117,7 @@ define(function(require) {
 			val.animations.add('jumpleft', [22, 21, 20, 19, 18, 17, 16, 15], 10, false);
 			val.animations.add('punch', [23, 24], 10, false);
 			// if (val === obama)
-			val.animations.add('kick', [26, 27, 28, 29, 30, 31, 32], 10, false);
+			val.animations.add('kick', [26, 27, 28, 29, 30], 10, false);
 		// player.animations.add('kick', [26, 27, 28, 29, 30], 10, false); //у обамы анимация на 2 тика меньше
 		});
 
@@ -133,10 +137,12 @@ define(function(require) {
 		}
 
 		opponent.punch = function() {
+			opponent.body.velocity.x = 0;
 			opponent.animations.play('punch');
 			opponent.animations.currentAnim.onComplete.add(function() {
-				opponent.animations.play('stay')
-			}, game)
+				opponent.animations.play('stay');
+				opponent.body.velocity.x = 0;
+			}, game);
 		}
 
 		opponent.jump = function() {
@@ -144,9 +150,17 @@ define(function(require) {
 			opponent.body.velocity.x = -100;
 			opponent.body.velocity.y = -1150;
 			opponent.animations.currentAnim.onComplete.add(function() {
-				opponent.animations.play('stay')
+				opponent.animations.play('stay');
 			}, game);
 		};
+
+		opponent.kick = function() {
+			opponent.body.velocity.x = 0;
+			opponent.animations.play('kick');
+			opponent.animations.currentAnim.onComplete.add(function() {
+				opponent.animations.play('stay');
+			}, game);
+		}
 
 		player.body.customSeparateX = false;
 		playerHP = 100;
@@ -172,6 +186,11 @@ define(function(require) {
 		stateText.anchor.setTo(0.5, 0.5);
 		stateText.visible = false;
 
+		timeText = game.add.text(game.world.centerX, 55, ' ', {
+			font: '48px arial',
+			fill: "#fff",
+		});
+		timeText.anchor.setTo(0.5,0)
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
 		timer = game.time.create(false);
@@ -180,12 +199,14 @@ define(function(require) {
 		timer.loop(2000, opponent.punch);
 		timer.loop(7000, opponent.jump);
 		timer.loop(5000, opponent.moveRight);
+		timer.loop(13000, opponent.kick);
 		timer.start();
 	};
 
 	Game.prototype.update = function (gameObj) {
 		var game = this.game;
 		gameObj.objects.hpbaropponent.updateCrop();
+		timeText.text = 41 - timer.seconds^0;
 
 		gameObj.objects.hpbarplayer.updateCrop();
 		gameObj.objects.hpbarplayer_e.scale.setTo(-1, 1);
@@ -220,7 +241,7 @@ define(function(require) {
 			if (gameObj.checkOverlap(player, opponent)) {
 				if (player.frame == 24) {
 					opponentHP -= 1;
-					cropRectOpponentHP.width = gameObj.objects.hpbaropponent.initialWidth / 100 * opponentHP;
+					gameObj.fn.hpbarupdate(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
 				}
 			}
 		} else if (kickKey.isDown) {
@@ -228,7 +249,7 @@ define(function(require) {
 			if (gameObj.checkOverlap(player, opponent)) {
 				if (player.frame == 28) {
 					opponentHP -= 2;
-					cropRectOpponentHP.width = gameObj.objects.hpbaropponent.initialWidth / 100 * opponentHP;
+					gameObj.fn.hpbarupdate(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
 				}
 			}
 		} else {
@@ -258,8 +279,14 @@ define(function(require) {
 		}
 		if (opponent.animations.currentAnim.name == 'punch') {
 			if (gameObj.checkOverlap(player, opponent)) {
+				playerHP -= 1;
+				gameObj.fn.hpbarupdate(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+			}
+		}
+		if (opponent.animations.currentAnim.name == 'kick') {
+			if (gameObj.checkOverlap(player, opponent)) {
 				playerHP -= 2;
-				cropRectPlayerHP.width = gameObj.objects.hpbarplayer.initialWidth / 100 * playerHP;
+				gameObj.fn.hpbarupdate(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
 			}
 		}
 		if (opponentHP <= 0) {
@@ -268,9 +295,8 @@ define(function(require) {
 		if (playerHP <= 0) {
 			gameObj.fn.finishRound(player, 'PLAYER 2');
 		}
-
-
 	};
+
 	Game.prototype.preload = function (gameObj) {
 		var game = this.game,
 			resources = gameObj.res,
@@ -286,11 +312,13 @@ define(function(require) {
 		});
 
 	};
+	
 	Game.prototype.checkOverlap = function (spriteA, spriteB) {
 		var boundsA = spriteA.getBounds(),
 			boundsB = spriteB.getBounds();
 
 		return Phaser.Rectangle.intersects(boundsA, boundsB);
 	}
+
 	return Game;
 });
