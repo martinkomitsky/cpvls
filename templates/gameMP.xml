@@ -1,0 +1,21 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+	<fest:script>
+		console.log('[gameMP json]', json);
+	</fest:script>
+	<div id="playscreen" class="game__playscreen js-focus">
+	</div>
+	<div class="game__menu-wrapper game__menu-wrapp er_main">
+
+		<div class="game__menu game__menu_lobby js-opponent {json.opponent.ready? 'game__menu_ready' : 'game__menu_fail'}">
+			<span class="game__menu-playername"><fest:value>json.opponent.name</fest:value></span>
+		</div>
+
+		<div class="game__menu game__menu_lobby js-player {json.player.ready? 'game__menu_ready' : 'game__menu_fail'}">
+			<span class="game__menu-playername"><fest:value>json.player.name</fest:value></span>
+			<ul class="menu">
+				<li class="menu__element"><a class="menu__item js-ready">FIGHT</a></li>
+				<li class="menu__element"><a class="menu__item js-back" href="#main">BACK</a></li>
+			</ul>
+		</div>
+	</div>
+</fest:template>

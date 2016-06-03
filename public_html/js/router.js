@@ -5,20 +5,24 @@ define(function(require) {
 
 		Main = require('views/main'),
 		Game = require('views/game'),
+		GameMP = require('views/gameMP'),
 		Login = require('views/login'),
 		Scoreboard = require('views/scoreboard'),
 		Register = require('views/register'),
 		Howtoplay = require('views/howtoplay'),
-		SplashScreen = require('views/splashScreen');
+		SplashScreen = require('views/splashScreen'),
+		ChooseYourDestiny = require('views/chooseyourdestiny');
 
 	app.add({
 		'main': Main,
 		'game': Game,
+		'gameMP': GameMP,
 		'login': Login,
 		'scoreboard': Scoreboard,
 		'register': Register,
 		'howtoplay': Howtoplay,
-		'splashscreen': SplashScreen
+		'splashscreen': SplashScreen,
+		'chooseyourdestiny': ChooseYourDestiny
 	});
 	app.render();
 
@@ -30,29 +34,37 @@ define(function(require) {
 			'register': 'register',
 			'scoreboard': 'scoreboard',
 			'game': 'game',
+			'gameMP': 'gameMP',
 			'howtoplay': 'howtoplay',
+			'chooseyourdestiny': 'chooseyourdestiny',
 			'*default': 'defaultAction'
 		},
 		initialize: function () {
 			// app.get('splashscreen').on('navigate', this.goToMain.bind(this));
 		},
-		main: function() {
+		main: function () {
 			app.get('main').show();
 		},
-		login: function() {
+		login: function () {
 			app.get('login').show();
 		},
-		register: function() {
+		register: function () {
 			app.get('register').show();
 		},
-		scoreboard: function() {
+		scoreboard: function () {
 			app.get('scoreboard').show();
 		},
-		game: function() {
+		game: function () {
 			app.get('game').show();
 		},
-		howtoplay: function() {
+		gameMP: function () {
+			app.get('gameMP').show();
+		},
+		howtoplay: function () {
 			app.get('howtoplay').show();
+		},
+		chooseyourdestiny: function () {
+			app.get('chooseyourdestiny').show();
 		},
 		defaultAction: function () {
 			app.get('splashscreen').show();

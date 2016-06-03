@@ -8,7 +8,7 @@
 				<fest:choose>
 					<fest:when test="json.session.attributes.isSignedIn">
 						<li class="menu__element">
-							<a class="menu__item js-focus" href="#game">START GAME</a>
+							<a class="menu__item js-focus" href="#chooseyourdestiny">START GAME</a>
 						</li>
 					</fest:when>
 					<fest:otherwise>

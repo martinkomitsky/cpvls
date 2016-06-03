@@ -1,0 +1,11 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+	<div class="game__menu-wrapper game__menu-wrapper_main">
+		<div class="game__menu">
+			<ul class="menu">
+				<li class="menu__element"><a class="menu__item js-back" href="#game">SINGLE PLAYER</a></li>
+				<li class="menu__element"><a class="menu__item js-back" href="#gameMP">MULTIPLAYER</a></li>
+				<li class="menu__element"><a class="menu__item js-back" href="#main">BACK</a></li>
+			</ul>
+		</div>
+	</div>
+</fest:template>

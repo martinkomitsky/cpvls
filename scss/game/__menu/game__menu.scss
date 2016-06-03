@@ -59,11 +59,35 @@
 					}
 			}
 		}
-
+		&-playername {
+			color: white;
+			font-size: 85px;
+		}
+		@media (max-height: 800px) {
+			&-playername {
+				color: white;
+				font-size: 45px;
+			}
+		}
 		&_fail {
 			border: #792728 solid 1px;
 			animation: shake .3s ease-in-out, invalidate__menu 0.4s ease;
 			// animation: invalidate__menu 0.4s ease;
+		}
+		&_ready {
+			border: #29F34B solid 1px;
+			animation: shake .3s ease-in-out, invalidate__menu 0.4s ease;
+			// animation: invalidate__menu 0.4s ease;
+		}
+		&_lobby {
+			width: 60%;
+			margin-bottom: 350px;
+		}
+		@media (max-height: 1000px) {
+			&_lobby {
+				width: 60%;
+				margin-bottom: 150px;
+			}
 		}
 	}
 
