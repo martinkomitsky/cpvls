@@ -169,15 +169,15 @@ define(function(require) {
 				winnerName = winnerName.toUpperCase();
 				console.info('[round fisinsed!]');
 				this.const.currentGameStatus = 'fisinsed';
+				this.objects.timeText.visible = false;
 				this.const.aiTimer.stop();
-				// loser.kill();
 				this.objects.stateText.text = winnerName + ' WINS!';
 				this.objects.stateText.visible = true;
 				// this.objects.hpbaropponent_e.visible = false;
 				// this.objects.hpbaropponent.visible = false;
 				// this.objects.hpbarplayer.visible = false;
 				// this.objects.hpbarplayer_e.visible = false;
-				// this.objects.timeText.visible = false;
+				//save score to server
 			}.bind(this),
 			checkOverlap: function (spriteA, spriteB) {
 				return Phaser.Rectangle.intersects(spriteA.getBounds(), spriteB.getBounds());
@@ -314,38 +314,39 @@ define(function(require) {
 
 		gameObj.objects.timeText = game.add.text(game.world.centerX, 55, ' ', {
 			font: '40px mkx_titleregular',
-			fill: "#E4E3E4",
+			fill: '#E4E3E4',
 		});
 		gameObj.objects.timeText.stroke = '#847F7F';
 		gameObj.objects.timeText.strokeThickness = 2;
 		gameObj.objects.timeText.anchor.setTo(0.5, -0.1)
 
-		gameObj.objects.playerNickText = game.add.text(game.world.centerX / 3 - 250	, 65, ' ', {
-			font: "25px mkx_titleregular",
-			fill: "#e4e3e4",
+		gameObj.objects.playerNickText = game.add.text(game.world.centerX / 2, 63, ' ', {
+			font: '21px mkx_titleregular',
+			fill: '#DDDCBA',
+			fontWeight: 'bold'
 		});
-		gameObj.objects.playerNickText.stroke = '#847f7f';
+		gameObj.objects.playerNickText.stroke = '#000';
 		gameObj.objects.playerNickText.strokeThickness = 2;
 
-		gameObj.objects.opponentNickText = game.add.text(game.world.centerX + 2 * game.world.centerX / 3, 65, ' ', {
-			font: "25px mkx_titleregular",
-			fill: "#e4e3e4",
+		// gameObj.objects.opponentNickText = game.add.text(-100, 63, ' ', {
+		gameObj.objects.opponentNickText = game.add.text(game.world.centerX + 1 * game.world.centerX / 2 - 350, 63, ' ', {
+
+			font: '21px mkx_titleregular',
+			fill: '#DDDCBA',
+			fontWeight: "bold"
 		});
-		gameObj.objects.opponentNickText.stroke = '#847f7f';
+		gameObj.objects.opponentNickText.stroke = '#000';
 		gameObj.objects.opponentNickText.strokeThickness = 2;
 
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
 		gameObj.const.aiTimer = game.time.create(false);
-
-		gameObj.const.aiTimer.loop(5000, opponent.victory);
-
-		// gameObj.const.aiTimer.loop(11000, opponent.stay, game);
-		// gameObj.const.aiTimer.loop(3000, opponent.moveLeft);
-		// gameObj.const.aiTimer.loop(2000, opponent.punch);
-		// gameObj.const.aiTimer.loop(7000, opponent.jump);
-		// gameObj.const.aiTimer.loop(5000, opponent.moveRight);
-		// gameObj.const.aiTimer.loop(13000, opponent.kick);
+		gameObj.const.aiTimer.loop(11000, opponent.stay, game);
+		gameObj.const.aiTimer.loop(3000, opponent.moveLeft);
+		gameObj.const.aiTimer.loop(2000, opponent.punch);
+		gameObj.const.aiTimer.loop(7000, opponent.jump);
+		gameObj.const.aiTimer.loop(5000, opponent.moveRight);
+		gameObj.const.aiTimer.loop(13000, opponent.kick);
 		gameObj.const.aiTimer.start();
 	};
 
@@ -358,8 +359,8 @@ define(function(require) {
 		gameObj.objects.timeText.text = 91 - gameObj.const.aiTimer.seconds^0;
 
 
-		gameObj.objects.playerNickText.text = gameObj.const.players.player.nick;
-		gameObj.objects.opponentNickText.text = gameObj.const.players.opponent.nick;
+		gameObj.objects.playerNickText.text = gameObj.const.players.player.nick.toUpperCase();
+		gameObj.objects.opponentNickText.text = gameObj.const.players.opponent.nick.toUpperCase();
 
 		gameObj.objects.hpbarplayer.updateCrop();
 		gameObj.objects.hpbarplayer_e.scale.setTo(-1, 1);
@@ -374,84 +375,83 @@ define(function(require) {
 		game.physics.arcade.collide(opponent, gameObj.objects.rightWall);
 
 		player.body.velocity.x = 0;
-
-		if (player.body.touching.down) {
-			firstFrame = false;
-		}
-		if (cursors.left.isDown) {
-			console.log("Move to the left");
-			player.body.velocity.x = -300;
-			if (player.body.touching.down) {
-				player.animations.play('left');
-			}
-		} else if (cursors.right.isDown) {
-			console.log("Move to the right");
-			player.body.velocity.x = 300;
-			if (player.body.touching.down)
-				player.animations.play('right');
-		} else if (punchKey.isDown) {
-			player.animations.play('punch');
-			if (gameObj.fn.checkOverlap(player, opponent)) {
-				if (player.frame == 24) {
-					opponentHP -= 1;
-					if (opponentHP >= 0) {
-						gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
-					}
-				}
-			}
-		} else if (kickKey.isDown) {
-			player.animations.play('kick');
-			if (gameObj.fn.checkOverlap(player, opponent)) {
-				if (player.frame == 28) {
-					opponentHP -= 2;
-					if (opponentHP >= 0) {
-						gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
-					}
-				}
-			}
-		} else {
-			if (player.body.touching.down) {
-				if (player.animations.currentAnim.loop || player.frame == 15) {
-					player.animations.play('stay');
-				} else {
-					player.animations.currentAnim.onComplete.add(function() {player.animations.play('stay')}, game);
-				}
-			} else {
-				if (firstFrame == true) {
-					console.log ('we are flying for the first time');
-					opponent.animations.play('stay');
-					player.frame = 15;
-				}
-			}
-		}
-		if (cursors.up.isDown && player.body.touching.down) {
-			console.log("Jump");
-			if (cursors.left.isDown) {
-				player.animations.play('jumpleft');
-			} else {
-				player.animations.play('jump');
-			}
-			player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
-			player.body.velocity.y = -1150;
-		}
-		if (opponent.animations.currentAnim.name == 'punch') {
-			if (gameObj.fn.checkOverlap(player, opponent)) {
-				playerHP -= 1;
-				if (playerHP >= 0) {
-					gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
-				}
-			}
-		}
-		if (opponent.animations.currentAnim.name == 'kick') {
-			if (gameObj.fn.checkOverlap(player, opponent)) {
-				playerHP -= 2;
-				if (playerHP >= 0) {
-					gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
-				}
-			}
-		}
-
 		if (gameObj.const.currentGameStatus === 'round') {
+			if (player.body.touching.down) {
+				firstFrame = false;
+			}
+			if (cursors.left.isDown) {
+				console.log("Move to the left");
+				player.body.velocity.x = -300;
+				if (player.body.touching.down) {
+					player.animations.play('left');
+				}
+			} else if (cursors.right.isDown) {
+				console.log("Move to the right");
+				player.body.velocity.x = 300;
+				if (player.body.touching.down)
+					player.animations.play('right');
+			} else if (punchKey.isDown) {
+				player.animations.play('punch');
+				if (gameObj.fn.checkOverlap(player, opponent)) {
+					if (player.frame == 24) {
+						opponentHP -= 1;
+						if (opponentHP >= 0) {
+							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+						}
+					}
+				}
+			} else if (kickKey.isDown) {
+				player.animations.play('kick');
+				if (gameObj.fn.checkOverlap(player, opponent)) {
+					if (player.frame == 28) {
+						opponentHP -= 2;
+						if (opponentHP >= 0) {
+							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+						}
+					}
+				}
+			} else {
+				if (player.body.touching.down) {
+					if (player.animations.currentAnim.loop || player.frame == 15) {
+						player.animations.play('stay');
+					} else {
+						player.animations.currentAnim.onComplete.add(function() {player.animations.play('stay')}, game);
+					}
+				} else {
+					if (firstFrame == true) {
+						console.log ('we are flying for the first time');
+						opponent.animations.play('stay');
+						player.frame = 15;
+					}
+				}
+			}
+			if (cursors.up.isDown && player.body.touching.down) {
+				console.log("Jump");
+				if (cursors.left.isDown) {
+					player.animations.play('jumpleft');
+				} else {
+					player.animations.play('jump');
+				}
+				player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
+				player.body.velocity.y = -1150;
+			}
+			if (opponent.animations.currentAnim.name == 'punch') {
+				if (gameObj.fn.checkOverlap(player, opponent)) {
+					playerHP -= 1;
+					if (playerHP >= 0) {
+						gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+					}
+				}
+			}
+			if (opponent.animations.currentAnim.name == 'kick') {
+				if (gameObj.fn.checkOverlap(player, opponent)) {
+					playerHP -= 2;
+					if (playerHP >= 0) {
+						gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
+					}
+				}
+			}
+
 			if (opponentHP <= 0) {
 				opponent.animations.play('death');
 				player.animations.play('victory');
@@ -461,7 +461,23 @@ define(function(require) {
 				opponent.animations.play('victory');
 				gameObj.fn.finishRound(player, gameObj.const.players.opponent.name);
 			} else {
-				console.warn('pizda');
+				console.warn('pizda', gameObj.objects.timeText.text);
+			}
+
+			if (gameObj.objects.timeText.text == 0) {
+				if (opponentHP < playerHP) {
+					opponent.animations.play('death');
+					player.animations.play('victory');
+					gameObj.fn.finishRound(opponent, gameObj.const.players.player.name);
+				} else if (opponentHP > playerHP) {
+					player.animations.play('death');
+					opponent.animations.play('victory');
+					gameObj.fn.finishRound(player, gameObj.const.players.opponent.name);
+				} else {
+					player.animations.play('death');
+					opponent.animations.play('death');
+					gameObj.fn.finishRound(player, 'nobody');
+				}
 			}
 		}
 	};
