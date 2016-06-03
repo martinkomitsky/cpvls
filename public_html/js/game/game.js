@@ -49,10 +49,21 @@ define(function(require) {
 				wall.visible = false;
 				wall.body.immovable = true;
 				return wall;
-			}
+			},
+			finishRound: function (loser, winnerName) {
+				console.info('[round fisinsed!]')
+				loser.kill();
+				stateText.text = winnerName + ' WINS!';
+				stateText.visible = true;
+				this.objects.hpbaropponent_e.visible = false;
+				this.objects.hpbaropponent.visible = false;
+				this.objects.hpbarplayer.visible = false;
+				this.objects.hpbarplayer_e.visible = false;
+			}.bind(this)
 		}
 		this.objects = {};
 	};
+
 
 	Game.prototype.create = function (gameObj) {
 		var game = this.game;
@@ -73,20 +84,20 @@ define(function(require) {
 		ground.visible = false;
 		ground.body.immovable = true;
 
-		hpbarplayer_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
-		hpbaropponent_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
-		hpbarplayer = game.add.sprite(game.world.width / 2, 50, 'hpbar');
-		hpbaropponent = game.add.sprite(game.world.width / 2, 50, 'hpbar');
+		gameObj.objects.hpbarplayer_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
+		gameObj.objects.hpbaropponent_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
+		gameObj.objects.hpbarplayer = game.add.sprite(game.world.width / 2, 50, 'hpbar');
+		gameObj.objects.hpbaropponent = game.add.sprite(game.world.width / 2, 50, 'hpbar');
 
 		cursors = game.input.keyboard.createCursorKeys();
 		punchKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		kickKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
 
-		player = game.add.sprite(game.world.width/100*25, game.world.height - 750, 'player');
-		player.scale.setTo(2.2,2.2);
+		player = game.add.sprite(game.world.width / 100 * 25, game.world.height - 750, 'player');
+		player.scale.setTo(2.2, 2.2);
 
-		opponent = game.add.sprite(game.world.width/100*75 , game.world.height - 750, 'opponent');
-		opponent.scale.setTo(-2.2,2.2);
+		opponent = game.add.sprite(game.world.width / 100 * 75 , game.world.height - 750, 'opponent');
+		opponent.scale.setTo(-2.2, 2.2);
 		opponent.anchor.setTo(0.5);
 
 		game.physics.arcade.enable(player);
@@ -144,13 +155,13 @@ define(function(require) {
 		opponent.body.customSeparateX = true;
 		opponentHP = 100;
 
-		cropRectOpponentHP = new Phaser.Rectangle(0, 0, hpbaropponent.width, hpbaropponent.height);
-		cropRectPlayerHP = new Phaser.Rectangle(0, 0, hpbarplayer.width, hpbarplayer.height);
+		cropRectOpponentHP = new Phaser.Rectangle(0, 0, gameObj.objects.hpbaropponent.width, gameObj.objects.hpbaropponent.height);
+		cropRectPlayerHP = new Phaser.Rectangle(0, 0, gameObj.objects.hpbarplayer.width, gameObj.objects.hpbarplayer.height);
 
-		hpbarplayer.crop(cropRectPlayerHP);
-		hpbaropponent.crop(cropRectOpponentHP);
-		hpbaropponent.initialWidth = hpbaropponent.width;
-		hpbarplayer.initialWidth = hpbarplayer.width;
+		gameObj.objects.hpbarplayer.crop(cropRectPlayerHP);
+		gameObj.objects.hpbaropponent.crop(cropRectOpponentHP);
+		gameObj.objects.hpbaropponent.initialWidth = gameObj.objects.hpbaropponent.width;
+		gameObj.objects.hpbarplayer.initialWidth = gameObj.objects.hpbarplayer.width;
 
 		stateText = game.add.text(game.world.centerX,game.world.centerY -50, ' ', {
 			font: '84px mkx_titleregular',
@@ -175,11 +186,11 @@ define(function(require) {
 
 	Game.prototype.update = function (gameObj) {
 		var game = this.game;
-		hpbaropponent.updateCrop();
+		gameObj.objects.hpbaropponent.updateCrop();
 
-		hpbarplayer.updateCrop();
-		hpbarplayer_e.scale.setTo(-1, 1);
-		hpbarplayer.scale.setTo(-1, 1);
+		gameObj.objects.hpbarplayer.updateCrop();
+		gameObj.objects.hpbarplayer_e.scale.setTo(-1, 1);
+		gameObj.objects.hpbarplayer.scale.setTo(-1, 1);
 
 		game.physics.arcade.collide(player, ground);
 		game.physics.arcade.collide(opponent, ground);
@@ -210,7 +221,7 @@ define(function(require) {
 			if (gameObj.checkOverlap(player, opponent)) {
 				if (player.frame == 24) {
 					opponentHP -= 1;
-					cropRectOpponentHP.width = hpbaropponent.initialWidth / 100 * opponentHP;
+					cropRectOpponentHP.width = gameObj.objects.hpbaropponent.initialWidth / 100 * opponentHP;
 				}
 			}
 		} else if (kickKey.isDown) {
@@ -218,7 +229,7 @@ define(function(require) {
 			if (gameObj.checkOverlap(player, opponent)) {
 				if (player.frame == 28) {
 					opponentHP -= 2;
-					cropRectOpponentHP.width = hpbaropponent.initialWidth / 100 * opponentHP;
+					cropRectOpponentHP.width = gameObj.objects.hpbaropponent.initialWidth / 100 * opponentHP;
 				}
 			}
 		} else {
@@ -249,14 +260,14 @@ define(function(require) {
 		if (opponent.animations.currentAnim.name == 'punch') {
 			if (gameObj.checkOverlap(player, opponent)) {
 				playerHP -= 2;
-				cropRectPlayerHP.width = hpbarplayer.initialWidth / 100 * playerHP;
+				cropRectPlayerHP.width = gameObj.objects.hpbarplayer.initialWidth / 100 * playerHP;
 			}
 		}
 		if (opponentHP <= 0) {
-			gameObj.finishRound(opponent, 'PLAYER 1');
+			gameObj.fn.finishRound(opponent, 'PLAYER 1');
 		}
 		if (playerHP <= 0) {
-			gameObj.finishRound(player, 'PLAYER 2');
+			gameObj.fn.finishRound(player, 'PLAYER 2');
 		}
 
 
@@ -282,15 +293,5 @@ define(function(require) {
 
 		return Phaser.Rectangle.intersects(boundsA, boundsB);
 	}
-
-	Game.prototype.finishRound = function (loser, winnerName) {
-			loser.kill();
-			stateText.text = winnerName + ' WINS!';
-			stateText.visible = true;
-			hpbaropponent_e.visible = false;
-			hpbaropponent.visible = false;
-			hpbarplayer.visible = false;
-			hpbarplayer_e.visible = false;
-		}
 	return Game;
 });
