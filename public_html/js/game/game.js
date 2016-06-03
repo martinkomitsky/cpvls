@@ -24,22 +24,40 @@ define(function(require) {
 				'images/assets/landscape5.jpg'
 			],
 			objects: {
-				'ground': 'images/assets/platform.png',
-				'hpbar': 'images/assets/hpbar.png',
-				'hpbar-empty': 'images/assets/hpbar_empty.png',
-				'menu': 'images/assets/menu.png',
-				'wall': 'images/assets/wall.png',
+				ground: 'images/assets/platform.png',
+				hpbar: 'images/assets/hpbar.png',
+				hpbar_empty: 'images/assets/hpbar_empty.png',
+				menu: 'images/assets/menu.png',
+				wall: 'images/assets/wall.png',
 			},
-			characters: [
-				'images/assets/zero.png',
-				'images/assets/scorpion.png'
-			],
+			characters: {
+				obama: {
+					sprite: 'images/assets/zero.png',
+				},
+				putin: {
+					sprite: 'images/assets/scorpion.png',
+				}
+
+
+			},
 			gameModes: [
 				'singleplayer',//todo
 				'multiplayer'
 			],
-			currentGameStatus: 'game'
-		}
+		};
+		this.const = {
+			currentGameStatus: 'round',
+			players: {
+				player: {
+					name: Object.keys(this.res.characters)[Math.random() * 2^0],
+					nick: 'xxxMerOPNXAPbxxx'
+				},
+				opponent: {
+					name: Object.keys(this.res.characters)[Math.random() * 2^0],
+					nick: 'vip://PoKanoVzrivatel777'
+				}
+			},
+		};
 		this.res.objects['arena'] = this.res.arenas[this.res.currentArena];
 
 		this.fn = {
@@ -52,23 +70,29 @@ define(function(require) {
 				return wall;
 			},
 			finishRound: function (loser, winnerName) {
+				winnerName = winnerName.toUpperCase();
 				console.info('[round fisinsed!]');
+				this.const.currentGameStatus = 'fisinsed';
 				loser.kill();
-				stateText.text = winnerName + ' WINS!';
-				stateText.visible = true;
+				this.objects.stateText.text = winnerName + ' WINS!';
+				this.objects.stateText.visible = true;
 				this.objects.hpbaropponent_e.visible = false;
 				this.objects.hpbaropponent.visible = false;
 				this.objects.hpbarplayer.visible = false;
 				this.objects.hpbarplayer_e.visible = false;
 			}.bind(this),
+			checkOverlap: function (spriteA, spriteB) {
+				var boundsA = spriteA.getBounds(),
+					boundsB = spriteB.getBounds();
+
+				return Phaser.Rectangle.intersects(boundsA, boundsB);
+			},
 			updateBarHP: function (cropRectBar, initialWidth, amount) {
 				cropRectBar.width = initialWidth / 100 * amount;
 			}
-
 		}
 		this.objects = {};
 	};
-
 
 	Game.prototype.create = function (gameObj) {
 		var game = this.game;
@@ -83,14 +107,14 @@ define(function(require) {
 		gameObj.objects.leftWall = gameObj.fn.initWall(0, 0);
 		gameObj.objects.rightWall = gameObj.fn.initWall(window.innerWidth - 10, 0);
 
-		ground = game.add.sprite(0, game.world.height - 20, 'ground');
-		ground.scale.setTo(5, 2);
-		ground.game.physics.arcade.enableBody(ground);
-		ground.visible = false;
-		ground.body.immovable = true;
+		gameObj.objects.ground = game.add.sprite(0, game.world.height - 20, 'ground');
+		gameObj.objects.ground.scale.setTo(5, 2);
+		gameObj.objects.ground.game.physics.arcade.enableBody(gameObj.objects.ground);
+		gameObj.objects.ground.visible = false;
+		gameObj.objects.ground.body.immovable = true;
 
-		gameObj.objects.hpbarplayer_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
-		gameObj.objects.hpbaropponent_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
+		gameObj.objects.hpbarplayer_e = game.add.sprite(game.world.width / 2, 50, 'hpbar_empty');
+		gameObj.objects.hpbaropponent_e = game.add.sprite(game.world.width / 2, 50, 'hpbar_empty');
 		gameObj.objects.hpbarplayer = game.add.sprite(game.world.width / 2, 50, 'hpbar');
 		gameObj.objects.hpbaropponent = game.add.sprite(game.world.width / 2, 50, 'hpbar');
 
@@ -177,44 +201,47 @@ define(function(require) {
 		gameObj.objects.hpbaropponent.initialWidth = gameObj.objects.hpbaropponent.width;
 		gameObj.objects.hpbarplayer.initialWidth = gameObj.objects.hpbarplayer.width;
 
-		stateText = game.add.text(game.world.centerX, game.world.centerY - 50, ' ', {
+		gameObj.objects.stateText = game.add.text(game.world.centerX, game.world.centerY - 50, ' ', {
 			font: '84px mkx_titleregular',
-			fill: '#fff',
+			fill: '#E4E3E4',
 			fontStyle: 'italic'
 		});
-		stateText.stroke = '#963131';
-		stateText.strokeThickness = 4;
-		stateText.anchor.setTo(0.5, 0.5);
-		stateText.visible = false;
+		gameObj.objects.stateText.stroke = '#963131';
+		gameObj.objects.stateText.strokeThickness = 4;
+		gameObj.objects.stateText.anchor.setTo(0.5, 0.5);
+		gameObj.objects.stateText.visible = false;
 
-		timeText = game.add.text(game.world.centerX, 55, ' ', {
-			font: '48px arial',
-			fill: "#fff",
+		gameObj.objects.timeText = game.add.text(game.world.centerX, 55, ' ', {
+			font: '40px mkx_titleregular',
+			fill: "#E4E3E4",
 		});
-		timeText.anchor.setTo(0.5,0)
+		gameObj.objects.timeText.stroke = '#847F7F';
+		gameObj.objects.timeText.strokeThickness = 2;
+		gameObj.objects.timeText.anchor.setTo(0.5, -0.1)
+
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
-		timer = game.time.create(false);
-		timer.loop(11000, opponent.stay, game);
-		timer.loop(3000, opponent.moveLeft);
-		timer.loop(2000, opponent.punch);
-		timer.loop(7000, opponent.jump);
-		timer.loop(5000, opponent.moveRight);
-		timer.loop(13000, opponent.kick);
-		timer.start();
+		gameObj.const.aiTimer = game.time.create(false);
+		gameObj.const.aiTimer.loop(11000, opponent.stay, game);
+		gameObj.const.aiTimer.loop(3000, opponent.moveLeft);
+		gameObj.const.aiTimer.loop(2000, opponent.punch);
+		gameObj.const.aiTimer.loop(7000, opponent.jump);
+		gameObj.const.aiTimer.loop(5000, opponent.moveRight);
+		gameObj.const.aiTimer.loop(13000, opponent.kick);
+		gameObj.const.aiTimer.start();
 	};
 
 	Game.prototype.update = function (gameObj) {
 		var game = this.game;
 		gameObj.objects.hpbaropponent.updateCrop();
-		timeText.text = 41 - timer.seconds^0;
+		gameObj.objects.timeText.text = 90 - gameObj.const.aiTimer.seconds^0;
 
 		gameObj.objects.hpbarplayer.updateCrop();
 		gameObj.objects.hpbarplayer_e.scale.setTo(-1, 1);
 		gameObj.objects.hpbarplayer.scale.setTo(-1, 1);
 
-		game.physics.arcade.collide(player, ground);
-		game.physics.arcade.collide(opponent, ground);
+		game.physics.arcade.collide(player, gameObj.objects.ground);
+		game.physics.arcade.collide(opponent, gameObj.objects.ground);
 		game.physics.arcade.collide(player, opponent);
 		game.physics.arcade.collide(player, gameObj.objects.leftWall);
 		game.physics.arcade.collide(player, gameObj.objects.rightWall);
@@ -239,7 +266,7 @@ define(function(require) {
 				player.animations.play('right');
 		} else if (punchKey.isDown) {
 			player.animations.play('punch');
-			if (gameObj.checkOverlap(player, opponent)) {
+			if (gameObj.fn.checkOverlap(player, opponent)) {
 				if (player.frame == 24) {
 					opponentHP -= 1;
 					gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
@@ -247,7 +274,7 @@ define(function(require) {
 			}
 		} else if (kickKey.isDown) {
 			player.animations.play('kick');
-			if (gameObj.checkOverlap(player, opponent)) {
+			if (gameObj.fn.checkOverlap(player, opponent)) {
 				if (player.frame == 28) {
 					opponentHP -= 2;
 					gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
@@ -279,22 +306,26 @@ define(function(require) {
 			player.body.velocity.y = -1150;
 		}
 		if (opponent.animations.currentAnim.name == 'punch') {
-			if (gameObj.checkOverlap(player, opponent)) {
+			if (gameObj.fn.checkOverlap(player, opponent)) {
 				playerHP -= 1;
 				gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
 			}
 		}
 		if (opponent.animations.currentAnim.name == 'kick') {
-			if (gameObj.checkOverlap(player, opponent)) {
+			if (gameObj.fn.checkOverlap(player, opponent)) {
 				playerHP -= 2;
 				gameObj.fn.updateBarHP(cropRectPlayerHP, gameObj.objects.hpbarplayer.initialWidth, playerHP);
 			}
 		}
-		if (opponentHP <= 0) {
-			gameObj.fn.finishRound(opponent, 'PLAYER 1');
-		}
-		if (playerHP <= 0) {
-			gameObj.fn.finishRound(player, 'PLAYER 2');
+
+		if (gameObj.const.currentGameStatus === 'round') {
+			if (opponentHP <= 0) {
+				gameObj.fn.finishRound(opponent, gameObj.const.players.player.name);
+			} else if (playerHP <= 0) {
+				gameObj.fn.finishRound(player, gameObj.const.players.opponent.name);
+			} else {
+				console.warn('pizda');
+			}
 		}
 	};
 
@@ -302,24 +333,19 @@ define(function(require) {
 		var game = this.game,
 			resources = gameObj.res,
 			objects = resources.objects,
-			characters = resources.characters;
+			characters = resources.characters,
+			players = gameObj.const.players;
 
 		$.each(objects, function (key, val) {
 			game.load.image(key, val);
 		});
 
-		$.each(['player', 'opponent'], function (key, val) {
-			game.load.spritesheet(val, characters[Math.random() * 2^0], 141, 0);
+		$.each(players, function (key, val) {
+			// debugger
+			game.load.spritesheet(key, characters[val.name].sprite, 141, 0);
 		});
 
 	};
-
-	Game.prototype.checkOverlap = function (spriteA, spriteB) {
-		var boundsA = spriteA.getBounds(),
-			boundsB = spriteB.getBounds();
-
-		return Phaser.Rectangle.intersects(boundsA, boundsB);
-	}
 
 	return Game;
 });
