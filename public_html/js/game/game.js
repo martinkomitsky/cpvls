@@ -1,7 +1,7 @@
 define(function(require) {
 
 	var Game = function () {
-		this.data = {
+		this.res = {
 			currentArena: Math.random() * 10^0,
 			arenas: [
 				'images/assets/landscape5.jpg',
@@ -39,7 +39,19 @@ define(function(require) {
 				'multiplayer'
 			]
 		}
-		this.data.objects['arena'] = this.data.arenas[this.data.currentArena];
+		this.res.objects['arena'] = this.res.arenas[this.res.currentArena];
+
+		this.fn = {
+			initWall: function  (x, y) {
+				wall = game.add.sprite(x, y, 'wall');
+				wall.scale.setTo(10, 25);
+				wall.game.physics.arcade.enableBody(wall);
+				wall.visible = false;
+				wall.body.immovable = true;
+				return wall;
+			}
+		}
+		this.objects = {};
 	};
 
 	Game.prototype.create = function (gameObj) {
@@ -49,21 +61,11 @@ define(function(require) {
 		firstFrame = true;
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
-		sky = game.add.sprite(0, 0, 'arena');
+		background = game.add.sprite(0, 0, 'arena');
+		background.scale.setTo(window.innerWidth / background.width, window.innerHeight / background.height);
 
-		sky.scale.setTo(window.innerWidth/sky.width, window.innerHeight/sky.height);
-
-		leftWall = game.add.sprite(0, 0, 'wall');
-		leftWall.scale.setTo(10, 25);
-		leftWall.game.physics.arcade.enableBody(leftWall);
-		leftWall.visible = false;
-		leftWall.body.immovable = true;
-
-		rightWall = game.add.sprite(window.innerWidth-10, 0, 'wall');
-		rightWall.scale.setTo(10, 25);
-		rightWall.game.physics.arcade.enableBody(rightWall);
-		rightWall.visible = false;
-		rightWall.body.immovable = true;
+		gameObj.objects.leftWall = gameObj.fn.initWall(0, 0);
+		gameObj.objects.rightWall = gameObj.fn.initWall(window.innerWidth - 10, 0);
 
 		ground = game.add.sprite(0, game.world.height - 16, 'ground');
 		ground.scale.setTo(5, 2);
@@ -71,11 +73,10 @@ define(function(require) {
 		ground.visible = false;
 		ground.body.immovable = true;
 
-		hpbarplayer_e = game.add.sprite(game.world.width/2, 50, 'hpbar-empty');
-		hpbaropponent_e = game.add.sprite(game.world.width/2, 50, 'hpbar-empty');
-		hpbarplayer = game.add.sprite(game.world.width/2, 50, 'hpbar');
-		hpbaropponent = game.add.sprite(game.world.width/2, 50, 'hpbar');
-
+		hpbarplayer_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
+		hpbaropponent_e = game.add.sprite(game.world.width / 2, 50, 'hpbar-empty');
+		hpbarplayer = game.add.sprite(game.world.width / 2, 50, 'hpbar');
+		hpbaropponent = game.add.sprite(game.world.width / 2, 50, 'hpbar');
 
 		cursors = game.input.keyboard.createCursorKeys();
 		punchKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -183,10 +184,10 @@ define(function(require) {
 		game.physics.arcade.collide(player, ground);
 		game.physics.arcade.collide(opponent, ground);
 		game.physics.arcade.collide(player, opponent);
-		game.physics.arcade.collide(player, leftWall);
-		game.physics.arcade.collide(player, rightWall);
-		game.physics.arcade.collide(opponent, leftWall);
-		game.physics.arcade.collide(opponent, rightWall);
+		game.physics.arcade.collide(player, gameObj.objects.leftWall);
+		game.physics.arcade.collide(player, gameObj.objects.rightWall);
+		game.physics.arcade.collide(opponent, gameObj.objects.leftWall);
+		game.physics.arcade.collide(opponent, gameObj.objects.rightWall);
 
 		player.body.velocity.x = 0;
 
@@ -262,9 +263,9 @@ define(function(require) {
 	};
 	Game.prototype.preload = function (gameObj) {
 		var game = this.game,
-			gamedata = gameObj.data,
-			objects = gamedata.objects,
-			characters = gamedata.characters;
+			resources = gameObj.res,
+			objects = resources.objects,
+			characters = resources.characters;
 
 		$.each(objects, function (key, val) {
 			game.load.image(key, val);

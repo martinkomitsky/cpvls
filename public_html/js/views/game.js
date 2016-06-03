@@ -9,18 +9,19 @@ define(function(require) {
 		template: tmpl,
 		className: 'game__main game__main_visible js-game',
 		initialize: function() {
-			g = new G();
+			this.gameObj = new G();
 			// debugger;
 		},
 		render: function() {
 			console.log("Script is in action");
 			var state = {
-				preload: g.preload.bind(this, g),
-				create: g.create.bind(this, g),
-				update: g.update.bind(this, g)
+				preload: this.gameObj.preload.bind(this, this.gameObj),
+				create: this.gameObj.create.bind(this, this.gameObj),
+				update: this.gameObj.update.bind(this, this.gameObj)
 			};
 			this.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', state);
 			window.game = this.game;
+			window.g = this.gameObj;
 
 			return BaseView.prototype.render.call(this);
 		},
