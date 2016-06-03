@@ -32,7 +32,7 @@ define(function(require) {
 			},
 			characters: {
 				obama: {
-					sprite: 'images/assets/zero1.png',
+					sprite: 'images/assets/zero.png',
 					animations: {
 						'stay': {
 							frames: [0, 1, 2, 3, 4, 5, 6],
