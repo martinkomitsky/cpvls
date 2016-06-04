@@ -145,12 +145,12 @@ define(function(require) {
 			players: {
 				player: {
 					name: Object.keys(this.res.characters)[Math.random() * 2^0],
-					nick: 'xxxMerOPNXAPbxxx',
+					nick: 'player1',
 
 				},
 				opponent: {
 					name: Object.keys(this.res.characters)[Math.random() * 2^0],
-					nick: 'vipplayer',
+					nick: 'player2',
 				}
 			},
 		};
@@ -527,8 +527,10 @@ define(function(require) {
 				console.log("Jump");
 				if (cursors.left.isDown) {
 					player.animations.play('jumpleft');
+					conn.send(JSON.stringify({message: 'jumpleft'}));
 				} else {
 					player.animations.play('jump');
+					conn.send(JSON.stringify({message: 'jump'}));
 				}
 				player.animations.currentAnim.onComplete.add(function() {player.frame = 15}, game);
 				player.body.velocity.y = -1150;
