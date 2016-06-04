@@ -2,6 +2,13 @@
 	<fest:script>
 		console.log('[gameMP json]', json);
 	</fest:script>
+<div class="timer" style="
+    position: absolute;
+    top: 0;
+    left: 45%;
+    color: white;
+    font-size: 35px;
+"></div>
 	<div id="playscreen" class="game__playscreen js-focus">
 	</div>
 	<div class="game__menu-wrapper game__menu-wrapp er_main">
@@ -13,7 +20,14 @@
 		<div class="game__menu game__menu_lobby js-player {json.player.ready? 'game__menu_ready' : 'game__menu_fail'}">
 			<span class="game__menu-playername"><fest:value>json.player.name</fest:value></span>
 			<ul class="menu">
-				<li class="menu__element"><a class="menu__item js-ready">FIGHT</a></li>
+				<fest:choose>
+					<fest:when test="json.player.ready">
+						<li class="menu__element"><a class="menu__item js-ready menu__item_notready {json.opponent.name === 'Waiting for an opponent...' ? 'menu__item_disabled js-disabled' : ''}">DON'T FIGHT</a></li>
+					</fest:when>
+					<fest:otherwise>
+						<li class="menu__element"><a class="menu__item js-ready menu__item_ready {json.opponent.name === 'Waiting for an opponent...' ? 'menu__item_disabled js-disabled' : ''}">FIGHT</a></li>
+					</fest:otherwise>
+				</fest:choose>
 				<li class="menu__element"><a class="menu__item js-back" href="#main">BACK</a></li>
 			</ul>
 		</div>

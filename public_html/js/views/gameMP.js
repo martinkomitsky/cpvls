@@ -24,6 +24,9 @@ define(function(require) {
 
 			this.listenTo(this.model, 'change', this.userCallback);
 
+			this.on('startTimer', this.startTimer);
+			this.on('startGame', this.startGame);
+
 			this.master = false;
 			console.warn(this.model.toJSON().login, 'adasassad');
 			this.player = {
@@ -53,7 +56,6 @@ define(function(require) {
 				ws.onopen = function (event) {
 					console.info('[ws opened]');
 					self.render();
-
 				};
 
 				ws.onmessage = function (event) {
@@ -88,35 +90,63 @@ define(function(require) {
 								if (data.message === 'ready') {
 									self.opponent.ready = true;
 									self.render();
+
+									self.trigger('startTimer');
 								}
 								if (data.message === 'not ready') {
 									self.opponent.ready = false;
+									self.trigger('startTimer');
 									self.render();
 								}
 
+								if (data.message === 'left') {
+									self.gameObj.const.players.opponent.inst.moveLeft();
+								}
+								if (data.message === 'right') {
+									self.gameObj.const.players.opponent.inst.moveRight();
+								}
+								if (data.message === 'jump') {
+									self.gameObj.const.players.opponent.inst.jump();
+								}
+								if (data.message === 'kick') {
+									self.gameObj.const.players.opponent.inst.kick();
+								}
+								if (data.message === 'punch') {
+									self.gameObj.const.players.opponent.inst.punch();
+								}
+								if (data.message === 'stay') {
+									self.gameObj.const.players.opponent.inst.stay();
+								}
+
+								if (data.message === 'hp') {
+									self.gameObj.const.players.opponent.inst.hp(data.amount);
+								}
+
 							});
+
 						});
 						let i = 0;
-						var message = self.master ? {message:'ping'}: {message:'pong'};
-						setInterval(function () {
-							i++;
-							message.i = i;
-							conn.send(JSON.stringify(message));
-						}, 1000);
+						// var message = self.master ? {message:'ping'}: {message:'pong'};
+						// setInterval(function () {
+						// 	i++;
+						// 	message.i = i;
+						// 	conn.send(JSON.stringify(message));
+						// }, 1000);
 					}
 				}
 			});
 
 		},
 		render: function() {
-			var state = {
-				preload: this.gameObj.preload.bind(this, this.gameObj),
-				create: this.gameObj.create.bind(this, this.gameObj),
-				update: this.gameObj.update.bind(this, this.gameObj)
-			};
+			// var state = {
+			// 	preload: this.gameObj.preload.bind(this, this.gameObj),
+			// 	create: this.gameObj.create.bind(this, this.gameObj),
+			// 	update: this.gameObj.update.bind(this, this.gameObj)
+			// };
+			// this.state = state;
 			// this.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', state);
-			window.game = this.game;
 			window.g = this.gameObj;
+			// window.game = this.game;
 
 			return BaseView.prototype.render.call(this);
 		},
@@ -127,10 +157,63 @@ define(function(require) {
 		userCallback: function (model) {
 			this.player.name = this.model.toJSON().login;
 		},
+		startTimer: function () {
+			console.warn('startTimer!!!');
+			// debugger
+			if (this.player.ready && this.opponent.ready) {
+				var i = 1;
+					if (!this.interval) {
+						this.interval = setInterval(function () {
+							if (i === 2) {
+								$('.timer').text('');
+								clearInterval(self.interval);
+								self.interval = undefined;
+								console.info(i, 'stop!');
+								$('.timer, .game__menu-wrapper').hide();
+								self.trigger('startGame');
+								// self.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', self.state);
+							} else {
+								console.info('countdown to start', i);
+								$('.timer').text(i);
+								i++;
+							}
+						}, 1000);
+					}
+			} else {
+				console.warn("CLEARING interval")
+				clearInterval(this.interval);
+				$('.timer').text('');
+				this.interval = undefined;
+			}
+		},
+		startGame: function () {
+			// debugger
+			console.log('startGame!');
+			var state = {
+				preload: this.gameObj.preload.bind(this, this.gameObj, this.conn),
+				create: this.gameObj.create.bind(this, this.gameObj, this.conn),
+				update: this.gameObj.update.bind(this, this.gameObj, this.conn)
+			};
+			this.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', state);
+			window.game = this.game;
+
+		},
 		ready: function () {
-			this.player.ready = true;
-			this.conn.send(JSON.stringify({message: 'ready'}));
-			this.render();
+			if (!$('.js-ready').hasClass('js-disabled')) {
+				if (this.player.ready === false) {
+					this.player.ready = true;
+					this.conn.send(JSON.stringify({message: 'ready'}));
+					this.trigger('startTimer');
+					this.render();
+				} else {
+					this.player.ready = false;
+					this.conn.send(JSON.stringify({message: 'not ready'}));
+					this.trigger('startTimer');
+					this.render();
+				}
+			} else {
+				console.warn('js-disabled!');
+			}
 		}
 	});
 

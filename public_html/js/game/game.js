@@ -150,7 +150,7 @@ define(function(require) {
 				},
 				opponent: {
 					name: Object.keys(this.res.characters)[Math.random() * 2^0],
-					nick: 'хуй',
+					nick: 'vipplayer',
 				}
 			},
 		};
@@ -190,8 +190,31 @@ define(function(require) {
 		this.objects = {};
 	};
 
-	Game.prototype.create = function (gameObj) {
+	Game.prototype.create = function (gameObj, conn) {
+		// window.conn = conn;
+		// window.sas = this;
 		var game = this.game;
+		// conn.on('data', function (data) {
+		// 	console.info('Received blablba', data);
+		// 	data = JSON.parse(data);
+
+		// 	if (data.message === 'left') {
+		// 		gameObj.const.players.opponent.inst.moveRight();
+		// 	}
+		// 	if (data.message === 'right') {
+		// 		gameObj.const.players.opponent.inst.moveLeft();
+		// 	}
+		// 	if (data.message === 'jump') {
+		// 		gameObj.const.players.opponent.inst.jump();
+		// 	}
+		// 	if (data.message === 'kick') {
+		// 		gameObj.const.players.opponent.inst.kick();
+		// 	}
+		// 	if (data.message === 'punch') {
+		// 		gameObj.const.players.opponent.inst.punch();
+		// 	}
+
+		// });
 
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		firstFrame = true;
@@ -247,7 +270,7 @@ define(function(require) {
 			fontWeight: 'bold'
 		});
 		gameObj.objects.playerHitText.stroke = '#000';
-		gameObj.objects.playerHitText.strokeThickness = 2;		
+		gameObj.objects.playerHitText.strokeThickness = 2;
 		gameObj.objects.playerHitText.visible = false;
 
 		gameObj.objects.opponentHitText = game.add.text(game.world.width - 200, game.world.centerY - 100, ' ', {
@@ -256,7 +279,7 @@ define(function(require) {
 			fontWeight: 'bold'
 		});
 		gameObj.objects.opponentHitText.stroke = '#000';
-		gameObj.objects.opponentHitText.strokeThickness = 2;	
+		gameObj.objects.opponentHitText.strokeThickness = 2;
 		gameObj.objects.opponentHitText.visible = false;
 
 		cursors = game.input.keyboard.createCursorKeys();
@@ -286,12 +309,12 @@ define(function(require) {
 
 		opponent.moveRight = function() {
 			opponent.animations.play('right');
-			opponent.body.velocity.x = -100;
+			opponent.body.velocity.x = -300;
 		}
 
 		opponent.moveLeft = function() {
 			opponent.animations.play('left');
-			opponent.body.velocity.x = 100;
+			opponent.body.velocity.x = 300;
 		}
 
 		opponent.stay = function() {
@@ -333,10 +356,23 @@ define(function(require) {
 			opponent.animations.play('victory');
 		}
 
-		player.body.customSeparateX = false;
+		opponent.hp = function (amount) {
+			gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, amount);
+		}
+
+		opponent.teleport = function( x, y, animation, animationStatus) {
+			switch (animation) {
+				case 'stay':
+					//
+					break;
+
+			}
+		}
+
+		player.body.customSeparateX = true;
 		playerHP = 100;
 
-		opponent.body.customSeparateX = false;
+		opponent.body.customSeparateX = true;
 		opponentHP = 100;
 
 		cropRectOpponentHP = new Phaser.Rectangle(0, 0, gameObj.objects.hpbaropponent.width, gameObj.objects.hpbaropponent.height);
@@ -357,31 +393,33 @@ define(function(require) {
 		gameObj.objects.stateText.anchor.setTo(0.5, 0.5);
 		gameObj.objects.stateText.visible = false;
 
-		
+
 
 		movesList = ['stay', 'left', 'right', 'jump', 'jumpleft', 'punch', 'kick'];
 
 		gameObj.const.aiTimer = game.time.create(false);
-		gameObj.const.aiTimer.loop(11000, opponent.stay, game);
-		gameObj.const.aiTimer.loop(3000, opponent.moveLeft);
-		gameObj.const.aiTimer.loop(2000, opponent.punch);
-		gameObj.const.aiTimer.loop(7000, opponent.jump);
-		gameObj.const.aiTimer.loop(5000, opponent.moveRight);
-		gameObj.const.aiTimer.loop(13000, opponent.kick);
-		gameObj.const.aiTimer.loop(7000, function() {
-			gameObj.objects.opponentHitText.visible = false;
-			gameObj.objects.playerHitText.visible = false;
-		});
+		// gameObj.const.aiTimer.loop(11000, opponent.stay, game);
+		// gameObj.const.aiTimer.loop(3000, opponent.moveLeft);
+		// gameObj.const.aiTimer.loop(2000, opponent.punch);
+		// gameObj.const.aiTimer.loop(7000, opponent.jump);
+		// gameObj.const.aiTimer.loop(5000, opponent.moveRight);
+		// gameObj.const.aiTimer.loop(13000, opponent.kick);
+		// gameObj.const.aiTimer.loop(7000, function() {
+		// 	gameObj.objects.opponentHitText.visible = false;
+		// 	gameObj.objects.playerHitText.visible = false;
+		// });
 		gameObj.const.aiTimer.start();
 		playerHitTextCurrentTime = 0;
 		opponentHitTextCurrentTime = 0;
-		
+
 	};
 
-	Game.prototype.update = function (gameObj) {
+	Game.prototype.update = function (gameObj, conn) {
+		// window.conn = conn;
 		var game = this.game,
 			player = gameObj.const.players.player.inst,
-			opponent = gameObj.const.players.opponent.inst;
+			opponent = gameObj.const.players.opponent.inst
+			kek = this;
 
 		gameObj.objects.hpbaropponent.updateCrop();
 		gameObj.objects.timeText.text = 91 - gameObj.const.aiTimer.seconds^0;
@@ -408,7 +446,7 @@ define(function(require) {
 		game.physics.arcade.collide(player, gameObj.objects.rightWall);
 		game.physics.arcade.collide(opponent, gameObj.objects.leftWall);
 		game.physics.arcade.collide(opponent, gameObj.objects.rightWall);
-	
+
 		player.body.velocity.x = 0;
 		if (gameObj.const.currentGameStatus === 'round') {
 			if (player.body.touching.down) {
@@ -419,20 +457,29 @@ define(function(require) {
 				player.body.velocity.x = -300;
 				if (player.body.touching.down) {
 					player.animations.play('left');
+					console.info('sending left to peer');
+					conn.send(JSON.stringify({message: 'left'}));
 				}
 			} else if (cursors.right.isDown) {
 				console.log("Move to the right");
 				player.body.velocity.x = 300;
-				if (player.body.touching.down)
+				if (player.body.touching.down) {
 					player.animations.play('right');
+					conn.send(JSON.stringify({message: 'right'}));
+				}
 			} else if (punchKey.isDown) {
 				player.animations.play('punch');
+				conn.send(JSON.stringify({message: 'punch'}));
 				if (gameObj.fn.checkOverlap(player, opponent)) {
 					if (player.frame == 24) {
 						prevOpponentHP = opponentHP;
 						opponentHP -= 1;
 						if (opponentHP >= 0) {
 							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+							// if (kek.master) {
+							// 	conn.send(JSON.stringify({message: 'hp', amount: opponentHP}));
+							// }
+
 							playerHitTextCurrentTime = gameObj.const.aiTimer.seconds;
 							gameObj.objects.playerHitText.text = "PUNCH\n" + (prevOpponentHP - opponentHP) + " damage";
 							gameObj.objects.playerHitText.visible = true;
@@ -441,12 +488,16 @@ define(function(require) {
 				}
 			} else if (kickKey.isDown) {
 				player.animations.play('kick');
+				conn.send(JSON.stringify({message: 'kick'}));
 				if (gameObj.fn.checkOverlap(player, opponent)) {
 					if (player.frame == 28) {
 						prevOpponentHP = opponentHP;
 						opponentHP -= 2;
 						if (opponentHP >= 0) {
 							gameObj.fn.updateBarHP(cropRectOpponentHP, gameObj.objects.hpbaropponent.initialWidth, opponentHP);
+							// if (kek.master) {
+							// 	conn.send(JSON.stringify({message: 'hp', amount: opponentHP}));
+							// }
 							playerHitTextCurrentTime = gameObj.const.aiTimer.seconds;
 							gameObj.objects.playerHitText.text = "KICK\n" + (prevOpponentHP - opponentHP) + " damage";
 							gameObj.objects.playerHitText.visible = true;
@@ -457,12 +508,16 @@ define(function(require) {
 				if (player.body.touching.down) {
 					if (player.animations.currentAnim.loop || player.frame == 15) {
 						player.animations.play('stay');
+						conn.send(JSON.stringify({message: 'stay'}));
 					} else {
-						player.animations.currentAnim.onComplete.add(function() {player.animations.play('stay')}, game);
+						player.animations.currentAnim.onComplete.add(function() {
+							player.animations.play('stay');
+							conn.send(JSON.stringify({message: 'stay'}));
+						}, game);
 					}
 				} else {
 					if (firstFrame == true) {
-						console.log ('we are flying for the first time');
+						// console.log ('we are flying for the first time');
 						opponent.animations.play('stay');
 						player.frame = 15;
 					}
@@ -516,7 +571,7 @@ define(function(require) {
 				opponent.animations.play('victory');
 				gameObj.fn.finishRound(player, gameObj.const.players.opponent.name);
 			} else {
-				console.warn('pizda', gameObj.objects.timeText.text);
+				// console.warn('a', gameObj.objects.timeText.text);
 			}
 
 			if (gameObj.objects.timeText.text == 0) {
@@ -537,7 +592,8 @@ define(function(require) {
 		}
 	};
 
-	Game.prototype.preload = function (gameObj) {
+	Game.prototype.preload = function (gameObj, conn) {
+		// window.conn = conn;
 		var game = this.game,
 			resources = gameObj.res,
 			objects = resources.objects,
