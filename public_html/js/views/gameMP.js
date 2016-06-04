@@ -2,9 +2,9 @@ define(function(require) {
 
 	var BaseView = require('views/baseView'),
 		tmpl = require('tmpl/gameMP'),
-		phaser = require('lib/phaser'),
+		phaser = require('Phaser'),
 		user = require('models/user'),
-		G = require('game/game'),
+		G = require('game/game')//,
 		peer = require('lib/peer');
 
 	var View = BaseView.extend({
@@ -38,7 +38,6 @@ define(function(require) {
 				name: 'Waiting for an opponent...',
 				ready: false
 			};
-// debugger
 			self = this;
 			peer.on('open', function(id) {
 				currentID = id;
@@ -125,7 +124,7 @@ define(function(require) {
 							});
 
 						});
-						let i = 0;
+						// let i = 0;
 						// var message = self.master ? {message:'ping'}: {message:'pong'};
 						// setInterval(function () {
 						// 	i++;
@@ -138,16 +137,6 @@ define(function(require) {
 
 		},
 		render: function() {
-			// var state = {
-			// 	preload: this.gameObj.preload.bind(this, this.gameObj),
-			// 	create: this.gameObj.create.bind(this, this.gameObj),
-			// 	update: this.gameObj.update.bind(this, this.gameObj)
-			// };
-			// this.state = state;
-			// this.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', state);
-			window.g = this.gameObj;
-			// window.game = this.game;
-
 			return BaseView.prototype.render.call(this);
 		},
 		events: {
@@ -159,7 +148,6 @@ define(function(require) {
 		},
 		startTimer: function () {
 			console.warn('startTimer!!!');
-			// debugger
 			if (this.player.ready && this.opponent.ready) {
 				var i = 1;
 					if (!this.interval) {
@@ -171,7 +159,6 @@ define(function(require) {
 								console.info(i, 'stop!');
 								$('.timer, .game__menu-wrapper').hide();
 								self.trigger('startGame');
-								// self.game = new Phaser.Game("100", "100", Phaser.AUTO, 'playscreen', self.state);
 							} else {
 								console.info('countdown to start', i);
 								$('.timer').text(i);
@@ -187,7 +174,6 @@ define(function(require) {
 			}
 		},
 		startGame: function () {
-			// debugger
 			console.log('startGame!');
 			var state = {
 				preload: this.gameObj.preload.bind(this, this.gameObj, this.conn),
@@ -216,7 +202,6 @@ define(function(require) {
 			}
 		}
 	});
-
 
 	return View;
 });
